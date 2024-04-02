@@ -10,7 +10,7 @@
     ],
     "max-len": [
       "warn",
-      { "code": 120 }
+      { "code": 180 }
     ],
     "no-trailing-spaces": "error",
     "no-console": [
