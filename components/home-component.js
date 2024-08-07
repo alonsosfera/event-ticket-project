@@ -5,7 +5,7 @@ const inter = Inter({ subsets: ["latin"] })
 
 const HomeComponent = () => {
   return (
-    <main className={`main ${inter.className}`}>
+    <main className={`home main ${inter.className}`}>
       <div className={"description"}>
         <p>
           Get started by editing&nbsp;
