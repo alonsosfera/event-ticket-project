@@ -1,75 +1,70 @@
-import { Button, Card, Form, Input } from "antd"
-import { CloseOutlined } from "@ant-design/icons"
-
+import React, { useState } from "react"
+import { Button, Modal, Form, Input } from "antd"
 
 const Recovery = () => {
+  const [visible, setVisible] = useState(true)
+
+  const handleCancel = () => {
+    setVisible(false)
+  }
+
+  const handleOk = () => {
+    setVisible(false)
+    console.log("Formulario enviado")
+  }
+
   return (
-    <div style={{
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      height: "100vh",
-      position: "relative"
-    }}>
-      <Card
-        title={<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <span>Recuperación de contraseña</span>
-          <Button
-            type="text"
-            icon={<CloseOutlined />}
-            style={{ fontSize: "16px", color: "#566573" }} />
-        </div>}
-        bordered={true}
-        style={{
-          width: 380,
-          height: 300,
-          position: "relative"
+    <Modal
+      title="Recuperación de contraseña"
+      visible={open}
+      centered={true}
+      onCancel={handleCancel}
+      footer={null}
+      width={412}
+      style={{ top: 20 }}>
+      <Form
+        name="basic"
+        layout="vertical"
+        initialValues={{
+          remember: true
         }}
-        headStyle={{
-          borderBottom: "1px solid black"
-        }}>
-        <Form
-          name="basic"
-          layout="vertical"
-          initialValues={{
-            remember: true
-          }}
-          autoComplete="off">
-          <Form.Item
-            label="Nueva contraseña"
-            name="nueva_contraseña"
-            rules={[
-              {
-                message: "Por favor introduce tu nueva contraseña!"
-              }
-            ]}>
-            <Input.Password />
-          </Form.Item>
+        autoComplete="off"
+        onFinish={handleOk}>
+        <Form.Item
+          label="Nueva contraseña"
+          name="new_password"
+          rules={[
+            {
+              message: "Por favor introduce tu nueva contraseña!"
+            }
+          ]}>
+          <Input.Password />
+        </Form.Item>
 
-          <Form.Item
-            label="Confirmar contraseña"
-            name="confirmar_contraseña"
-            rules={[
-              {
-                message: "Por favor confirma tu contraseña!"
-              }
-            ]}>
-            <Input.Password />
-          </Form.Item>
+        <Form.Item
+          label="Confirmar contraseña"
+          name="password_confirmation"
+          rules={[
+            {
+              message: "Por favor confirma tu contraseña!"
+            }
+          ]}>
+          <Input.Password />
+        </Form.Item>
 
-          <Form.Item>
-            <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px" }}>
-              <Button type="default">
-                Cancelar
-              </Button>
-              <Button style={{ backgroundColor: "black", color: "white" }}>
-                Enviar
-              </Button>
-            </div>
-          </Form.Item>
-        </Form>
-      </Card>
-    </div>
+        <Form.Item>
+          <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px" }}>
+            <Button type="default" onClick={handleCancel}>
+              Cancelar
+            </Button>
+            <Button style={{ backgroundColor: "#17202a", color: "white" }} htmlType="submit">
+              Enviar
+            </Button>
+
+          </div>
+        </Form.Item>
+      </Form>
+    </Modal>
   )
 }
 
