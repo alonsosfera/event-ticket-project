@@ -4,39 +4,31 @@ import { Button, Modal, Form, Input } from "antd"
 const Recovery = () => {
   const [visible, setVisible] = useState(true)
 
-  const handleCancel = () => {
-    setVisible(false)
-  }
+  const handleCancel = () => setVisible(false)
 
-  const handleOk = () => {
+  const handleSubmit = () => {
     setVisible(false)
-    console.log("Formulario enviado")
   }
 
   return (
     <Modal
       title="Recuperación de contraseña"
-      visible={open}
-      centered={true}
+      visible={visible}
+      centered
       onCancel={handleCancel}
       footer={null}
       width={412}
       style={{ top: 20 }}>
       <Form
-        name="basic"
         layout="vertical"
-        initialValues={{
-          remember: true
-        }}
+        initialValues={{ remember: true }}
         autoComplete="off"
-        onFinish={handleOk}>
+        onFinish={handleSubmit}>
         <Form.Item
           label="Nueva contraseña"
           name="new_password"
           rules={[
-            {
-              message: "Por favor introduce tu nueva contraseña!"
-            }
+            { message: "Por favor introduce tu nueva contraseña!" }
           ]}>
           <Input.Password />
         </Form.Item>
@@ -45,9 +37,7 @@ const Recovery = () => {
           label="Confirmar contraseña"
           name="password_confirmation"
           rules={[
-            {
-              message: "Por favor confirma tu contraseña!"
-            }
+            { message: "Por favor confirma tu contraseña!" }
           ]}>
           <Input.Password />
         </Form.Item>
@@ -60,7 +50,6 @@ const Recovery = () => {
             <Button style={{ backgroundColor: "#17202a", color: "white" }} htmlType="submit">
               Enviar
             </Button>
-
           </div>
         </Form.Item>
       </Form>
