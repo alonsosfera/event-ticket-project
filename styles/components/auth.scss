@@ -25,3 +25,53 @@
     }
   }
 }
+
+.login {
+  .column {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  .black-triangle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+    clip-path: polygon(78% 0, 100% 0, 99% 99%, 23% 100%);
+  }
+  
+  .yellow-triangle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #FFD549;
+    clip-path: polygon(100% 0%, 100% 43%, 61% 100%, 33% 100%, 90% 0);
+  }
+  
+  .green-triangle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #48D598;
+    clip-path: polygon(100% 27%, 59% 100%, 100% 100%);
+  }
+  
+  .title {
+    text-align: center;
+    color: white;
+    font-size: 7vw;
+    font-weight: bold;
+    padding: 1px 0;
+    background-color: #404040; // Fondo gris
+    margin: 0 auto;
+    width: 100%;
+    max-width: 35vw; // Ajusta el ancho máximo del título
+  }
+}
