@@ -3,6 +3,14 @@ import Link from "next/link"
 
 export default function LoginComponent() {
 
+  const onFinish = values => {
+    console.log("Datos ingresados:", values)
+  }
+
+  const onFinishFailed = errorInfo => {
+    console.log("Error:", errorInfo)
+  }
+
   return (
     <Row
       className="login"
@@ -14,23 +22,27 @@ export default function LoginComponent() {
         <Form
           name="loginForm"
           initialValues={{ remember: true }}
-          style={{ maxWidth: "27vw", margin: "0 auto" }}>
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
+          style={{ maxWidth: "27vw", margin: "0 auto" }}
+          labelCol={{ span: 24 }}
+          wrapperCol={{ span: 24 }}>
           <Form.Item
-            name="email"
-            label="Email"
-            rules={[{ required: true, message: "Por favor ingresa tu correo electrónico" }]}
-            labelCol={{ span: 24 }}
-            wrapperCol={{ span: 24 }}
+            name="tel"
+            label="Número de Teléfono"
+            rules={[
+              { required: true, message: "Por favor ingresa tu número de teléfono" },
+              { pattern: /^\d{10}$/, message: "El número de teléfono debe tener exactamente 10 dígitos" }
+            ]}
             colon={false}>
-            <Input placeholder="Correo electrónico" />
+            <Input
+              placeholder="Número de teléfono"
+              type="number" />
           </Form.Item>
-
           <Form.Item
             name="password"
             label="contraseña"
             rules={[{ required: true, message: "Por favor ingresa tu contraseña" }]}
-            labelCol={{ span: 24 }}
-            wrapperCol={{ span: 24 }}
             colon={false}>
             <Input.Password placeholder="Contraseña" />
           </Form.Item>
@@ -43,7 +55,6 @@ export default function LoginComponent() {
 
           <Form.Item>
             <Button
-              className="round"
               type="primary"
               htmlType="submit"
               style={{ width: "100%", backgroundColor: "#2F333C", borderRadius: "20px" }}>
@@ -57,7 +68,6 @@ export default function LoginComponent() {
         <div className={"black-triangle"}></div>
         <div className={"yellow-triangle"}></div>
         <div className={"green-triangle"}></div>
-
       </Col>
     </Row>
   )
