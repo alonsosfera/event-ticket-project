@@ -14,12 +14,7 @@ const Recovery = () => {
     <Modal
       className="modal-update-password"
       title={
-        <div style={{
-          width: "100%",
-          borderBottom: "1px solid #000",
-          paddingBottom: "8px",
-          padding: "1rem"
-        }}>
+        <div className="tittle-modal">
           Recuperación de contraseña
         </div>
       }
@@ -49,12 +44,12 @@ const Recovery = () => {
           <Input.Password />
         </Form.Item>
 
-        <Form.Item style={{ marginBottom: "0" }}>
-          <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px" }}>
+        <Form.Item  className="form-buttons">
+          <div className="content-buttons">
             <Button type="default" onClick={handleCancel}>
               Cancelar
             </Button>
-            <Button style={{ backgroundColor: "#17202a", color: "white" }} htmlType="submit">
+            <Button className="button-style" htmlType="submit">
               Enviar
             </Button>
           </div>
