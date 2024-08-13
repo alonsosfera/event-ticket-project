@@ -14,7 +14,7 @@ const Recovery = () => {
     <Modal
       className="modal-update-password"
       title={
-        <div className="tittle-modal">
+        <div className="title-modal">
           Recuperación de contraseña
         </div>
       }
