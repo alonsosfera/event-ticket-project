@@ -1,5 +1,7 @@
 import { Row, Col, Form, Input, Button } from "antd"
 import Link from "next/link"
+import Image from "next/image"
+import { WhatsAppOutlined, LockOutlined } from "@ant-design/icons"
 
 export default function LoginComponent() {
 
@@ -14,17 +16,23 @@ export default function LoginComponent() {
   return (
     <Row
       className="login"
-      style={{ height: "100vh" }}
       justify={"center"}
       align="middle">
-      <Col span={12} style={{ paddingRight: "2rem" }}>
-        <div className={"title"}>PartyPass</div>
+      <Col span={12}>
+        <div className="logo">
+          <Image
+            src="/PartyPass logo.webp"
+            alt="logo"
+            fill={true}
+            className="title" />
+        </div>
         <Form
+          className="form"
+          requiredMark={false}
           name="loginForm"
           initialValues={{ remember: true }}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
-          style={{ maxWidth: "27vw", margin: "0 auto" }}
           labelCol={{ span: 24 }}
           wrapperCol={{ span: 24 }}>
           <Form.Item
@@ -36,18 +44,21 @@ export default function LoginComponent() {
             ]}
             colon={false}>
             <Input
+              prefix={<WhatsAppOutlined />}
               placeholder="Número de teléfono"
               type="number" />
           </Form.Item>
           <Form.Item
             name="password"
-            label="contraseña"
+            label="Contraseña"
             rules={[{ required: true, message: "Por favor ingresa tu contraseña" }]}
             colon={false}>
-            <Input.Password placeholder="Contraseña" />
+            <Input.Password
+              placeholder="Contraseña"
+              prefix={<LockOutlined />} />
           </Form.Item>
 
-          <Form.Item style={{ textAlign: "right" }}>
+          <Form.Item className="link">
             <Link style={{ color: "#000000" }} href="https://www.figma.com/design/fnuzq9KkkLzHpqMQwOtrLd/App?node-id=428-982&t=rNOSGRWrMaIrPb22-0">
               ¿Olvidaste tu contraseña?
             </Link>
@@ -55,16 +66,15 @@ export default function LoginComponent() {
 
           <Form.Item>
             <Button
-              type="primary"
-              htmlType="submit"
-              style={{ width: "100%", backgroundColor: "#2F333C", borderRadius: "20px" }}>
+              className="button"
+              htmlType="submit">
               Iniciar sesión
             </Button>
           </Form.Item>
         </Form>
       </Col>
 
-      <Col span={12} className={"column"}>
+      <Col span={12} className={"column-triangles"}>
         <div className={"black-triangle"}></div>
         <div className={"yellow-triangle"}></div>
         <div className={"green-triangle"}></div>

@@ -27,7 +27,28 @@
 }
 
 .login {
-  .column {
+  height: 100vh;
+
+  .logo {
+    position: relative;
+    width: 24vw; 
+    height: 15vh; 
+    margin: 0 auto;
+    padding: 1px 0; 
+    margin-bottom: 2%;
+  }
+  .button {
+    width: 100%; 
+    background-color: #2F333C;
+    border-radius: 20px;
+    color: white;
+  }
+
+  .link {
+    text-align: right;
+    color: #000000;
+  }
+  .column-triangles {
     position: relative;
     height: 100%;
     overflow: hidden;
@@ -40,7 +61,7 @@
     width: 100%;
     height: 100%;
     background-color: #000000;
-    clip-path: polygon(78% 0, 100% 0, 99% 99%, 23% 100%);
+    clip-path: polygon(78% 0, 100% 0, 99% 100%, 23% 100%);
   }
   
   .yellow-triangle {
@@ -62,16 +83,8 @@
     background-color: #48D598;
     clip-path: polygon(100% 27%, 59% 100%, 100% 100%);
   }
-  
-  .title {
-    text-align: center;
-    color: white;
-    font-size: 7vw;
-    font-weight: bold;
-    padding: 1px 0;
-    background-color: #404040; // Fondo gris
+  .form {
+    max-width: 20vw; 
     margin: 0 auto;
-    width: 100%;
-    max-width: 35vw; // Ajusta el ancho máximo del título
   }
 }
