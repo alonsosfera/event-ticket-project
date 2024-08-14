@@ -12,23 +12,26 @@ const NewUser = () => {
 
   return (
     <Modal
+      className="modal-new-user"
       title={"Nuevo usuario"}
       visible={visible}
       centered
       onCancel={handleCancel}
-      footer={[
-        <Button key="cancel" onClick={handleCancel}>
-          Cancelar
-        </Button>,
-        <Button
-          key="submit" type="primary"
-          onClick={handleSubmit}>
-          Guardar
-        </Button>
-      ]}
+      footer={
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <Button key="cancel" onClick={handleCancel}>
+            Cancelar
+          </Button>
+          <Button
+            key="submit"
+            style={{ backgroundColor: "#17202a", color: "white"  }}
+            onClick={handleSubmit}>
+            Guardar
+          </Button>
+        </div>
+      }
       width={381}>
       <Form
-        style={{ padding: "1rem" }}
         layout="vertical"
         initialValues={{ remember: true }}
         autoComplete="off"
