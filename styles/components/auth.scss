@@ -1,28 +1,27 @@
-.modal-update-password  .ant-modal-content {
-  padding: 0 ;
+.modal-update-password {
+  .ant-modal-content {
+    padding: 0 ;
 
-  .title-modal {
-    width: 100% ;
-    border-bottom: 1px solid #000 ;
-    padding-bottom: 8px;
-    padding: 1rem;
+    .title-modal {
+      width: 100% ;
+      border-bottom: 1px solid #000 ;
+      padding-bottom: 8px;
+      padding: 1rem;
+    }
   }
-}
 
-.form-buttons {
-  margin-bottom: 0px;
-
-  .content-buttons {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-
-    .button-style {
-      background-color: #17202a;
-      color: white;
+  .form-buttons {
+    margin-bottom: 0px;
+  
+    .content-buttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+  
+      .button-style {
+        background-color: #17202a;
+        color: white;
+      }
     }
   }
 }
-
-
-
