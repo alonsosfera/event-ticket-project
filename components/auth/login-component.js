@@ -84,7 +84,9 @@ export default function LoginComponent() {
           </Form>
         </Col>
 
-        <Col xs={0} md={12} className={"column-triangles"}>
+        <Col
+          className={"column-triangles"}
+          xs={0} md={12}>
           <div className={"black-triangle"}></div>
           <div className={"yellow-triangle"}></div>
           <div className={"green-triangle"}></div>
