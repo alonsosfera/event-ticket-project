@@ -1,6 +1,6 @@
 .modal-update-password {
   .ant-modal-content {
-
+     padding: 0;
     .title-modal {
       width: 100% ;
       border-bottom: 1px solid $primary-black ;
@@ -8,7 +8,9 @@
       padding: 1rem;
     }
   }
-
+  .form-recovery{
+    padding: 1rem;
+  }
   .form-buttons {
     margin-bottom: 0px;
   

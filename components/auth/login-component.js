@@ -2,7 +2,7 @@ import { Row, Col, Form, Input, Button } from "antd"
 import { useState } from "react"
 import Image from "next/image"
 import { WhatsAppOutlined, LockOutlined } from "@ant-design/icons"
-import Recovery from "./recovery-component"
+import Recovery from "./password-recovery-component"
 
 export default function LoginComponent() {
 

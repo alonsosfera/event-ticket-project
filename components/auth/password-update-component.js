@@ -1,10 +1,13 @@
-import React from "react"
+import React, { useState } from "react"
 import { Button, Modal, Form, Input } from "antd"
 
-const Recovery = ({ visible, onCancel }) => {
-  const handleSubmit = values => {
-    console.log("Datos enviados:", values)
-    onCancel()
+const PasswordUpdate = () => {
+  const [visible, setVisible] = useState(true)
+
+  const handleCancel = () => setVisible(false)
+
+  const handleSubmit = () => {
+    setVisible(false)
   }
 
   return (
@@ -17,11 +20,11 @@ const Recovery = ({ visible, onCancel }) => {
       }
       open={visible}
       centered
-      onCancel={onCancel}
+      onCancel={handleCancel}
       footer={null}
-      width={412}
-      style={{ top: 20 }}>
+      width={412}>
       <Form
+        className="form-recovery"
         layout="vertical"
         initialValues={{ remember: true }}
         autoComplete="off"
@@ -42,7 +45,7 @@ const Recovery = ({ visible, onCancel }) => {
 
         <Form.Item  className="form-buttons">
           <div className="content-buttons">
-            <Button type="default" onClick={onCancel}>
+            <Button type="default" onClick={handleCancel}>
               Cancelar
             </Button>
             <Button className="button-style" htmlType="submit">
@@ -55,4 +58,4 @@ const Recovery = ({ visible, onCancel }) => {
   )
 }
 
-export default Recovery
+export default PasswordUpdate
