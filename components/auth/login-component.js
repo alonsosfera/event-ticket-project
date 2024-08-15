@@ -1,12 +1,12 @@
-import { Row, Col, Form, Input, Button } from "antd"
+import { Row, Col, Form, Input, Button, Alert } from "antd"
 import { useState } from "react"
 import Image from "next/image"
 import { WhatsAppOutlined, LockOutlined } from "@ant-design/icons"
 import Recovery from "./password-recovery-component"
 
 export default function LoginComponent() {
-
   const [isModalVisible, setIsModalVisible] = useState(false)
+  const [alertVisible, setAlertVisible] = useState(false)
 
   const showModal = () => setIsModalVisible(true)
   const handleCancel = () => setIsModalVisible(false)
@@ -19,8 +19,23 @@ export default function LoginComponent() {
     console.log("Error:", errorInfo)
   }
 
+  const handleRecoverySubmit = () => {
+    setAlertVisible(true)
+    setTimeout(() => {
+      setAlertVisible(false)
+    }, 3000)
+  }
+
   return (
     <>
+      {alertVisible && (
+        <div className="alert-login">
+          <Alert
+            description="Se ha enviado un mensaje al número proporcionado."
+            type="success"
+            className="alert-content" />
+        </div>
+      )}
       <Row
         className="login"
         justify={"center"}
@@ -92,11 +107,11 @@ export default function LoginComponent() {
           <div className={"green-triangle"}></div>
         </Col>
       </Row>
+
       <Recovery
         visible={isModalVisible}
-        onCancel={handleCancel} />
+        onCancel={handleCancel}
+        onSubmit={handleRecoverySubmit} />
     </>
   )
-};
-
-
+}

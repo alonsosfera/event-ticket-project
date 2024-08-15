@@ -2,9 +2,10 @@ import React from "react"
 import { Button, Modal, Form, Input } from "antd"
 import { WhatsAppOutlined } from "@ant-design/icons"
 
-const Recovery = ({ visible, onCancel }) => {
+const Recovery = ({ visible, onCancel, onSubmit }) => {
   const handleSubmit = values => {
     console.log("Datos enviados:", values)
+    onSubmit()
     onCancel()
   }
 
@@ -41,7 +42,7 @@ const Recovery = ({ visible, onCancel }) => {
             placeholder="Número de teléfono"
             type="number" />
         </Form.Item>
-        <Form.Item  className="form-buttons">
+        <Form.Item className="form-buttons">
           <div className="content-buttons">
             <Button type="default" onClick={onCancel}>
               Cancelar
