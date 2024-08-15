@@ -30,10 +30,9 @@
 
   .logo {
     position: relative;
-    width: 24vw; 
-    height: 15vh; 
+    max-width: 414px; 
+    height: 113px; 
     margin: 0 auto;
-    padding: 1px 0; 
     margin-bottom: 2%;
   }
   .button {
@@ -83,7 +82,8 @@
     clip-path: polygon(100% 27%, 59% 100%, 100% 100%);
   }
   .form {
-    max-width: 20vw; 
+    max-width: 360px;
+    height: 282px; 
     margin: 0 auto;
   }
 

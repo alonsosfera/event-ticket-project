@@ -25,7 +25,7 @@ export default function LoginComponent() {
         className="login"
         justify={"center"}
         align="middle">
-        <Col span={12}>
+        <Col xs={20} md={12}>
           <div className="logo">
             <Image
               src="/PartyPass logo.webp"
@@ -84,7 +84,7 @@ export default function LoginComponent() {
           </Form>
         </Col>
 
-        <Col span={12} className={"column-triangles"}>
+        <Col xs={0} md={12} className={"column-triangles"}>
           <div className={"black-triangle"}></div>
           <div className={"yellow-triangle"}></div>
           <div className={"green-triangle"}></div>
