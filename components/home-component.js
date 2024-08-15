@@ -1,29 +1,71 @@
-import { Row, Col } from "antd"
-
+import { Row, Col, Card } from "antd"
 
 const HomeComponent = () => {
   return (
-    <Row  style={{ background: "white", padding: "12px" }} gutter={[40, 24]}>
+    <Row gutter={[40, 24]}>
       <Col span={24}>
-        <Row gutter={[24,24]}>
-          <Col span={6} style={{ background: "blue" }}>Proximo</Col>
-          <Col span={6} style={{ background: "blue" }}>Proximo</Col>
-          <Col span={6} style={{ background: "blue" }}>Proximo</Col>
-          <Col span={6} style={{ background: "blue" }}>Proximo</Col>
+        <Row gutter={[24, 24]}>
+          <Col span={6}>
+            <Card
+              title="Proximo">
+              Proximo
+            </Card>
+          </Col>
+          <Col span={6}>
+            <Card title="Proximo">
+              Proximo
+            </Card>
+          </Col>
+          <Col span={6}>
+            <Card title="Proximo">
+              Proximo
+            </Card>
+          </Col>
+          <Col span={6}>
+            <Card title="Proximo">
+              Proximo
+            </Card>
+          </Col>
         </Row>
       </Col>
+
       <Col span={24}>
-        <Row gutter={16}>
-          <Col span={6} style={{ background: "blue" }}>Invitación</Col>
-          <Col span={18} style={{ background: "red" }}>Invitación</Col>
+        <Row gutter={[24, 24]}>
+          <Col span={6}>
+            <Card title="Invitación">
+              Contenido
+            </Card>
+          </Col>
+          <Col span={18}>
+            <Card title="Invitación">
+              Contenido
+            </Card>
+          </Col>
         </Row>
       </Col>
+
       <Col span={24}>
-        <Row gutter={16}>
-          <Col span={6} style={{ background: "red" }}>Proximo</Col>
-          <Col span={6} style={{ background: "red" }}>Proximo</Col>
-          <Col span={6} style={{ background: "red" }}>Proximo</Col>
-          <Col span={6} style={{ background: "red" }}>Proximo</Col>
+        <Row gutter={[24, 24]}>
+          <Col span={6}>
+            <Card title="Proximo">
+              Contenido
+            </Card>
+          </Col>
+          <Col span={6}>
+            <Card title="Proximo">
+              Contenido
+            </Card>
+          </Col>
+          <Col span={6}>
+            <Card title="Proximo">
+              Contenido
+            </Card>
+          </Col>
+          <Col span={6}>
+            <Card title="Proximo">
+              Contenido
+            </Card>
+          </Col>
         </Row>
       </Col>
     </Row>
