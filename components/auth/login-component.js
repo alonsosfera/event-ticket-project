@@ -68,7 +68,7 @@ export default function LoginComponent() {
               <Input
                 prefix={<WhatsAppOutlined />}
                 placeholder="Número de teléfono"
-                type="number" />
+                type="text" />
             </Form.Item>
             <Form.Item
               name="password"

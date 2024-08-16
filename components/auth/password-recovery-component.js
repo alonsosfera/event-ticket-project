@@ -40,7 +40,7 @@ const Recovery = ({ visible, onCancel, onSubmit }) => {
           <Input
             prefix={<WhatsAppOutlined />}
             placeholder="Número de teléfono"
-            type="number" />
+            type="text" />
         </Form.Item>
         <Form.Item className="form-buttons">
           <div className="content-buttons">
