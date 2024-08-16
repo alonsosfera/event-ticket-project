@@ -1,0 +1,83 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserType {
+  OWNER
+  ADMIN
+  HOST
+}
+
+model Tentant {
+  id         String      @id @default(uuid())
+  name       String
+  createdAt  DateTime    @default(now()) @db.Timestamp(6)
+  users      User[]
+  eventHalls EventHall[]
+}
+
+model User {
+  id               String            @id @default(uuid())
+  name             String
+  phone            String            @unique
+  phoneVerified    DateTime?
+  type             UserType
+  password         String
+  createdAt        DateTime          @default(now()) @db.Timestamp(6)
+  events           Event[]
+  passwordRecovery PasswordRecovery?
+
+  tenantId String
+  tenant   Tentant @relation(fields: [tenantId], references: [id])
+}
+
+model PasswordRecovery {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id])
+}
+
+model EventHall {
+  id        String   @id @default(uuid())
+  name      String
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  events    Event[]
+
+  tenantId String
+  tenant   Tentant @relation(fields: [tenantId], references: [id])
+}
+
+model Event {
+  id        String   @id @default(uuid())
+  name      String
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  guests    Guest[]
+  users     User[]
+
+  eventHallId String
+  eventHall   EventHall @relation(fields: [eventHallId], references: [id])
+}
+
+model Guest {
+  id            String   @id @default(uuid())
+  name          String
+  phone         String
+  guestQuantity Int
+  createdAt     DateTime @default(now()) @db.Timestamp(6)
+
+  eventId String
+  event   Event  @relation(fields: [eventId], references: [id])
+}
