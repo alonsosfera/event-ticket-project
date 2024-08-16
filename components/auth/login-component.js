@@ -12,11 +12,11 @@ export default function LoginComponent() {
   const handleCancel = () => setIsModalVisible(false)
 
   const onFinish = values => {
-    console.log("Datos ingresados:", values)
+    values
   }
 
   const onFinishFailed = errorInfo => {
-    console.log("Error:", errorInfo)
+    errorInfo
   }
 
   const handleRecoverySubmit = () => {

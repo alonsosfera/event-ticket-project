@@ -4,7 +4,7 @@ import { WhatsAppOutlined } from "@ant-design/icons"
 
 const Recovery = ({ visible, onCancel, onSubmit }) => {
   const handleSubmit = values => {
-    console.log("Datos enviados:", values)
+    values
     onSubmit()
     onCancel()
   }
