@@ -1,32 +1,15 @@
 .home-component {
   padding: 10px;
   height: 100vh;
-  background-color: white;
-
-  h1 {
-    color: $primary-light-black;
-    font-size: 36px;
-  }
-
-  h4 {
-    color: black;
-    margin-bottom: 20px;
-    color: $primary-light-black;
-  }
-
-  h3 {
-    color: $primary-light-black;
-  }
+  background-color: #F4F5F7;
 
   .ant-row {
+    background-color: #FFFFFF;
   }
 
-    h5 {
-      font-weight: bold;
-    }
-
     .ant-card {
-      border: 1px solid #d5dbdb;
+      border: 1px solid #B0B8CB
+    ;
     }
 
     .ant-card h4 {
@@ -40,4 +23,16 @@
     .ant-image {
       margin-top: 10px;
     }
+
+  .ant-typography {
+    color: $primary-typography;
+  }
+
+  .ant-statistic .ant-statistic-title {
+    color: $primary-typography;
+  }
+
+  .ant-statistic .ant-statistic-content-value {
+    color: $primary-typography;
+  }
   }
