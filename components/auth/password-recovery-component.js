@@ -26,12 +26,11 @@ const Recovery = ({ visible, onCancel, onSubmit }) => {
         requiredMark={false}
         className="form-recovery"
         layout="vertical"
-        initialValues={{ remember: true }}
         autoComplete="off"
         onFinish={handleSubmit}>
         <Form.Item
-          name="tel"
-          label="Número de Teléfono"
+          name="phone"
+          label="Número de teléfono"
           rules={[
             { required: true, message: "Por favor ingresa tu número de teléfono" },
             { pattern: /^\d{10}$/, message: "El número de teléfono debe tener exactamente 10 dígitos" }
@@ -39,7 +38,7 @@ const Recovery = ({ visible, onCancel, onSubmit }) => {
           colon={false}>
           <Input
             prefix={<WhatsAppOutlined />}
-            placeholder="Número de teléfono"
+            placeholder="WhatsApp"
             type="text" />
         </Form.Item>
         <Form.Item>

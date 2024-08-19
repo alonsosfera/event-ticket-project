@@ -8,7 +8,7 @@ export default function LoginComponent() {
   const [isRecoveryModalVisible, setIsRecoveryModalVisible] = useState(false)
 
   const showRecoveryModal = () => setIsRecoveryModalVisible(true)
-  const handleCancel = () => setIsRecoveryModalVisible(false)
+  const closeRecoveryModal = () => setIsRecoveryModalVisible(false)
 
   const onFinish = values => {
     values
@@ -43,13 +43,12 @@ export default function LoginComponent() {
             className="form"
             requiredMark={false}
             name="loginForm"
-            initialValues={{ remember: true }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             labelCol={{ span: 24 }}
             wrapperCol={{ span: 24 }}>
             <Form.Item
-              name="tel"
+              name="phone"
               label="Número de teléfono"
               rules={[
                 { required: true, message: "Por favor ingresa tu número de teléfono" },
@@ -101,7 +100,7 @@ export default function LoginComponent() {
 
       <Recovery
         visible={isRecoveryModalVisible}
-        onCancel={handleCancel}
+        onCancel={closeRecoveryModal}
         onSubmit={handleRecoverySubmit} />
     </>
   )
