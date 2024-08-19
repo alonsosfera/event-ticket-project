@@ -19,9 +19,8 @@ export default function LoginComponent() {
   }
 
   const handleRecoverySubmit = () => {
-    message.success({
+    message.open({
       content: "Se ha enviado un mensaje al número proporcionado",
-      icon: null,
       duration: 3
     })
   }

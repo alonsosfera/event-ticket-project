@@ -20,17 +20,15 @@
 
 .ant-message {
   .ant-message-notice {
-    min-width: 95% !important;
-    max-width: 1424px !important;
-    background-color: #F6FFED !important;
-    border-color: #B7EB8F !important;
-  }
-  .ant-message-success {
-    border: 1px solid #B7EB8F !important; // Puedes ajustar el color del borde
-  }
-
-  .ant-message-icon {
-    display: none;
+  .ant-message-notice-content {
+    min-width: 95%;
+    max-width: 1424px;
+    height: 40px;
+    background-color: #F6FFED;
+    border-radius: 0%;
+    border: 1px solid #B7EB8F;
+    text-align: left;
+  }  
   }
 }
 
