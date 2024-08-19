@@ -10,5 +10,10 @@ body {
   overflow-x: hidden;
 }
 
+.ant-modal .ant-btn[type="submit"] {
+  background-color: #17202a;
+  color: white;
+}
+
 @import "./_variables.scss";
 @import "./_components.scss";

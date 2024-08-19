@@ -1,15 +1,14 @@
-import { Row, Col, Form, Input, Button, Alert } from "antd"
+import { Row, Col, Form, Input, Button, message } from "antd"
 import { useState } from "react"
 import Image from "next/image"
 import { WhatsAppOutlined, LockOutlined } from "@ant-design/icons"
 import Recovery from "./password-recovery-component"
 
 export default function LoginComponent() {
-  const [isModalVisible, setIsModalVisible] = useState(false)
-  const [alertVisible, setAlertVisible] = useState(false)
+  const [isRecoveryModalVisible, setIsRecoveryModalVisible] = useState(false)
 
-  const showModal = () => setIsModalVisible(true)
-  const handleCancel = () => setIsModalVisible(false)
+  const showRecoveryModal = () => setIsRecoveryModalVisible(true)
+  const handleCancel = () => setIsRecoveryModalVisible(false)
 
   const onFinish = values => {
     values
@@ -20,22 +19,15 @@ export default function LoginComponent() {
   }
 
   const handleRecoverySubmit = () => {
-    setAlertVisible(true)
-    setTimeout(() => {
-      setAlertVisible(false)
-    }, 3000)
+    message.success({
+      content: "Se ha enviado un mensaje al número proporcionado",
+      icon: null,
+      duration: 3
+    })
   }
 
   return (
     <>
-      {alertVisible && (
-        <div className="alert-login">
-          <Alert
-            description="Se ha enviado un mensaje al número proporcionado."
-            type="success"
-            className="alert-content" />
-        </div>
-      )}
       <Row
         className="login"
         justify={"center"}
@@ -59,7 +51,7 @@ export default function LoginComponent() {
             wrapperCol={{ span: 24 }}>
             <Form.Item
               name="tel"
-              label="Número de Teléfono"
+              label="Número de teléfono"
               rules={[
                 { required: true, message: "Por favor ingresa tu número de teléfono" },
                 { pattern: /^\d{10}$/, message: "El número de teléfono debe tener exactamente 10 dígitos" }
@@ -67,7 +59,7 @@ export default function LoginComponent() {
               colon={false}>
               <Input
                 prefix={<WhatsAppOutlined />}
-                placeholder="Número de teléfono"
+                placeholder="WhatsApp"
                 type="text" />
             </Form.Item>
             <Form.Item
@@ -83,7 +75,7 @@ export default function LoginComponent() {
             <Form.Item className="item-password">
               <Button
                 type="link"
-                onClick={showModal}
+                onClick={showRecoveryModal}
                 className="button-password">
                 ¿Olvidaste tu contraseña?
               </Button>
@@ -109,7 +101,7 @@ export default function LoginComponent() {
       </Row>
 
       <Recovery
-        visible={isModalVisible}
+        visible={isRecoveryModalVisible}
         onCancel={handleCancel}
         onSubmit={handleRecoverySubmit} />
     </>

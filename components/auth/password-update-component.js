@@ -48,7 +48,7 @@ const PasswordUpdate = () => {
             <Button type="default" onClick={handleCancel}>
               Cancelar
             </Button>
-            <Button className="button-style" htmlType="submit">
+            <Button htmlType="submit">
               Enviar
             </Button>
           </div>

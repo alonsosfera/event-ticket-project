@@ -42,12 +42,12 @@ const Recovery = ({ visible, onCancel, onSubmit }) => {
             placeholder="Número de teléfono"
             type="text" />
         </Form.Item>
-        <Form.Item className="form-buttons">
+        <Form.Item>
           <div className="content-buttons">
             <Button type="default" onClick={onCancel}>
               Cancelar
             </Button>
-            <Button className="button-style" htmlType="submit">
+            <Button htmlType="submit">
               Recuperar contraseña
             </Button>
           </div>
