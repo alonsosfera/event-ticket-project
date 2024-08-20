@@ -1,32 +1,21 @@
-import { Layout as ALayout, Menu, Typography, Dropdown, Button } from "antd"
-import { UserOutlined, MenuOutlined } from "@ant-design/icons"
+import { Layout as ALayout, Typography, Dropdown, Button } from "antd"
+import { MenuOutlined, UserOutlined  } from "@ant-design/icons"
 import Image from "next/image"
 import Link from "next/link"
 import React from "react"
-import { useRouter } from "next/router"
+import { menuItems } from "./items-header-sider-component"
 
 const { Header } = ALayout
 const { Title } = Typography
 
 const HeaderBar = () => {
-  const router = useRouter()
-  const currentPath = router.pathname
-
-  const menuItems = (
-    <Menu theme="light" selectedKeys={[currentPath]}>
-      <Menu.Item key="/" icon={<UserOutlined />}>
-        <Link href="/">Inicio</Link>
-      </Menu.Item>
-      <Menu.Item key="/events" icon={<UserOutlined />}>
-        <Link href="/events">Eventos</Link>
-      </Menu.Item>
-    </Menu>
-  )
 
   return (
     <Header className="header">
       <div className="mobile-menu-button">
-        <Dropdown overlay={menuItems} trigger={["click"]}>
+        <Dropdown
+          trigger={["click"]}
+          menu={{ items: menuItems }}>
           <Button icon={<MenuOutlined className="menu-icon" />} type="text" />
         </Dropdown>
       </div>

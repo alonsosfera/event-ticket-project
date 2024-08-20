@@ -1,4 +1,4 @@
-import { MyLayout } from "@/components/layout/layout"
+import { MyLayout } from "@/components/layout/layout-component"
 
 export default function eventsPage() {
   return (

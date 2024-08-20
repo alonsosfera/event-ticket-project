@@ -1,14 +1,8 @@
 import { Layout as ALayout, Menu } from "antd"
-import {
-  HomeOutlined,
-  ScheduleOutlined,
-  MenuFoldOutlined,
-  MenuUnfoldOutlined
-} from "@ant-design/icons"
+import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons"
 import React, { useState } from "react"
-import Link from "next/link"
 import { useRouter } from "next/router"
-
+import { menuItems } from "./items-header-sider-component"
 const { Sider } = ALayout
 
 const SiderBar = () => {
@@ -20,14 +14,13 @@ const SiderBar = () => {
     setCollapsed(!collapsed)
   }
 
-  const menuItems = (
+  const menuSideBar = (
     <Menu theme="light" selectedKeys={[currentPath]}>
-      <Menu.Item key="/" icon={<HomeOutlined />}>
-        <Link href="/">Inicio</Link>
-      </Menu.Item>
-      <Menu.Item key="/events" icon={<ScheduleOutlined />}>
-        <Link href="/events">Eventos</Link>
-      </Menu.Item>
+      {menuItems.map(item => (
+        <Menu.Item key={item.key} icon={item.icon}>
+          {item.label}
+        </Menu.Item>
+      ))}
     </Menu>
   )
 
@@ -38,7 +31,7 @@ const SiderBar = () => {
       collapsed={collapsed}
       onCollapse={setCollapsed}
       collapsedWidth={70}>
-      {menuItems}
+      {menuSideBar}
       <div className="sider-footer">
         {collapsed ? (
           <MenuUnfoldOutlined className="menu-toggle" onClick={toggleSider} />

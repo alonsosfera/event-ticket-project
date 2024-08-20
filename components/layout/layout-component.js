@@ -1,7 +1,7 @@
 import { Layout as ALayout } from "antd"
 import React from "react"
-import HeaderBar from "./header"
-import SiderBar from "./sider"
+import HeaderBar from "./header-component"
+import SiderBar from "./sider-component"
 
 const { Content } = ALayout
 
