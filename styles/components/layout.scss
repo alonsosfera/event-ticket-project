@@ -87,16 +87,13 @@
   }
 
   @media (max-width: 568px) {
-    .header {
-      height: 45px;
-    }
-
     .image {
-      width: 120px;
-    }
-
-    .user .text {
       display: none;
+    }
+    .user .text {
+      color: black;
+      font-size: 15px;
+      margin-top: 7px;
     }
 
     .user .icon {

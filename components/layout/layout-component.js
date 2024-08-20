@@ -1,18 +1,24 @@
 import { Layout as ALayout } from "antd"
-import React from "react"
+import React, { useState } from "react"
 import HeaderBar from "./header-component"
 import SiderBar from "./sider-component"
 
 const { Content } = ALayout
 
 export const MyLayout = ({ children }) => {
+  const [collapseSider, setCollapseSider] = useState(false)
+
+  const toggleCollapsedSider = () => {
+    setCollapseSider(!collapseSider)
+  }
+
   return (
     <ALayout className="layout">
       <HeaderBar />
       <ALayout>
-        <SiderBar />
+        <SiderBar collapseSider={collapseSider} toggleCollapsedSider={toggleCollapsedSider} />
         <ALayout>
-          <Content className="content">
+          <Content className={`content ${collapseSider ? "content-collapsed" : ""}`}>
             <div>{children}</div>
           </Content>
         </ALayout>
