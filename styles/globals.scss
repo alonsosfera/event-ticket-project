@@ -15,5 +15,14 @@ body {
   color: white;
 }
 
+.ant-message .ant-message-notice .ant-message-notice-content {
+  width: 95%;
+  height: 40px;
+  background-color: #F6FFED;
+  border-radius: 0%;
+  border: 1px solid #B7EB8F;
+  text-align: left;
+}
+
 @import "./_variables.scss";
 @import "./_components.scss";
