@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { Button, Modal, Form, Input } from "antd"
 
-const Recovery = () => {
+const PasswordUpdate = () => {
   const [visible, setVisible] = useState(true)
 
   const handleCancel = () => setVisible(false)
@@ -18,14 +18,13 @@ const Recovery = () => {
           Recuperación de contraseña
         </div>
       }
-      visible={visible}
+      open={visible}
       centered
       onCancel={handleCancel}
       footer={null}
-      width={412}
-      style={{ top: 20 }}>
+      width={412}>
       <Form
-        style={{ padding:"1rem" }}
+        className="form-recovery"
         layout="vertical"
         initialValues={{ remember: true }}
         autoComplete="off"
@@ -49,7 +48,7 @@ const Recovery = () => {
             <Button type="default" onClick={handleCancel}>
               Cancelar
             </Button>
-            <Button className="button-style" htmlType="submit">
+            <Button htmlType="submit">
               Enviar
             </Button>
           </div>
@@ -59,4 +58,4 @@ const Recovery = () => {
   )
 }
 
-export default Recovery
+export default PasswordUpdate
