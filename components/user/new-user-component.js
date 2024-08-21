@@ -1,4 +1,4 @@
-import { Button, Form, Input, Modal } from "antd"
+import { Button, Form, Input, Modal, Select } from "antd"
 import { useState } from "react"
 
 const NewUser = () => {
@@ -9,6 +9,8 @@ const NewUser = () => {
   const handleSubmit = () => {
     setVisible(false)
   }
+
+  const { Option } = Select
 
   return (
     <Modal
@@ -39,29 +41,25 @@ const NewUser = () => {
         <Form.Item
           label="Nombre"
           name="name"
-          rules={[{ message: "Por favor introduce tu nombre!" }]}>
+          rules={[{ message: "Por favor introduce nombre!" }]}>
           <Input />
         </Form.Item>
 
         <Form.Item
-          label="Email"
-          name="email"
-          rules={[{ message: "Por favor confirma tu email!" }]}>
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          label="Teléfono"
-          name="telephone"
-          rules={[{ message: "Por favor confirma tu número de teléfono!" }]}>
+          label="Número de telefono"
+          name="phone"
+          rules={[{ message: "Por favor confirma email!" }]}>
           <Input />
         </Form.Item>
 
         <Form.Item
           label="Rol"
           name="role"
-          rules={[{ message: "Por favor confirma tu número de teléfono!" }]}>
-          <Input />
+          rules={[{ message: "Por favor selecciona un rol" }]}>
+          <Select placeholder="Selecciona un rol">
+            <Option value="ADMIN">ADMIN</Option>
+            <Option value="HOST">HOST</Option>
+          </Select>
         </Form.Item>
       </Form>
     </Modal>

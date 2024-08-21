@@ -1,4 +1,4 @@
-import NewUser from "@/components/user/newUser-component"
+import NewUser from "@/components/user/new-user-component"
 
 
 export default function UsersPage() {
