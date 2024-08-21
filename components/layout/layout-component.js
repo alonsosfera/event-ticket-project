@@ -5,7 +5,7 @@ import SiderBar from "./sider-component"
 
 const { Content } = ALayout
 
-export const MyLayout = ({ children }) => {
+export const Layout = ({ children }) => {
   const [collapseSider, setCollapseSider] = useState(false)
 
   const toggleCollapsedSider = () => {
@@ -27,4 +27,4 @@ export const MyLayout = ({ children }) => {
   )
 }
 
-export default MyLayout
+export default Layout

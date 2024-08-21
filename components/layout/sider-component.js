@@ -2,7 +2,7 @@ import { Layout as ALayout, Menu } from "antd"
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons"
 import React from "react"
 import { useRouter } from "next/router"
-import { menuItems } from "./items-header-sider-component"
+import { menuItems } from "./menu-items"
 const { Sider } = ALayout
 
 const SiderBar = ({ collapseSider, toggleCollapsedSider }) => {

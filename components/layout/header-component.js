@@ -3,7 +3,7 @@ import { MenuOutlined, UserOutlined  } from "@ant-design/icons"
 import Image from "next/image"
 import Link from "next/link"
 import React from "react"
-import { menuItems } from "./items-header-sider-component"
+import { menuItems } from "./menu-items"
 
 const { Header } = ALayout
 const { Title } = Typography
@@ -21,7 +21,7 @@ const HeaderBar = () => {
       </div>
       <Link href="/">
         <Image
-          src="/PartyPass logo no background.webp"
+          src="/logo_no_background.webp"
           alt="logo"
           width={150}
           height={45}
