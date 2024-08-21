@@ -59,20 +59,28 @@ const HomeComponent = () => {
         </Row>
       </Col>
 
-      <Col span={24}>
+      <Col span={24} className="no-border-col">
         <Typography.Title level={5}>Próximos Eventos</Typography.Title>
         <Row gutter={[36, 24]} justify="center">
           <Col span={6}>
-            <Statistic title="14/04/2024" value={"50 Años Martha"} />
+            <Card>
+              <Statistic title="14/04/2024" value={"50 Años Martha"} />
+            </Card>
           </Col>
           <Col span={6}>
-            <Statistic title="14/04/2024" value={"Xv Carla"} />
+            <Card>
+              <Statistic title="14/04/2024" value={"Xv Carla"} />
+            </Card>
           </Col>
           <Col span={6}>
-            <Statistic title="14/04/2024" value={"50 Años Martha"} />
+            <Card>
+              <Statistic title="14/04/2024" value={"50 Años Martha"} />
+            </Card>
           </Col>
           <Col span={6}>
-            <Statistic title="14/04/2024" value={"50 Años Martha"} />
+            <Card>
+              <Statistic title="14/04/2024" value={"50 Años Martha"} />
+            </Card>
           </Col>
         </Row>
       </Col>

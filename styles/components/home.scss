@@ -7,9 +7,12 @@
     background-color: #FFFFFF;
   }
 
+  .no-border-col .ant-card {
+    border: none;
+  }
+
     .ant-card {
-      border: 1px solid #B0B8CB
-    ;
+      border: 1px solid #B0B8CB;
     }
 
     .ant-card h4 {
