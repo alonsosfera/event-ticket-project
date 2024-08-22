@@ -1,10 +1,10 @@
-import NewUser from "@/components/user/new-user-component"
+import Users from "@/components/user/users-component"
 
 
 export default function UsersPage() {
   return(
     <div>
-      <NewUser />
+      <Users />
     </div>
   )
 }
