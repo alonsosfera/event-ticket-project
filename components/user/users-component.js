@@ -16,7 +16,7 @@ const Users = () => {
   }
 
   const handleSubmit = values => {
-    console.log("New user values:", values)
+   (values)
     setIsModalVisible(false)
   }
 
@@ -60,7 +60,7 @@ const Users = () => {
     {
       title: "Acciones",
       key: "action",
-      render: (text, record) => (
+      render: () => (
         <Space size="middle">
           <Button shape="circle" icon={<EditOutlined />} />
           <Button
