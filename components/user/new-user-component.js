@@ -1,6 +1,6 @@
-import { Button, Form, Input, Select } from "antd"
+import {  Form, Input, Select } from "antd"
 
-const NewUser = ({ onCancel, onSubmit }) => {
+const NewUser = ({ onSubmit }) => {
   const { Option } = Select
 
   return (
@@ -59,19 +59,6 @@ const NewUser = ({ onCancel, onSubmit }) => {
           <Option value="HOST">HOST</Option>
         </Select>
       </Form.Item>
-
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <Button key="cancel" onClick={onCancel}>
-          Cancelar
-        </Button>
-        <Button
-          key="submit"
-          style={{ backgroundColor: "#2F333C", color: "#fff", borderRadius: "0px" }}
-          type="primary"
-          htmlType="submit">
-          Guardar
-        </Button>
-      </div>
     </Form>
   )
 }

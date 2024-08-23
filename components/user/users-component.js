@@ -82,7 +82,7 @@ const Users = () => {
               <Button
                 key="submit"
                 onClick={showModal}
-                style={{ backgroundColor: "#2F333C", color: "#fff", borderRadius: "0px" }}>
+                style={{ backgroundColor: "#2F333C", color: "#fff" }}>
                 Agregar Usuario
               </Button>
             </Col>
@@ -100,14 +100,14 @@ const Users = () => {
                 <Input style={{ borderRadius: "0px" }} />
                 <Button
                   icon={<SettingOutlined />}
-                  style={{ backgroundColor: "#2F333C", color: "#FFFF", borderRadius: "0px" }}>
+                  style={{ backgroundColor: "#2F333C", color: "#FFFF" }}>
                   Buscar
                 </Button>
               </Space.Compact>
             </Col>
             <Col>
               <Button
-                style={{ backgroundColor: "#2F333C", color: "#FFFF", borderRadius: "0px" }}>
+                style={{ backgroundColor: "#2F333C", color: "#FFFF" }}>
                 Descargar
               </Button>
             </Col>
@@ -127,9 +127,11 @@ const Users = () => {
         title="Nuevo Usuario"
         visible={isModalVisible}
         onCancel={handleCancel}
-        width={381}
-        footer={null}>
-        <NewUser onCancel={handleCancel} onSubmit={handleSubmit} />
+        cancel="Cancelar"
+        onOk={handleSubmit}
+        okText="Guardar"
+        width={381}>
+        <NewUser />
       </Modal>
     </>
   )
