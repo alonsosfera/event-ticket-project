@@ -8,6 +8,20 @@
       padding: 1rem;
     }
   }
+
+  .form-buttons {
+    margin-bottom: 0px;
+
+    .content-buttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+
+      .button-style {
+        background-color: #17202a;
+        color: white;
+      }
+    }
   .form-recovery {
     padding: 1rem;
   }
@@ -23,13 +37,13 @@
 
   .logo {
     position: relative;
-    max-width: 414px; 
-    height: 113px; 
+    max-width: 414px;
+    height: 113px;
     margin: 0 auto;
     margin-bottom: 2%;
   }
   .button {
-    width: 100%; 
+    width: 100%;
     background-color: #2F333C;
     border-radius: 20px;
     color: white;
@@ -44,7 +58,7 @@
     height: 100%;
     overflow: hidden;
   }
-  
+
   .black-triangle {
     position: absolute;
     top: 0;
@@ -54,7 +68,7 @@
     background-color: $primary-black;
     clip-path: polygon(78% 0, 100% 0, 99% 100%, 23% 100%);
   }
-  
+
   .yellow-triangle {
     position: absolute;
     top: 0;
@@ -64,7 +78,7 @@
     background-color: $primary-yellow;
     clip-path: polygon(100% 0%, 100% 43%, 61% 100%, 33% 100%, 90% 0);
   }
-  
+
   .green-triangle {
     position: absolute;
     top: 0;
@@ -76,9 +90,16 @@
   }
   .form {
     max-width: 360px;
-    height: 282px; 
+    height: 282px;
     margin: 0 auto;
   }
+
+.ant-modal-footer {
+  .ant-btn {
+    background-color: #2F333C;
+    color: #fff;
+  }
+}
 
   .item-password {
     text-align: end;

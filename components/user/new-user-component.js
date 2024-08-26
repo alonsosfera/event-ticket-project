@@ -16,22 +16,12 @@ const NewUser = () => {
     <Modal
       className="modal-new-user"
       title={"Nuevo usuario"}
-      visible={visible}
+      open={setVisible}
       centered
       onCancel={handleCancel}
-      footer={
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <Button key="cancel" onClick={handleCancel}>
-            Cancelar
-          </Button>
-          <Button
-            key="submit"
-            style={{ backgroundColor: "#17202a", color: "white"  }}
-            onClick={handleSubmit}>
-            Guardar
-          </Button>
-        </div>
-      }
+      cancelText="Cancelar"
+      onOk={handleSubmit}
+      okText="Guardar"
       width={381}>
       <Form
         layout="vertical"
@@ -48,8 +38,8 @@ const NewUser = () => {
         <Form.Item
           label="Número de telefono"
           name="phone"
-          rules={[{ message: "Por favor confirma email!" }]}>
-          <Input />
+          rules={[{ message: "Por favor confirma whatsapp!" }]}>
+          <Input placeholder="WhatsApp" />
         </Form.Item>
 
         <Form.Item
