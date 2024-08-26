@@ -1,4 +1,4 @@
-import { Button, Form, Input, Modal, Select } from "antd"
+import { Form, Input, Modal, Select } from "antd"
 import { useState } from "react"
 
 const NewUser = () => {
@@ -16,7 +16,7 @@ const NewUser = () => {
     <Modal
       className="modal-new-user"
       title={"Nuevo usuario"}
-      open={setVisible}
+      open={visible}
       centered
       onCancel={handleCancel}
       cancelText="Cancelar"
