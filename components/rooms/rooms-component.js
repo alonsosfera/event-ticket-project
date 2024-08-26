@@ -2,7 +2,8 @@ import { Button, Col, Row, Typography, Input, Space, Checkbox, Modal } from "ant
 import { DeleteOutlined , EditOutlined , SettingOutlined } from "@ant-design/icons"
 import { useState } from "react"
 import NewRoom from "@/components/rooms/new-room-component"
-import RoomsTableComponent from "@/components/rooms/rooms-table-Component"
+import RoomsTableComponent from "@/components/rooms/rooms-table-component"
+import RoomsListComponent from "@/components/rooms/rooms-list-component"
 
 const Rooms = () => {
 
@@ -123,6 +124,9 @@ const Rooms = () => {
           <Row gutter={[24, 24]}>
             <Col xs={0} md={24}>
               <RoomsTableComponent dataSource={dataSource} columns={columns} />
+            </Col>
+            <Col xs={24} md={0}>
+              <RoomsListComponent dataSource={dataSource} columns={columns} />
             </Col>
           </Row>
         </Col>
