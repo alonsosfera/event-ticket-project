@@ -1,7 +1,8 @@
-import { Button, Col, Row, Typography, Input, Space, Table, Checkbox, Modal } from "antd"
-import { SettingOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons"
+import { Button, Col, Row, Typography, Input, Space, Checkbox, Modal } from "antd"
+import { DeleteOutlined , EditOutlined , SettingOutlined } from "@ant-design/icons"
 import { useState } from "react"
 import NewRoom from "@/components/rooms/new-room-component"
+import RoomsTableComponent from "@/components/rooms/rooms-table-Component"
 
 const Rooms = () => {
 
@@ -120,8 +121,8 @@ const Rooms = () => {
 
         <Col span={24}>
           <Row gutter={[24, 24]}>
-            <Col span={24}>
-              <Table dataSource={dataSource} columns={columns} />
+            <Col xs={0} md={24}>
+              <RoomsTableComponent dataSource={dataSource} columns={columns} />
             </Col>
           </Row>
         </Col>
