@@ -9,7 +9,7 @@ const NewRoom = ({  onSubmit }) => {
       uid: "-1",
       name: "File.png",
       status: "done",
-      url: "http://www.baidu.com/file.png"
+      url: "https://www.google.com"
     }
   ])
 
@@ -60,7 +60,6 @@ const NewRoom = ({  onSubmit }) => {
         <Input />
       </Form.Item>
 
-      {/* Upload Dragger */}
       <Form.Item label="Sube tus archivos">
         <Dragger {...uploadProps}>
           <p className="ant-upload-drag-icon">
