@@ -79,17 +79,16 @@ const Rooms = () => {
 
   return (
     <>
-      <Row style={{ background: "#F4F5F7", padding: "20px" }} gutter={[24, 0]}>
-        <Col span={24} style={{ marginBottom: "10px" }}>
+      <Row className="rooms-container" gutter={[24, 0]}>
+        <Col span={24} className="rooms-header">
           <Row justify="space-between" align="middle">
             <Col>
-              <Typography.Title level={2} style={{ color: "#2F333C" }}>Lista de salones</Typography.Title>
+              <Typography.Title level={2} className="title">Lista de salones</Typography.Title>
             </Col>
             <Col>
               <Button
                 key="submit"
-                onClick={showModal}
-                style={{ backgroundColor: "#2F333C", color: "#fff" }}>
+                onClick={showModal}>
                 Agregar salón
               </Button>
             </Col>
@@ -103,18 +102,16 @@ const Rooms = () => {
             style={{ marginBottom: "25px" }}
             gutter={[16, 0]}>
             <Col span={12}>
-              <Space.Compact style={{ width: "100%" }}>
-                <Input style={{ borderRadius: "0px" }} />
+              <Space.Compact>
+                <Input />
                 <Button
-                  icon={<SettingOutlined />}
-                  style={{ backgroundColor: "#2F333C", color: "#FFFF" }}>
+                  icon={<SettingOutlined />}>
                   Buscar
                 </Button>
               </Space.Compact>
             </Col>
             <Col>
-              <Button
-                style={{ backgroundColor: "#2F333C", color: "#FFFF" }}>
+              <Button>
                 Descargar
               </Button>
             </Col>
