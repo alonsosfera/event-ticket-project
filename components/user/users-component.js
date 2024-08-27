@@ -2,6 +2,7 @@ import { Button, Col, Row, Typography, Input, Space, Table, Modal } from "antd"
 import { SettingOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons"
 import NewUser from "@/components/user/new-user-component"
 import { useState } from "react"
+import UsersTableComponent from "@/components/user/users-table-component"
 
 const Users = () => {
   const [isModalVisible, setIsModalVisible] = useState(false)
@@ -104,8 +105,9 @@ const Users = () => {
 
         <Col span={24}>
           <Row gutter={[24, 24]}>
-            <Col span={24}>
-              <Table
+            <Col
+              xs={0} md={24}>
+              <UsersTableComponent
                 dataSource={dataSource}
                 columns={columns}
                 rowSelection={rowSelection} />
