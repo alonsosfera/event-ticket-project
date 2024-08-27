@@ -59,7 +59,7 @@ const Users = () => {
 
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
-      console.log(`Selected Row Keys: ${selectedRowKeys}`, "Selected Rows: ", selectedRows)
+      return(`Selected Row Keys: ${selectedRowKeys}`, "Selected Rows: ", selectedRows)
     }
   }
 
@@ -116,7 +116,7 @@ const Users = () => {
 
       <Modal
         title="Nuevo Usuario"
-        visible={isModalVisible}
+        open={isModalVisible}
         onCancel={handleCancel}
         cancel="Cancelar"
         okText="Guardar"
