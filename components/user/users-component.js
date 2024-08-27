@@ -3,6 +3,7 @@ import { SettingOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons
 import NewUser from "@/components/user/new-user-component"
 import { useState } from "react"
 import UsersTableComponent from "@/components/user/users-table-component"
+import UsersListComponent from "@/components/user/users-list-component"
 
 const Users = () => {
   const [isModalVisible, setIsModalVisible] = useState(false)
@@ -108,6 +109,12 @@ const Users = () => {
             <Col
               xs={0} md={24}>
               <UsersTableComponent
+                dataSource={dataSource}
+                columns={columns}
+                rowSelection={rowSelection} />
+            </Col>
+            <Col xs={24} md={0}>
+              <UsersListComponent
                 dataSource={dataSource}
                 columns={columns}
                 rowSelection={rowSelection} />
