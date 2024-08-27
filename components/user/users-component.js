@@ -1,10 +1,9 @@
-import { Button, Col, Row, Typography, Input, Space, Table, Checkbox, Modal } from "antd"
+import { Button, Col, Row, Typography, Input, Space, Table, Modal } from "antd"
 import { SettingOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons"
 import NewUser from "@/components/user/new-user-component"
 import { useState } from "react"
 
 const Users = () => {
-
   const [isModalVisible, setIsModalVisible] = useState(false)
 
   const showModal = () => {
@@ -12,11 +11,6 @@ const Users = () => {
   }
 
   const handleCancel = () => {
-    setIsModalVisible(false)
-  }
-
-  const handleSubmit = values => {
-   (values)
     setIsModalVisible(false)
   }
 
@@ -36,12 +30,6 @@ const Users = () => {
   ]
 
   const columns = [
-    {
-      title: "",
-      dataIndex: "checkbox",
-      key: "checkbox",
-      render: () => <Checkbox />
-    },
     {
       title: "Nombre",
       dataIndex: "name",
@@ -63,12 +51,17 @@ const Users = () => {
       render: () => (
         <Space size="middle">
           <Button shape="circle" icon={<EditOutlined />} />
-          <Button
-            shape="circle" icon={<DeleteOutlined />} />
+          <Button shape="circle" icon={<DeleteOutlined />} />
         </Space>
       )
     }
   ]
+
+  const rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+      console.log(`Selected Row Keys: ${selectedRowKeys}`, "Selected Rows: ", selectedRows)
+    }
+  }
 
   return (
     <>
@@ -91,13 +84,11 @@ const Users = () => {
 
         <Col span={24}>
           <Row
-            justify="end"
-            align="middle"
-            style={{ marginBottom: "25px" }}
-            gutter={[16, 0]}>
+            justify="end" align="middle"
+            style={{ marginBottom: "25px" }} gutter={[16, 0]}>
             <Col span={12}>
               <Space.Compact style={{ width: "100%" }}>
-                <Input style={{ borderRadius: "0px" }} />
+                <Input />
                 <Button
                   icon={<SettingOutlined />}
                   style={{ backgroundColor: "#2F333C", color: "#FFFF" }}>
@@ -106,10 +97,7 @@ const Users = () => {
               </Space.Compact>
             </Col>
             <Col>
-              <Button
-                style={{ backgroundColor: "#2F333C", color: "#FFFF" }}>
-                Descargar
-              </Button>
+              <Button>Descargar</Button>
             </Col>
           </Row>
         </Col>
@@ -117,7 +105,10 @@ const Users = () => {
         <Col span={24}>
           <Row gutter={[24, 24]}>
             <Col span={24}>
-              <Table dataSource={dataSource} columns={columns} />
+              <Table
+                dataSource={dataSource}
+                columns={columns}
+                rowSelection={rowSelection} />
             </Col>
           </Row>
         </Col>
@@ -128,7 +119,6 @@ const Users = () => {
         visible={isModalVisible}
         onCancel={handleCancel}
         cancel="Cancelar"
-        onOk={handleSubmit}
         okText="Guardar"
         width={381}>
         <NewUser />
