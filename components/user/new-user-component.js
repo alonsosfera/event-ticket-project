@@ -6,7 +6,6 @@ const NewUser = ({ onSubmit }) => {
   return (
     <Form
       layout="vertical"
-      initialValues={{ remember: true }}
       autoComplete="off"
       onFinish={onSubmit}>
       <Form.Item
