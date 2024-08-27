@@ -11,7 +11,7 @@ const UserList = ({ dataSource, columns }) => {
           {columns.map (column => (
             column.dataIndex && (
               <Descriptions.Item
-                style={{ borderBottom: "1px solid #576176", padding: "1rem" }}
+                style={{ borderBottom: "1px solid #d5dbdb", padding: "1rem" }}
                 key={column.key}
                 label={column.title}>
                 {data[column.dataIndex]}
