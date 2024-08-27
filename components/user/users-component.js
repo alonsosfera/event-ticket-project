@@ -1,4 +1,4 @@
-import { Button, Col, Row, Typography, Input, Space, Table, Modal } from "antd"
+import { Button, Col, Row, Typography, Input, Space, Modal } from "antd"
 import { SettingOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons"
 import NewUser from "@/components/user/new-user-component"
 import { useState } from "react"
