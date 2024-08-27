@@ -5,12 +5,16 @@ const UserList = ({ dataSource, columns }) => {
 
   return (
     <div>
-      {dataSource.map ((data , index) => (
-        <Descriptions key={data.key} title={`Salón ${index + 1}`}>
+      {dataSource.map (data => (
+        <Descriptions
+          style={{ padding: "1rem" }} key={data.key}>
           {columns.map (column => (
             column.dataIndex && (
-              <Descriptions.Item key={column.key} label={column.title}>
-                {data[ column.dataIndex ]}
+              <Descriptions.Item
+                style={{ borderBottom: "1px solid #576176", padding: "1rem" }}
+                key={column.key}
+                label={column.title}>
+                {data[column.dataIndex]}
               </Descriptions.Item>
             )
           ))}
