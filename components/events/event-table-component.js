@@ -5,6 +5,7 @@ import TableActions from "./event-table-actions-component"
 import EventHeader from "./event-header-component"
 import { columns, initialDataSource } from "./event-table-items"
 import EmptyDescription from "./event-empty-component"
+import EventCard from "./event-card-component"
 
 const EventTable = () => {
   const [dataSource, setDataSource] = useState(initialDataSource)
@@ -39,10 +40,14 @@ const EventTable = () => {
             rowSelection={{ selectedRowKeys, onChange: onSelectChange }}
             columns={columns}
             dataSource={dataSource} />
+          <EventCard />
         </>
       ) : (
-        <EmptyDescription
-          description="Seleccione un evento para ver aquí sus detalles" />
+        <div>
+          <EmptyDescription
+            description="Seleccione un evento para ver aquí sus detalles" />
+          <EventCard />
+        </div>
       )}
     </div>
   )

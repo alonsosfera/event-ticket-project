@@ -1,8 +1,10 @@
 import EventHeader from "./event-header-component"
 import { useEvent } from "./event-context"
 import TableActions from "./event-table-actions-component"
-import { List, Descriptions, Typography } from "antd"
+import { List, Descriptions, Typography, Button } from "antd"
 import EmptyDescription from "./event-empty-component"
+import EventCard from "./event-card-component"
+import { LeftOutlined } from "@ant-design/icons"
 
 const { Title } = Typography
 
@@ -14,18 +16,22 @@ const dataSource = Array.from({ length: 46 }).map((_, i) => ({
   estatus: "pendiente"
 }))
 
-const DescriptionView = ({ record }) => (
+const DescriptionView = ({ data }) => (
   <Descriptions
     bordered column={1}>
-    <Descriptions.Item label="Familia">{record.familia}</Descriptions.Item>
-    <Descriptions.Item label="Invitados">{record.invitados}</Descriptions.Item>
-    <Descriptions.Item label="WhatsApp">{record.whatsapp}</Descriptions.Item>
-    <Descriptions.Item label="Estatus">{record.estatus}</Descriptions.Item>
+    <Descriptions.Item label="Familia">{data.familia}</Descriptions.Item>
+    <Descriptions.Item label="Invitados">{data.invitados}</Descriptions.Item>
+    <Descriptions.Item label="WhatsApp">{data.whatsapp}</Descriptions.Item>
+    <Descriptions.Item label="Estatus">{data.estatus}</Descriptions.Item>
   </Descriptions>
 )
 
 const TableMobile = () => {
   const { selectedEvent, eventData } = useEvent()
+
+  const handleBack = () => {
+    window.location.reload()
+  }
 
   if (!eventData || eventData.length === 0) {
     return (
@@ -34,9 +40,16 @@ const TableMobile = () => {
     )
   }
 
-
   return (
     <div className="event-container-mobile">
+      {selectedEvent && (
+      <Button
+        type="text"
+        className="back-button"
+        icon={<LeftOutlined className="icon-back" />}
+        onClick={handleBack}>
+      </Button>
+      )}
       <EventHeader selectedEvent={selectedEvent} />
       {selectedEvent ? (
         <>
@@ -45,12 +58,15 @@ const TableMobile = () => {
             dataSource={dataSource}
             renderItem={item => (
               <List.Item>
-                <DescriptionView record={item} />
+                <DescriptionView data={item} />
               </List.Item>
             )} />
         </>
       ) : (
-        <Title className="title-event">Eventos</Title>
+        <div>
+          <Title className="title-event">Eventos</Title>
+          <EventCard />
+        </div>
       )}
     </div>
   )

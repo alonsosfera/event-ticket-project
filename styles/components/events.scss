@@ -1,4 +1,4 @@
-.event-container{
+.event-container {
   background-color: #F4F5F7;
   padding: 16px;
 
@@ -13,39 +13,39 @@
   .ant-btn {
     font-weight: bold
   } 
-  .ant-row{
+  .ant-row {
     justify-content: flex-end;
     margin-bottom: 16px;
   }
 
-  .row-buttons{
+  .row-buttons {
     justify-content: space-between;
   }
 
-  .col-buttons{
+  .col-buttons {
     display: flex;
     gap: 5px;
   }
-  .row-header{
+  .row-header {
     margin-bottom: 6px;
   }
 
-  .col-date{
+  .col-date {
     text-align: right;
   }
 
-  .col-invitate{
+  .col-invitate {
     text-align: right;
   }
 
-  .col-title-event{
+  .col-title-event {
     text-align: right;
     font-weight: bold;
     text-align: left;
   }
 }
 
-.event-container-mobile{
+.event-container-mobile {
   background-color: #F4F5F7;
   padding: 16px;
 
@@ -56,17 +56,17 @@
   .ant-btn {
     font-weight: bold
   }  
-  .ant-row{
+  .ant-row {
     justify-content: flex-end;
     margin-bottom: 10px;
   }
 
-  .col-buttons{
+  .col-buttons {
     display: flex;
     gap: 15px;
   }
 
-  .col-buttons-download{
+  .col-buttons-download {
     display: flex;
     margin-right: 10px;
   }
@@ -79,28 +79,32 @@
     width: 100%;
   }
 
-  .row-header{
+  .row-header {
     margin-bottom: 12px;
   }
 
-  .col-date{
+  .col-date {
     text-align: right;
   }
 
-  .col-invitate{
+  .col-invitate {
     text-align: right;
     font-weight: bold;
     text-align: left;
   }
 
-  .col-title-event{
+  .col-title-event {
     text-align: right;
     font-weight: bold;
     text-align: left;
+  }
+
+  .back-button .icon-back {
+     font-size: 30px;
   }
 }
 
-.title .title-event{
+.title .title-event {
   font-size: 40px;
   font-weight: 700;
   color: #576176;
