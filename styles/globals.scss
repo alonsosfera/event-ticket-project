@@ -13,7 +13,8 @@ body {
   overflow-x: hidden;
 }
 
-.ant-modal .ant-btn[type="submit"] {
+.ant-modal .ant-btn[type="submit"],
+.ant-modal .ant-modal-footer .ant-btn-primary {
   background-color: #17202a;
   color: white;
 }
