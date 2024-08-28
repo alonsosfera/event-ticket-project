@@ -4,6 +4,7 @@ const UserList = ({ dataSource, columns }) => {
   return (
     <Row gutter={[16, 16]}>
       {dataSource.map(data => (
+        // eslint-disable-next-line react/jsx-key
         <Col>
           <Descriptions
             style={{ padding: "1rem", background: "#F4F5F7" }}
