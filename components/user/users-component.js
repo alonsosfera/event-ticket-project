@@ -93,8 +93,7 @@ const Users = () => {
             gutter={[28, 6]}>
             <Col
               xs={24}
-              md={18}
-              lg={18}>
+              lg={12}>
               <Space.Compact style={{ width: "100%" }}>
                 <Input />
                 <Button
@@ -127,6 +126,7 @@ const Users = () => {
                     <DescriptionListComponent items={[
                       { label: "Nombre", value: item.name },
                       { label: "Telefono", value: item.phone },
+                      // eslint-disable-next-line max-lines
                       { label: "Rol", value: item.role }
                     ]} />
                   </List.Item>
