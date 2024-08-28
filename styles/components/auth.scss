@@ -1,6 +1,6 @@
 .modal-update-password {
   .ant-modal-content {
-     padding: 0;
+    padding: 0;
     .title-modal {
       width: 100% ;
       border-bottom: 1px solid $primary-black ;
@@ -8,20 +8,6 @@
       padding: 1rem;
     }
   }
-
-  .form-buttons {
-    margin-bottom: 0px;
-
-    .content-buttons {
-      display: flex;
-      justify-content: flex-end;
-      gap: 10px;
-
-      .button-style {
-        background-color: #17202a;
-        color: white;
-      }
-    }
   .form-recovery {
     padding: 1rem;
   }
@@ -93,13 +79,6 @@
     height: 282px;
     margin: 0 auto;
   }
-
-.ant-modal-footer {
-  .ant-btn {
-    background-color: #2F333C;
-    color: #fff;
-  }
-}
 
   .item-password {
     text-align: end;
