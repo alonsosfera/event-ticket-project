@@ -85,9 +85,12 @@ const Rooms = () => {
         <Col span={24} className="rooms-header">
           <Row justify="space-between" align="middle">
             <Col>
-              <Typography.Title level={2} className="title">Lista de salones</Typography.Title>
+              <Typography.Title level={2} className="title">Salones</Typography.Title>
             </Col>
-            <Col>
+            <Col
+              xs={9}
+              md={4}
+              lg={4}>
               <Button
                 key="submit"
                 onClick={showModal}>
@@ -102,8 +105,10 @@ const Rooms = () => {
             justify="end"
             align="middle"
             style={{ marginBottom: "25px" }}
-            gutter={[16, 0]}>
-            <Col span={12}>
+            gutter={[28, 6]}>
+            <Col
+              xs={24}
+              lg={12}>
               <Space.Compact>
                 <Input />
                 <Button
