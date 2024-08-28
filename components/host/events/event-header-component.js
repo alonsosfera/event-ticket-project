@@ -13,7 +13,7 @@ const EventHeader = ({ selectedEvent, showFullView }) => {
   return (
     <>
       {showFullView && (<div className="title">
-        <Title className="title-event">Tus eventos</Title>
+        <Title className="page-title">Tus eventos</Title>
       </div>)}
       <Row gutter={16} className="row-header">
         <Col span={12}>

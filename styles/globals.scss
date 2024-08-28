@@ -32,5 +32,11 @@ body {
   width: 100%;
 }
 
+.ant-typography.page-title {
+  font-size: 40px;
+  font-weight: 700;
+  color: #576176;
+}
+
 @import "./_variables.scss";
 @import "./_components.scss";

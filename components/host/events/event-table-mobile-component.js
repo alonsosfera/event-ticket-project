@@ -1,9 +1,9 @@
 import EventHeader from "./event-header-component"
-import { useEvent } from "./event-context"
+import { useEvent } from "../../events/event-context"
 import TableActions from "./event-table-actions-component"
 import { List, Typography, Button } from "antd"
-import EmptyDescription from "./event-empty-component"
-import EventCard from "./event-card-component"
+import EmptyDescription from "../../shared/empty-component"
+import EventCard from "@/components/events/event-card-component"
 import { LeftOutlined } from "@ant-design/icons"
 import DescriptionListComponent from "@/components/shared/description-list-component"
 

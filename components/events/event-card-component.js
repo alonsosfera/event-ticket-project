@@ -19,7 +19,7 @@ const EventCard = () => {
             <Card
               key={index}
               className={cardClass}
-              title={<span className="card-title">{event.title}</span>}
+              title={<span title={event.title} className="card-title">{event.title}</span>}
               extra={
                 <Button
                   type="link"
@@ -36,10 +36,6 @@ const EventCard = () => {
                 <span>{event.totalInvites} invitados</span>
                 <span>{event.remainingInvites} invitados restantes</span>
               </div>
-              <Space className="card-buttons">
-                <Button type="default">Descargar</Button>
-                <Button type="default">Editar</Button>
-              </Space>
             </Card>
           )
         })}
