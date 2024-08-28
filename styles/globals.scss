@@ -38,5 +38,9 @@ body {
   color: #576176;
 }
 
+.ant-typography {
+  font-family: 'Roboto', sans-serif;
+}
+
 @import "./_variables.scss";
 @import "./_components.scss";
