@@ -1,6 +1,6 @@
 .modal-update-password {
   .ant-modal-content {
-     padding: 0;
+    padding: 0;
     .title-modal {
       width: 100% ;
       border-bottom: 1px solid $primary-black ;
@@ -23,13 +23,13 @@
 
   .logo {
     position: relative;
-    max-width: 414px; 
-    height: 113px; 
+    max-width: 414px;
+    height: 113px;
     margin: 0 auto;
     margin-bottom: 2%;
   }
   .button {
-    width: 100%; 
+    width: 100%;
     background-color: #2F333C;
     border-radius: 20px;
     color: white;
@@ -44,7 +44,7 @@
     height: 100%;
     overflow: hidden;
   }
-  
+
   .black-triangle {
     position: absolute;
     top: 0;
@@ -54,7 +54,7 @@
     background-color: $primary-black;
     clip-path: polygon(78% 0, 100% 0, 99% 100%, 23% 100%);
   }
-  
+
   .yellow-triangle {
     position: absolute;
     top: 0;
@@ -64,7 +64,7 @@
     background-color: $primary-yellow;
     clip-path: polygon(100% 0%, 100% 43%, 61% 100%, 33% 100%, 90% 0);
   }
-  
+
   .green-triangle {
     position: absolute;
     top: 0;
@@ -76,7 +76,7 @@
   }
   .form {
     max-width: 360px;
-    height: 282px; 
+    height: 282px;
     margin: 0 auto;
   }
 
