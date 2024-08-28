@@ -12,7 +12,7 @@
 
   .ant-btn {
     font-weight: bold
-  } 
+  }
   .ant-row {
     justify-content: flex-end;
     margin-bottom: 16px;
@@ -55,7 +55,7 @@
 
   .ant-btn {
     font-weight: bold
-  }  
+  }
   .ant-row {
     justify-content: flex-end;
     margin-bottom: 10px;
@@ -73,10 +73,6 @@
 
   .ant-divider {
     border-top: 1px solid #000;
-  }
-
-  .ant-descriptions {
-    width: 100%;
   }
 
   .row-header {
@@ -131,63 +127,63 @@
     height: 182px;
     border-radius: 10px;
     border-color: #A8B1C6;
-    
+
     .card-title {
       color: #000;
     }
-  
+
     .card-extra {
       color: #2F333C;
       font-weight: bold;
       padding: 0;
     }
-  
+
     .card-content {
       display: flex;
       justify-content: space-between;
       margin-bottom: 10px;
       margin-top: -12px;
     }
-  
+
     .card-invites {
       display: flex;
       justify-content: space-between;
       margin-bottom: 20px;
-  
+
       span {
         font-size: 10px;
         color: #00000073;
       }
     }
-  
+
     .card-buttons {
       display: flex;
       gap: 10px;
-  
+
       .ant-btn {
         width: 130px;
         font-weight: bold;
       }
     }
-    
+
     &.card-color-1 {
       .card-title {
         color: #EFBD17;
       }
     }
-  
+
     &.card-color-2 {
       .card-title {
         color: #48D598;
       }
     }
-  
+
     &.card-color-3 {
       .card-title {
         color: #A6CB2D;
       }
     }
-  
+
     &.card-color-4 {
       .card-title {
         color: #61D9D2;
