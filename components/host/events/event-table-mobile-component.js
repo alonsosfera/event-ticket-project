@@ -44,7 +44,7 @@ const TableMobile = () => {
       <EventHeader selectedEvent={selectedEvent} />
       {selectedEvent ? (
         <>
-          <TableActions showFullView={false} />
+          <TableActions />
           <List
             dataSource={dataSource}
             renderItem={item => (
