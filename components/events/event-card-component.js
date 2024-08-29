@@ -7,9 +7,8 @@ const EventCard = () => {
   const { eventData } = useEvent()
 
   return (
-    <>
-      <Row justify={"center"} gutter={[16, 6]}>
-        {eventData.map((event, index) => {
+    <Row justify={"center"} gutter={[16, 6]}>
+      {eventData.map((event, index) => {
         const cardClass = `card-container card-color-${(index % 4) + 1}`
         return (
           <Col
@@ -34,8 +33,7 @@ const EventCard = () => {
           </Col>
         )
       })}
-      </Row>
-    </>
+    </Row>
   )
 
 }
