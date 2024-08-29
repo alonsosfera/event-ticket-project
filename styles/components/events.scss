@@ -18,14 +18,6 @@
     margin-bottom: 16px;
   }
 
-  .row-buttons {
-    justify-content: space-between;
-  }
-
-  .col-buttons {
-    display: flex;
-    gap: 5px;
-  }
   .row-header {
     margin-bottom: 6px;
   }
@@ -39,7 +31,6 @@
   }
 
   .col-title-event {
-    text-align: right;
     font-weight: bold;
     text-align: left;
   }
@@ -86,11 +77,9 @@
   .col-invitate {
     text-align: right;
     font-weight: bold;
-    text-align: left;
   }
 
   .col-title-event {
-    text-align: right;
     font-weight: bold;
     text-align: left;
   }

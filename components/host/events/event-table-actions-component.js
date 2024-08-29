@@ -1,7 +1,9 @@
-import { Row, Col, Button, Divider } from "antd"
+import { Row, Col, Button, Divider, Flex, Grid } from "antd"
 import { FileImageOutlined, UnorderedListOutlined, NumberOutlined, FileTextOutlined } from "@ant-design/icons"
 
-const TableActions = ({ dataSource, selectedRowKeys, setDataSource, setSelectedRowKeys, showFullView = true }) => {
+const TableActions = ({ dataSource, selectedRowKeys, setDataSource, setSelectedRowKeys }) => {
+
+  const { xs, md, lg } = Grid.useBreakpoint()
 
   const handleDigitalInvitation = () => {
 
@@ -40,45 +42,48 @@ const TableActions = ({ dataSource, selectedRowKeys, setDataSource, setSelectedR
 
   return (
     <>
-      {showFullView ? (
-        <>
-          <Row gutter={16}>
-            <Col>
-              <Button
-                icon={<FileImageOutlined />}
-                onClick={handleDigitalInvitation}>
-                Invitación digital
-              </Button>
-            </Col>
-            <Col>
-              <Button onClick={handleArrangeGuests}>
-                Acomodo de invitados
-              </Button>
-            </Col>
-          </Row>
-          <Divider />
-          <Row className="row-buttons" gutter={16}>
-            <Col>
-              <Button
-                type="text"
-                icon={<UnorderedListOutlined />}
-                onClick={handleLoadGuestList}>
-                Cargar lista de invitados
-              </Button>
-              <Button
-                type="text"
-                icon={<NumberOutlined />}
-                onClick={handleDownloadNumbering}>
-                Descargar numeración
-              </Button>
-              <Button
-                type="text"
-                icon={<FileTextOutlined />}
-                onClick={handleDownloadPasses}>
-                Descargar pases
-              </Button>
-            </Col>
-            <Col className="col-buttons">
+      <Row justify={"end"} gutter={16}>
+        <Col>
+          <Button
+            icon={<FileImageOutlined />}
+            onClick={handleDigitalInvitation}>
+            Invitación digital
+          </Button>
+        </Col>
+        <Col>
+          <Button onClick={handleArrangeGuests}>
+            Acomodo de invitados
+          </Button>
+        </Col>
+      </Row>
+      <Divider />
+      <Row justify={"space-between"}>
+        <Col xs={24} xl={12}>
+          <Flex justify={xs ? "end" : "start"} gap={12}>
+            {md && <Button
+              type="text"
+              icon={<UnorderedListOutlined />}
+              onClick={handleLoadGuestList}>
+              Cargar lista de invitados
+            </Button>}
+            <Button
+              type="text"
+              icon={<NumberOutlined />}
+              onClick={handleDownloadNumbering}>
+              Descargar numeración
+            </Button>
+            <Button
+              type="text"
+              icon={<FileTextOutlined />}
+              onClick={handleDownloadPasses}>
+              Descargar pases
+            </Button>
+          </Flex>
+        </Col>
+        <Col xs={24} xl={12}>
+          <Flex justify={lg || xs ? "end" : "start"} gap={12}>
+            {md && (
+            <>
               <Button
                 className="invitation-buttons"
                 onClick={handleBulkDelete}>
@@ -89,56 +94,15 @@ const TableActions = ({ dataSource, selectedRowKeys, setDataSource, setSelectedR
                 onClick={handleSendInvitation}>
                 Enviar invitación
               </Button>
-              <Button
-                className="invitation-buttons"
-                onClick={handleAddGuests}>
-                Agregar invitados
-              </Button>
-            </Col>
-          </Row>
-        </>
-      ) : (
-        <>
-          <Row gutter={16}>
-            <Col className="col-buttons">
-              <Button
-                icon={<FileImageOutlined />}
-                onClick={handleDigitalInvitation}>
-                Invitación digital
-              </Button>
-              <Button onClick={handleArrangeGuests}>
-                Acomodo de invitados
-              </Button>
-            </Col>
-          </Row>
-          <Divider />
-          <Row gutter={16}>
-            <Col className="col-buttons-download">
-              <Button
-                type="text"
-                icon={<NumberOutlined />}
-                onClick={handleDownloadNumbering}>
-                Descargar numeración
-              </Button>
-              <Button
-                type="text"
-                icon={<FileTextOutlined />}
-                onClick={handleDownloadPasses}>
-                Descargar pases
-              </Button>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Button
-                className="invitation-buttons"
-                onClick={handleAddGuests}>
-                Agregar invitados
-              </Button>
-            </Col>
-          </Row>
-        </>
-      )}
+            </>)}
+            <Button
+              className="invitation-buttons"
+              onClick={handleAddGuests}>
+              Agregar invitados
+            </Button>
+          </Flex>
+        </Col>
+      </Row>
     </>
   )
 }

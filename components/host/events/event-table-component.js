@@ -32,8 +32,7 @@ const EventTable = () => {
             dataSource={dataSource}
             selectedRowKeys={selectedRowKeys}
             setDataSource={setDataSource}
-            setSelectedRowKeys={setSelectedRowKeys}
-            showFullView={true} />
+            setSelectedRowKeys={setSelectedRowKeys} />
           <Table
             size="small"
             bordered
