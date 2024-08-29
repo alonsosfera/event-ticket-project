@@ -3,18 +3,19 @@ import { Row, Col, Typography } from "antd"
 
 const { Title, Text } = Typography
 
-const EventHeader = ({ selectedEvent, showFullView }) => {
+const EventHeader = ({ selectedEvent }) => {
   if (!selectedEvent) {
     return (
       null
     )
   }
-
   return (
     <>
-      {showFullView && (<div className="title">
+      <Col
+        xs={0} md={24}
+        className="title">
         <Title className="page-title">Tus eventos</Title>
-      </div>)}
+      </Col>
       <Row gutter={16} className="row-header">
         <Col span={12}>
           <Text>{selectedEvent.location}</Text>

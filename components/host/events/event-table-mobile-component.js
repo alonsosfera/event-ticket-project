@@ -1,4 +1,3 @@
-import EventHeader from "./event-header-component"
 import { useEvent } from "../../events/event-context"
 import TableActions from "./event-table-actions-component"
 import { List, Typography, Button } from "antd"
@@ -41,7 +40,6 @@ const TableMobile = () => {
         onClick={handleBack}>
       </Button>
       )}
-      <EventHeader selectedEvent={selectedEvent} />
       {selectedEvent ? (
         <>
           <TableActions />

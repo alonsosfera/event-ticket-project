@@ -1,8 +1,10 @@
 import { Row, Col, Button, Divider, Flex, Grid } from "antd"
 import { FileImageOutlined, UnorderedListOutlined, NumberOutlined, FileTextOutlined } from "@ant-design/icons"
+import EventHeader from "./event-header-component"
+import { useEvent } from "../../events/event-context"
 
 const TableActions = ({ dataSource, selectedRowKeys, setDataSource, setSelectedRowKeys }) => {
-
+  const { selectedEvent } = useEvent()
   const { xs, md, lg } = Grid.useBreakpoint()
 
   const handleDigitalInvitation = () => {
@@ -42,6 +44,7 @@ const TableActions = ({ dataSource, selectedRowKeys, setDataSource, setSelectedR
 
   return (
     <>
+      <EventHeader selectedEvent={selectedEvent} />
       <Row justify={"end"} gutter={16}>
         <Col>
           <Button

@@ -2,7 +2,6 @@ import React, { useState } from "react"
 import { Table } from "antd"
 import { useEvent } from "../../events/event-context"
 import TableActions from "./event-table-actions-component"
-import EventHeader from "./event-header-component"
 import { columns, initialDataSource } from "./event-table-items"
 import EmptyDescription from "../../shared/empty-component"
 import EventCard from "@/components/events/event-card-component"
@@ -25,7 +24,6 @@ const EventTable = () => {
 
   return (
     <div className="event-container">
-      <EventHeader selectedEvent={selectedEvent} showFullView={true} />
       {selectedEvent ? (
         <>
           <TableActions
