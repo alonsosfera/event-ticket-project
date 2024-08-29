@@ -31,7 +31,7 @@ const TableMobile = () => {
   }
 
   return (
-    <div className="event-container-mobile">
+    <div className="event-container">
       {selectedEvent && (
       <Button
         type="text"

@@ -1,6 +1,6 @@
 .event-container {
   background-color: #F4F5F7;
-  padding: 16px;
+  padding: 5px 16px 16px 16px;
 
   .ant-table-tbody > tr > td {
     background-color: #F4F5F7;
@@ -19,83 +19,18 @@
   }
 
   .row-header {
-    margin-bottom: 6px;
-  }
-
-  .col-date {
-    text-align: right;
-  }
-
-  .col-invitate {
-    text-align: right;
-  }
-
-  .col-title-event {
-    font-weight: bold;
-    text-align: left;
-  }
-}
-
-.event-container-mobile {
-  background-color: #F4F5F7;
-  padding: 0 16px 16px 16px;
-
-  .ant-table-tbody > tr > td {
-    background-color: #F4F5F7;
-  }
-
-  .ant-btn {
-    font-weight: bold
-  }
-  .ant-row {
-    justify-content: flex-end;
-    margin-bottom: 10px;
-  }
-
-  .col-buttons {
-    display: flex;
-    gap: 15px;
-  }
-
-  .col-buttons-download {
-    display: flex;
-    margin-right: 10px;
-  }
-
-  .ant-divider {
-    border-top: 1px solid #000;
-  }
-
-  .row-header {
     margin-bottom: 12px;
   }
 
-  .col-date {
-    text-align: right;
-  }
-
-  .col-invitate {
-    text-align: right;
-    font-weight: bold;
-  }
-
   .col-title-event {
     font-weight: bold;
-    text-align: left;
   }
 
   .back-button .icon-back {
-     font-size: 30px;
-  }
+    font-size: 30px;
+ }
 }
 
-.empty-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 50vh;
-}
 .invitation-buttons {
     background-color: #17202a;
     color: white;
