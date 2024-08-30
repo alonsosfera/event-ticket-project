@@ -1,9 +1,9 @@
-import { Button, Col, Row, Typography, Input, Space, Checkbox, Modal } from "antd"
+import { Button , Col , Row , Typography , Input , Space , Checkbox , Modal , List } from "antd"
 import { DeleteOutlined , EditOutlined , SettingOutlined } from "@ant-design/icons"
 import { useState } from "react"
 import NewRoom from "@/components/rooms/new-room-component"
 import RoomsTableComponent from "@/components/rooms/rooms-table-component"
-import RoomsListComponent from "@/components/rooms/rooms-list-component"
+import DescriptionListComponent from "@/components/shared/description-list-component"
 
 const Rooms = () => {
 
@@ -28,14 +28,14 @@ const Rooms = () => {
       room: "Aduitorio Telmex",
       capacity: "150",
       addres: "Avenida solidaridad 3100, col. El Marques, CUU",
-      role: "ADMIN"
+      image: "foto"
     },
     {
       key: "2",
       room: "Manuel Bernardo",
       capacity: "300",
       addres: "Avenida solidaridad 3100, col. El Marques, CUU",
-      role: "HOST"
+      image: "foto"
     }
   ]
 
@@ -128,7 +128,18 @@ const Rooms = () => {
               <RoomsTableComponent dataSource={dataSource} columns={columns} />
             </Col>
             <Col xs={24} md={0}>
-              <RoomsListComponent dataSource={dataSource} columns={columns} />
+              <List
+                dataSource={dataSource}
+                renderItem={item => (
+                  <List.Item>
+                    <DescriptionListComponent items={[
+                    { label: "Salón", value: item.room },
+                    { label: "Capacidad", value: item.capacity },
+                    { label: "Dirección", value: item.addres },
+                      { label: "Imágenes", value: item.image }
+                  ]} />
+                  </List.Item>
+              )} />
             </Col>
           </Row>
         </Col>
