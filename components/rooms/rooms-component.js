@@ -32,7 +32,7 @@ const Rooms = () => {
     },
     {
       key: "2",
-      room: "Manuel Bernadrdo",
+      room: "Manuel Bernardo",
       capacity: "300",
       addres: "Avenida solidaridad 3100, col. El Marques, CUU",
       role: "HOST"
@@ -87,10 +87,7 @@ const Rooms = () => {
             <Col>
               <Typography.Title level={2} className="title">Salones</Typography.Title>
             </Col>
-            <Col
-              xs={9}
-              md={4}
-              lg={4}>
+            <Col>
               <Button
                 key="submit"
                 onClick={showModal}>
