@@ -1,10 +1,11 @@
 import EventHeader from "./event-header-component"
 import { useEvent } from "./event-context"
 import TableActions from "./event-table-actions-component"
-import { List, Descriptions, Typography, Button } from "antd"
+import { List, Typography, Button } from "antd"
 import EmptyDescription from "./event-empty-component"
 import EventCard from "./event-card-component"
 import { LeftOutlined } from "@ant-design/icons"
+import DescriptionListComponent from "@/components/shared/description-list-component"
 
 const { Title } = Typography
 
@@ -15,16 +16,6 @@ const dataSource = Array.from({ length: 46 }).map((_, i) => ({
   whatsapp: `6394650090 ${i}`,
   estatus: "pendiente"
 }))
-
-const DescriptionView = ({ data }) => (
-  <Descriptions
-    bordered column={1}>
-    <Descriptions.Item label="Familia">{data.familia}</Descriptions.Item>
-    <Descriptions.Item label="Invitados">{data.invitados}</Descriptions.Item>
-    <Descriptions.Item label="WhatsApp">{data.whatsapp}</Descriptions.Item>
-    <Descriptions.Item label="Estatus">{data.estatus}</Descriptions.Item>
-  </Descriptions>
-)
 
 const TableMobile = () => {
   const { selectedEvent, eventData } = useEvent()
@@ -58,7 +49,12 @@ const TableMobile = () => {
             dataSource={dataSource}
             renderItem={item => (
               <List.Item>
-                <DescriptionView data={item} />
+                <DescriptionListComponent items={[
+                  { label: "Familia", value: item.familia },
+                  { label: "Invitados", value: item.invitados },
+                  { label: "WhatsApp", value: item.whatsapp },
+                  { label: "Estatus", value: item.estatus }
+                ]} />
               </List.Item>
             )} />
         </>
