@@ -1,26 +1,27 @@
 import Typography from "antd/es/typography/Typography"
 import ButtonsHome from "./owner-home-buttons-component"
 import EventCard from "../events/event-card-component"
+import { Col } from "antd"
 const { Title } = Typography
 
 const OwnerHomeComponent = () => {
 
   return (
     <>
-      <div>
+      <Col>
         <Title className="page-title">Home</Title>
-      </div>
-      <div>
+      </Col>
+      <Col>
         <Title level={5} style={{ fontWeight: "bold" }}>Enlaces rápidos</Title>
-      </div>
+      </Col>
       <ButtonsHome />
-      <div>
+      <Col>
         <Title level={5} style={{ fontWeight: "bold", marginBottom: "20px" }}>Eventos esta semana</Title>
-      </div>
+      </Col>
       <EventCard />
-      <div>
+      <Col>
         <Title level={5} style={{ fontWeight: "bold", marginBottom: "20px", marginTop: "20px" }}>Proximos eventos</Title>
-      </div>
+      </Col>
       <EventCard />
     </>
   )
