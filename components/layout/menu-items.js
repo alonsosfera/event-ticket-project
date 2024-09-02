@@ -1,4 +1,4 @@
-import { HomeOutlined , ScheduleOutlined , ShopOutlined } from "@ant-design/icons"
+import { DragOutlined , HomeOutlined , ScheduleOutlined  } from "@ant-design/icons"
 import Link from "next/link"
 
 export const menuItems = [
@@ -13,8 +13,8 @@ export const menuItems = [
     label: <Link href="/events">Eventos</Link>
   },
   {
-    key: "/rooms",
-    icon: <ShopOutlined />,
-    label: <Link href="/rooms">Salones</Link>
+    key: "/room-maps",
+    icon: <DragOutlined />,
+    label: <Link href="/room-maps">Acomodo de Mesas</Link>
   }
 ]
