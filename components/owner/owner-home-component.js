@@ -11,7 +11,7 @@ const OwnerHomeComponent = () => {
       <Col>
         <Title className="page-title">Home</Title>
       </Col>
-      <Col>
+      <Col xs={0} sm={24}>
         <Title level={5} style={{ fontWeight: "bold" }}>Enlaces rápidos</Title>
       </Col>
       <ButtonsHome />
