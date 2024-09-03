@@ -23,7 +23,8 @@ const RoomMaps = () => {
               </Typography.Title>
             </Col>
             <Col
-              xs={12} md={4}
+              xs={12}
+              md={8}
               lg={4}>
               <Button
                 key="submit"
