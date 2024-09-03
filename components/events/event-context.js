@@ -30,12 +30,13 @@ export const EventProvider = ({ children }) => {
         remainingInvites: "78"
       },
       {
-        title: "Boda Amanda y Dante",
-        date: "30/04/2023",
-        location: "Auditorio Beta",
-        totalInvites: "521",
-        remainingInvites: "166"
+        title: "Fiesta de cumpleaños de Julia",
+        date: "15/06/2023",
+        location: "Centro de eventos Alpha",
+        totalInvites: "312",
+        remainingInvites: "117"
       }
+
     ]
     setEventData(initialEventData)
   }

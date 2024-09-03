@@ -1,10 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
-
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Roboto', sans-serif
 }
 
 html,
@@ -30,6 +28,16 @@ body {
 
 .ant-descriptions {
   width: 100%;
+}
+
+.ant-typography.page-title {
+  font-size: 40px;
+  font-weight: 700;
+  color: #576176;
+}
+
+.ant-typography {
+  font-family: 'Roboto', sans-serif;
 }
 
 @import "./_variables.scss";

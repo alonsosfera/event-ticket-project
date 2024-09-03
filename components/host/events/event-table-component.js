@@ -1,11 +1,10 @@
 import React, { useState } from "react"
 import { Table } from "antd"
-import { useEvent } from "./event-context"
+import { useEvent } from "../../events/event-context"
 import TableActions from "./event-table-actions-component"
-import EventHeader from "./event-header-component"
 import { columns, initialDataSource } from "./event-table-items"
-import EmptyDescription from "./event-empty-component"
-import EventCard from "./event-card-component"
+import EmptyDescription from "../../shared/empty-component"
+import EventCard from "@/components/events/event-card-component"
 
 const EventTable = () => {
   const [dataSource, setDataSource] = useState(initialDataSource)
@@ -25,15 +24,13 @@ const EventTable = () => {
 
   return (
     <div className="event-container">
-      <EventHeader selectedEvent={selectedEvent} showFullView={true} />
       {selectedEvent ? (
         <>
           <TableActions
             dataSource={dataSource}
             selectedRowKeys={selectedRowKeys}
             setDataSource={setDataSource}
-            setSelectedRowKeys={setSelectedRowKeys}
-            showFullView={true} />
+            setSelectedRowKeys={setSelectedRowKeys} />
           <Table
             size="small"
             bordered
