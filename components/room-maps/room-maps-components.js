@@ -1,21 +1,20 @@
-import { Button, Col, Row, Typography, Modal, Input, Form } from "antd"
+import { Button, Col, Row, Typography } from "antd"
 import { useState } from "react"
 import EmptyDescription from "@/components/shared/empty-component"
 import NewRoomMapComponent from "@/components/room-maps/new-room-map-component"
 
 const RoomMaps = () => {
-  const [isModalVisible, setIsModalVisible] = useState(false)
   const [showForm, setShowForm] = useState(false)
 
-  const showModal = () => {
-    setIsModalVisible(true)
+  const handleAddLayout = () => {
+    setShowForm(true)
   }
 
   const handleCancel = () => {
-    setIsModalVisible(false)
+    setShowForm(false)
   }
 
-  const handleAddLayout = () => {
+  const handleSave = () => {
     setShowForm(true)
   }
 
@@ -49,7 +48,7 @@ const RoomMaps = () => {
             </Col>
             <Col style={{ border: "1px solid #ccc", padding: "1rem", borderRadius: "8px" }} span={16}>
               {showForm ? (
-                <NewRoomMapComponent />
+                <NewRoomMapComponent  onCancel={handleCancel} onSave={handleSave} />
               ) : (
                 <EmptyDescription  />
               )}
@@ -57,16 +56,6 @@ const RoomMaps = () => {
           </Row>
         </Col>
       </Row>
-
-      <Modal
-        title="Nuevo Usuario"
-        open={isModalVisible}
-        onCancel={handleCancel}
-        cancelText="Cancelar"
-        okText="Guardar"
-        width={381}>
-        Modal Acomodo
-      </Modal>
     </>
   )
 }
