@@ -61,5 +61,14 @@ body {
   background-color: #F4F5F7
 }
 
+.description-container {
+  background-color: #F4F5F7;
+  padding: 5px 16px 16px 16px;
+
+  .ant-table-tbody > tr > td {
+    background-color: #F4F5F7;
+  }
+}
+
 @import "./_variables.scss";
 @import "./_components.scss";
