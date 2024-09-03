@@ -1,0 +1,63 @@
+.rooms-container {
+  background-color: #F4F5F7;
+  padding: 20px;
+
+  .ant-btn {
+    background-color: #2F333C;
+    color: #fff;
+  }
+
+  .rooms-header {
+    margin-bottom: 10px;
+
+    .title {
+      color: #2F333C;
+      font-size: 35px;
+    }
+  }
+
+  .ant-space{
+    .ant-btn{
+      background-color: unset;
+      color: inherit;
+    }
+  }
+
+  .ant-space-compact{
+    width: 100%;
+  }
+
+  .table-container {
+    .ant-table {
+      background-color: #fff;
+      border-radius: 5px;
+    }
+
+    .ant-table-thead > tr > th {
+      background-color: #F4F5F7;
+      font-weight: bold;
+    }
+
+    .action-buttons {
+      .ant-btn {
+        background-color: transparent;
+        border: none;
+        color: #2F333C;
+
+        &:hover {
+          color: #404040;
+        }
+      }
+    }
+  }
+
+  .modal-new-room {
+    .ant-modal-content {
+      padding: 20px;
+
+      .ant-modal-header {
+        border-bottom: 1px solid #000;
+      }
+      }
+    }
+  }
