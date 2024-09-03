@@ -1,9 +1,9 @@
-import { Button, Col, Row, Typography, Input, Space, Modal } from "antd"
+import { Button , Col , Row , Typography , Input , Space , Modal , List } from "antd"
 import { SettingOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons"
 import NewUser from "@/components/user/new-user-component"
 import { useState } from "react"
 import UsersTableComponent from "@/components/user/users-table-component"
-import UsersListComponent from "@/components/user/users-list-component"
+import DescriptionListComponent from "@/components/shared/description-list-component"
 
 const Users = () => {
   const [isModalVisible, setIsModalVisible] = useState(false)
@@ -67,13 +67,16 @@ const Users = () => {
 
   return (
     <>
-      <Row style={{ background: "#F4F5F7", padding: "20px" }} gutter={[24, 0]}>
+      <Row style={{ padding: "20px" }} gutter={[24, 0]}>
         <Col span={24} style={{ marginBottom: "10px" }}>
           <Row justify="space-between" align="middle">
             <Col>
-              <Typography.Title level={2} style={{ color: "#2F333C" }}>Lista de Usuarios</Typography.Title>
+              <Typography.Title level={2} style={{ color: "#2F333C" }}>Usuarios</Typography.Title>
             </Col>
-            <Col>
+            <Col
+              xs={9}
+              md={4}
+              lg={4}>
               <Button
                 key="submit"
                 onClick={showModal}
@@ -87,8 +90,10 @@ const Users = () => {
         <Col span={24}>
           <Row
             justify="end" align="middle"
-            style={{ marginBottom: "25px" }} gutter={[16, 0]}>
-            <Col span={12}>
+            gutter={[28, 6]}>
+            <Col
+              xs={24}
+              lg={12}>
               <Space.Compact style={{ width: "100%" }}>
                 <Input />
                 <Button
@@ -98,7 +103,7 @@ const Users = () => {
                 </Button>
               </Space.Compact>
             </Col>
-            <Col>
+            <Col xs={8} md={4}>
               <Button>Descargar</Button>
             </Col>
           </Row>
@@ -114,10 +119,18 @@ const Users = () => {
                 rowSelection={rowSelection} />
             </Col>
             <Col xs={24} md={0}>
-              <UsersListComponent
+              <List
                 dataSource={dataSource}
-                columns={columns}
-                rowSelection={rowSelection} />
+                renderItem={item => (
+                  <List.Item>
+                    <DescriptionListComponent items={[
+                      { label: "Nombre", value: item.name },
+                      { label: "Telefono", value: item.phone },
+                      // eslint-disable-next-line max-lines
+                      { label: "Rol", value: item.role }
+                    ]} />
+                  </List.Item>
+                )} />
             </Col>
           </Row>
         </Col>
