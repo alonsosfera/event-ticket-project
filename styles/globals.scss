@@ -40,5 +40,26 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
+.owner-header-buttons {
+  padding: 20px;
+
+  .buttons-header {
+    margin-bottom: 10px;
+  }
+
+  .ant-space-compact{
+    width: 100%;
+  }
+
+  .ant-btn.owner-buttons {
+    background-color: #17202a;
+    color: white;
+  }
+}
+
+.owner-table.ant-table-wrapper .ant-table-thead >tr>th {
+  background-color: #F4F5F7
+}
+
 @import "./_variables.scss";
 @import "./_components.scss";
