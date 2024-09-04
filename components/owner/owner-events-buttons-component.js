@@ -28,8 +28,7 @@ const EventButtons = () => {
             <Col>
               <Button
                 className="owner-buttons"
-                onClick={showCreateEventModal}
-                key="submit">
+                onClick={showCreateEventModal}>
                 Agregar evento
               </Button>
             </Col>
