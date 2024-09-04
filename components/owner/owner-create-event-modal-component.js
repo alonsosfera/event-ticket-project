@@ -1,5 +1,6 @@
 import React from "react"
-import { Button, Modal, Form, Input, DatePicker } from "antd"
+import { Button, Modal, Form, Input, DatePicker, Flex } from "antd"
+import Title from "antd/es/typography/Title"
 
 const EventModal = ({ visible, onCancel, onSubmit }) => {
   const handleSubmit = values => {
@@ -10,12 +11,7 @@ const EventModal = ({ visible, onCancel, onSubmit }) => {
 
   return (
     <Modal
-      className="modal-new-event"
-      title={
-        <div className="title-modal">
-          Nuevo evento
-        </div>
-      }
+      title={ <Title level={3}>Nuevo evento </Title> }
       open={visible}
       centered
       onCancel={onCancel}
@@ -23,7 +19,6 @@ const EventModal = ({ visible, onCancel, onSubmit }) => {
       width={500}>
       <Form
         requiredMark={false}
-        className="form-recovery"
         layout="vertical"
         autoComplete="off"
         onFinish={handleSubmit}>
@@ -34,7 +29,6 @@ const EventModal = ({ visible, onCancel, onSubmit }) => {
           colon={false}>
           <Input placeholder="Nombre del evento" />
         </Form.Item>
-
         <Form.Item
           name="host"
           label="Anfitrión"
@@ -42,7 +36,6 @@ const EventModal = ({ visible, onCancel, onSubmit }) => {
           colon={false}>
           <Input placeholder="Anfitrión" />
         </Form.Item>
-
         <Form.Item
           name="eventType"
           label="Tipo de evento"
@@ -50,7 +43,6 @@ const EventModal = ({ visible, onCancel, onSubmit }) => {
           colon={false}>
           <Input placeholder="Tipo de evento" />
         </Form.Item>
-
         <Form.Item
           name="date"
           label="Fecha"
@@ -58,15 +50,13 @@ const EventModal = ({ visible, onCancel, onSubmit }) => {
           colon={false}>
           <DatePicker style={{ width: "100%" }} />
         </Form.Item>
-
         <Form.Item
           name="guests"
           label="Invitados"
           rules={[{ required: true, message: "Por favor ingresa el número de invitados" }]}
           colon={false}>
-          <Input placeholder="Número de invitados" type="number" />
+          <Input placeholder="Número de invitados" />
         </Form.Item>
-
         <Form.Item
           name="tableArrangement"
           label="Acomodo de mesas"
@@ -74,7 +64,6 @@ const EventModal = ({ visible, onCancel, onSubmit }) => {
           colon={false}>
           <Input placeholder="Acomodo de mesas" />
         </Form.Item>
-
         <Form.Item
           name="venue"
           label="Salón"
@@ -82,7 +71,6 @@ const EventModal = ({ visible, onCancel, onSubmit }) => {
           colon={false}>
           <Input placeholder="Salón" />
         </Form.Item>
-
         <Form.Item
           name="passDesign"
           label="Diseño de pase"
@@ -90,16 +78,15 @@ const EventModal = ({ visible, onCancel, onSubmit }) => {
           colon={false}>
           <Input placeholder="Diseño de pase" />
         </Form.Item>
-
         <Form.Item>
-          <div className="content-buttons">
+          <Flex justify="end" gap={10}>
             <Button type="default" onClick={onCancel}>
               Cancelar
             </Button>
-            <Button htmlType="submit" type="primary">
+            <Button htmlType="submit">
               Crear evento
             </Button>
-          </div>
+          </Flex>
         </Form.Item>
       </Form>
     </Modal>

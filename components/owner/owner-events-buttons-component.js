@@ -1,4 +1,4 @@
-import { Row, Col, Typography, Button, Input, Space } from "antd"
+import { Row, Col, Typography, Button, Input, Space, message } from "antd"
 import { SettingOutlined } from "@ant-design/icons"
 import EventModal from "./owner-create-event-modal-component"
 import { useState } from "react"
