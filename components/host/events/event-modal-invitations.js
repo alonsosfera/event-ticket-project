@@ -1,5 +1,5 @@
 import React from "react"
-import { Button, Modal, Form, Input, Flex } from "antd"
+import { Button, Modal, Form, Input, Flex, Divider } from "antd"
 import Title from "antd/es/typography/Title"
 
 const InvitateGuestModal = ({ visible, onCancel, onSubmit }) => {
@@ -10,12 +10,13 @@ const InvitateGuestModal = ({ visible, onCancel, onSubmit }) => {
 
   return (
     <Modal
-      title={ <Title level={3}>Dar de alta invitados </Title> }
       open={visible}
       centered
       onCancel={onCancel}
       footer={null}
       width={383}>
+      <Title level={3}>Dar de alta invitados</Title>
+      <Divider style={{ background: "black", margin: "0px 0px 20px 0px" }} />
       <Form
         requiredMark={false}
         layout="vertical"
@@ -38,7 +39,10 @@ const InvitateGuestModal = ({ visible, onCancel, onSubmit }) => {
         <Form.Item
           name="phone"
           label="Número de contacto"
-          rules={[{ required: true, message: "Por favor ingresa el número de contacto" }]}
+          rules={[
+            { required: true, message: "Por favor ingresa el número de teléfono" },
+            { pattern: /^\d{10}$/, message: "El número de teléfono debe tener exactamente 10 dígitos" }
+          ]}
           colon={false}>
           <Input placeholder="6394650090" />
         </Form.Item>
