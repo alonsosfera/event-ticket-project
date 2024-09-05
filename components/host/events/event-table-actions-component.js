@@ -2,10 +2,13 @@ import { Row, Col, Button, Divider, Flex, Grid } from "antd"
 import { FileImageOutlined, UnorderedListOutlined, NumberOutlined, FileTextOutlined } from "@ant-design/icons"
 import EventHeader from "./event-header-component"
 import { useEvent } from "../../events/event-context"
+import InvitateGuestModal from "./event-modal-invitations"
+import { useState } from "react"
 
 const TableActions = ({ dataSource, selectedRowKeys, setDataSource, setSelectedRowKeys }) => {
   const { selectedEvent } = useEvent()
   const { xs, md, lg } = Grid.useBreakpoint()
+  const [isInvitateGuestModalVisible, setIsInvitateGuestModalVisible ] = useState(false)
 
   const handleDigitalInvitation = () => {
 
@@ -39,7 +42,16 @@ const TableActions = ({ dataSource, selectedRowKeys, setDataSource, setSelectedR
   }
 
   const handleAddGuests = () => {
+    setIsInvitateGuestModalVisible(true)
+  }
 
+  const handleCancelModal = () => {
+    setIsInvitateGuestModalVisible(false)
+  }
+
+  const handleSubmitModal = values => {
+    values
+    setIsInvitateGuestModalVisible(false)
   }
 
   return (
@@ -106,6 +118,11 @@ const TableActions = ({ dataSource, selectedRowKeys, setDataSource, setSelectedR
           </Flex>
         </Col>
       </Row>
+
+      <InvitateGuestModal
+        visible={isInvitateGuestModalVisible}
+        onCancel={handleCancelModal}
+        onSubmit={handleSubmitModal} />
     </>
   )
 }
