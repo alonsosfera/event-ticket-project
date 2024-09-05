@@ -6,7 +6,7 @@ const NewRoomMapComponent = ({ onSave, onCancel }) => {
     <Col>
       <Form layout="vertical">
         <Form.Item label="Nombre">
-          <Input style={{ width : "700px" }} />
+          <Input style={{ width : "100%" }} />
         </Form.Item>
         <Form.Item label="Selecciona los elementos y arrastralos">
           <Col span={16}>
