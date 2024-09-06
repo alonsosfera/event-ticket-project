@@ -1,6 +1,7 @@
 import axios from "axios"
+import { withAuthApi } from "@/helpers/with-api-auth"
 
-export default async function handler(req, res) {
+async function handler(req, res) {
   try {
     const accessToken = `?access_token=${process.env.WHATSAPP_ACCESS_TOKEN}`
 
@@ -44,3 +45,5 @@ export default async function handler(req, res) {
     res.status(500).json({ error, message: "Error al enviar mensaje." })
   }
 }
+
+export default withAuthApi(handler)

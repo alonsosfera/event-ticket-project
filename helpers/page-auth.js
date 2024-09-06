@@ -2,7 +2,7 @@ import { getSession } from "next-auth/react"
 
 /**
  * @param context
- * @param userRoles {?Array.<string>}
+ * @param userRoles {?Array.<String>}
  */
 export const pageAuth = async (context, userRoles = null) => {
   const session = await getSession(context)
