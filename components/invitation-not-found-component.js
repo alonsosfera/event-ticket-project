@@ -4,39 +4,39 @@ const { Title, Text } = Typography
 
 const InvitationNotFound = () => {
   return (
-    <div style={{ height: "100vh", position: "relative" }}>
+    <div className="invitation-not-found">
       <Row>
-        <Col span={24} style={{ position: "absolute", width: "100%", height: "30%", clipPath: "circle(13.7% at 100% 0)", backgroundColor: "#48D598" }}></Col>
+        <Col span={24} className="top-circle"></Col>
       </Row>
-      <Row style={{ height: "100%", display: "flex", alignItems: "center" }}>
+      <Row className="content-row">
         <Col
           xs={24} md={12}
-          style={{ textAlign: "center" }}>
+          className="image-col">
           <Image
             src="/not_found.webp"
             alt="not found"
-            style={{ width: "90%", maxWidth: "900px", height: "auto" }} />
+            className="not-found-image" />
         </Col>
         <Col
           xs={24} md={12}
-          style={{ textAlign: "center", padding: "20px" }}>
-          <Title style={{ fontSize: 90 }}>Oops!</Title>
-          <Title style={{ fontSize: 30 }}>Estamos teniendo problemas para encontrar tu invitación</Title>
-          <Text>Parece que tu información es incorrecta o ya caducó. Si crees que esto es un error, por favor contacta a tu anfitrión.</Text>
+          className="text-col">
+          <Title className="oops-title">Oops!</Title>
+          <Title className="sub-title">Estamos teniendo problemas para encontrar tu invitación</Title>
+          <Text className="info-text">Parece que tu información es incorrecta o ya caducó. Si crees que esto es un error, por favor contacta a tu anfitrión.</Text>
         </Col>
       </Row>
       <Row>
-        <Col span={24} style={{ position: "absolute", bottom: "20px", right: "60px", display: "flex", justifyContent: "flex-end" }}>
+        <Col span={24} className="logo-col">
           <Image
             src="/PartyPass logo.webp"
             alt="PartyPass logo"
             width={139}
             height={38}
-            style={{ position: "absolute", bottom: 0, right: 0 }} />
+            className="party-logo" />
         </Col>
       </Row>
       <Row>
-        <Col span={24} style={{ position: "absolute", width: "100%", height: "37%", clipPath: "circle(13.7% at 0 100%)", backgroundColor: "#48D598", bottom: 0 }}></Col>
+        <Col span={24} className="bottom-circle"></Col>
       </Row>
     </div>
   )
