@@ -1,12 +1,14 @@
 import Image from "next/image"
-import { useState } from "react"
+import { useRouter } from "next/router"
 import { signIn } from "next-auth/react"
+import { useEffect, useState } from "react"
 import { Row, Col, Form, Input, Button, message } from "antd"
 import { WhatsAppOutlined, LockOutlined } from "@ant-design/icons"
 
 import Recovery from "./password-recovery-component"
 
 export default function LoginComponent() {
+  const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const [isRecoveryModalVisible, setIsRecoveryModalVisible] = useState(false)
 
@@ -29,6 +31,15 @@ export default function LoginComponent() {
       duration: 3
     })
   }
+
+  useEffect(() => {
+    const { phone, pass } = router.query
+
+    if (phone && pass) {
+      router.push("/auth/signin")
+        .then(() => onFinish({ phone, password: pass }))
+    }
+  }, [router])
 
   return (
     <>
@@ -53,22 +64,22 @@ export default function LoginComponent() {
             wrapperCol={{ span: 24 }}>
             <Form.Item
               name="phone"
+              colon={false}
               label="Número de teléfono"
               rules={[
                 { required: true, message: "Por favor ingresa tu número de teléfono" },
                 { pattern: /^\d{10}$/, message: "El número de teléfono debe tener exactamente 10 dígitos" }
-              ]}
-              colon={false}>
+              ]}>
               <Input
                 prefix={<WhatsAppOutlined />}
                 placeholder="WhatsApp"
                 type="text" />
             </Form.Item>
             <Form.Item
+              colon={false}
               name="password"
               label="Contraseña"
-              rules={[{ required: true, message: "Por favor ingresa tu contraseña" }]}
-              colon={false}>
+              rules={[{ required: true, message: "Por favor ingresa tu contraseña" }]}>
               <Input.Password
                 placeholder="Contraseña"
                 prefix={<LockOutlined />} />
