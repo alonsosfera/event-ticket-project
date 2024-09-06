@@ -4,6 +4,7 @@ import UserRoleEnum from "@/models/user-role-enum"
 import Layout from "@/components/layout/layout-component"
 import HomeComponent from "@/components/host/home-component"
 import OwnerHomeComponent from "@/components/owner/owner-home-component"
+import { pageAuth } from "@/helpers/page-auth"
 
 export default function HomePage({ role }) {
   return (
@@ -22,18 +23,5 @@ export default function HomePage({ role }) {
 }
 
 export async function getServerSideProps(context) {
-  const session = await getSession(context)
-
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/auth/signin",
-        permanent: false
-      }
-    }
-  }
-
-  return {
-    props: { role: session.user.role }
-  }
+  return pageAuth(context)
 }
