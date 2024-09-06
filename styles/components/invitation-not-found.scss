@@ -27,7 +27,7 @@
   }
 
   .text-col {
-    text-align: center;
+    text-align: center; // Alineación predeterminada para pantallas pequeñas
     padding: 20px;
 
     .oops-title {
@@ -64,5 +64,15 @@
     clip-path: circle(13.7% at 0 100%);
     background-color: #48D598;
     bottom: 0;
+  }
+
+  
+  @media (min-width: 768px) {
+    .text-col {
+      text-align: start; 
+    }
+    .image-col {
+      text-align: end;
+    }
   }
 }
