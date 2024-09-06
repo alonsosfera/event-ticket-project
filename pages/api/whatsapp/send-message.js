@@ -27,7 +27,7 @@ export default async function handler(req, res) {
     await axios.post(`${process.env.WHATSAPP_URL}/messages${accessToken}`, {
       messaging_product: "whatsapp",
       recipient_type: "individual",
-      to: phone,
+      to: `+52${phone}`,
       type: "template",
       template: {
         name: templateName,

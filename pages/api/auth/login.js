@@ -6,7 +6,7 @@ export default async function handler(req, res) {
   if (req.method === "POST"){
     try {
       const { phone, password } = req.body
-      let user = await prisma.user.findUnique({ where: { phone: `+52${phone}` } })
+      let user = await prisma.user.findUnique({ where: { phone } })
 
       bcrypt.compare(password, user.password, async (err, result) => {
         if (err) {
