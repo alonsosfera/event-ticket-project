@@ -1,5 +1,6 @@
 import Head from "next/head"
 import { getSession } from "next-auth/react"
+import UserRoleEnum from "@/models/user-role-enum"
 import Layout from "@/components/layout/layout-component"
 import HomeComponent from "@/components/host/home-component"
 import OwnerHomeComponent from "@/components/owner/owner-home-component"
@@ -12,9 +13,9 @@ export default function HomePage({ role }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <Layout>
-        {role === "ADMIN" && <div>ADMIN PAGE</div>}
-        {role === "OWNER" && <OwnerHomeComponent />}
-        {role === "HOST" && <HomeComponent />}
+        {role === UserRoleEnum.ADMIN && <div>ADMIN PAGE</div>}
+        {role === UserRoleEnum.OWNER && <OwnerHomeComponent />}
+        {role === UserRoleEnum.HOST && <HomeComponent />}
       </Layout>
     </>
   )
