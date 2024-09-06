@@ -1,21 +1,26 @@
-import { Row, Col, Form, Input, Button, message } from "antd"
-import { useState } from "react"
 import Image from "next/image"
+import { useState } from "react"
+import { signIn } from "next-auth/react"
+import { Row, Col, Form, Input, Button, message } from "antd"
 import { WhatsAppOutlined, LockOutlined } from "@ant-design/icons"
+
 import Recovery from "./password-recovery-component"
 
 export default function LoginComponent() {
+  const [isLoading, setIsLoading] = useState(false)
   const [isRecoveryModalVisible, setIsRecoveryModalVisible] = useState(false)
 
   const showRecoveryModal = () => setIsRecoveryModalVisible(true)
   const closeRecoveryModal = () => setIsRecoveryModalVisible(false)
 
-  const onFinish = values => {
-    values
-  }
-
-  const onFinishFailed = errorInfo => {
-    errorInfo
+  const onFinish = credentials => {
+    setIsLoading(true)
+    signIn("credentials", { ...credentials, callbackUrl: "/" })
+      .catch(error => {
+        message.error("Número de teléfono o contraseña incorrectos")
+        console.error(error)
+        setIsLoading(false)
+      })
   }
 
   const handleRecoverySubmit = () => {
@@ -44,7 +49,6 @@ export default function LoginComponent() {
             requiredMark={false}
             name="loginForm"
             onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
             labelCol={{ span: 24 }}
             wrapperCol={{ span: 24 }}>
             <Form.Item
@@ -81,8 +85,9 @@ export default function LoginComponent() {
 
             <Form.Item>
               <Button
+                htmlType="submit"
                 className="button"
-                htmlType="submit">
+                loading={isLoading}>
                 Iniciar sesión
               </Button>
             </Form.Item>
