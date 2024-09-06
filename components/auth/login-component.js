@@ -36,7 +36,7 @@ export default function LoginComponent() {
     const { phone, pass } = router.query
 
     if (phone && pass) {
-      router.push("/auth/signin")
+      router.replace("/auth/signin")
         .then(() => onFinish({ phone, password: pass }))
     }
   }, [router])
