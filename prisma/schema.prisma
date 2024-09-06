@@ -25,6 +25,7 @@ model Tentant {
   createdAt  DateTime    @default(now()) @db.Timestamp(6)
   users      User[]
   eventHalls EventHall[]
+  updatedAt  DateTime    @updatedAt
 }
 
 model User {
@@ -37,9 +38,7 @@ model User {
   createdAt        DateTime          @default(now()) @db.Timestamp(6)
   events           Event[]
   passwordRecovery PasswordRecovery?
-
-  tenantId String
-  tenant   Tentant @relation(fields: [tenantId], references: [id])
+  tenants          Tentant[]
 }
 
 model PasswordRecovery {
@@ -66,6 +65,7 @@ model Event {
   createdAt DateTime @default(now()) @db.Timestamp(6)
   guests    Guest[]
   users     User[]
+  updatedAt DateTime @updatedAt
 
   eventHallId String
   eventHall   EventHall @relation(fields: [eventHallId], references: [id])
