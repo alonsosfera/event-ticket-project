@@ -1,5 +1,4 @@
 import Head from "next/head"
-import { getSession } from "next-auth/react"
 import UserRoleEnum from "@/models/user-role-enum"
 import Layout from "@/components/layout/layout-component"
 import HomeComponent from "@/components/host/home-component"
