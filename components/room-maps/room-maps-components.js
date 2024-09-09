@@ -20,67 +20,61 @@ const RoomMaps = () => {
   }
 
   return (
-    <>
-      <Row style={{ padding: "20px" }} gutter={[24, 24]}>
-        <Col span={24} style={{ marginBottom: "10px" }}>
-          <Row justify="space-between" align="middle">
-            <Col>
-              <Typography.Title level={2} style={{ color: "#2F333C" }}>
-                Acomodo de Mesas
-              </Typography.Title>
-            </Col>
-            <Col
-              xs={0}
-              md={8}
-              lg={4}>
-              <Button
-                key="submit"
-                onClick={handleAddLayout}
-                style={{ backgroundColor: "#2F333C", color: "#fff" }}>
-                Agregar nueva mesa
-              </Button>
-            </Col>
-          </Row>
+    <Row style={{ padding: "20px" }} gutter={[24, 24]}>
+      <Col span={24} style={{ marginBottom: "10px" }}>
+        <Row justify="space-between" align="middle">
+          <Col>
+            <Typography.Title level={2} style={{ color: "#2F333C" }}>
+              Acomodo de Mesas
+            </Typography.Title>
+          </Col>
+          <Col
+            xs={0} md={8}
+            lg={4}>
+            <Button
+              key="submit"
+              onClick={handleAddLayout}
+              style={{ backgroundColor: "#2F333C", color: "#fff" }}>
+              Agregar nueva mesa
+            </Button>
+          </Col>
+        </Row>
 
-          <Row
-            justify="space-between"
-            align="top">
-            <Col
-              xs={24}
-              md={8}
-              lg={8}>
+        <Row justify="space-between" align="top">
+          <Col
+            xs={24}
+            md={8}
+            lg={8}>
+            <Row
+              justify="center" align="middle"
+              style={{ height: "100%" }}>
               <Col
-                xs={0}
-                md={0}
-                lg={24}>
+                xs={0} md={24}>
                 <RoomMapsTable />
               </Col>
-              <Col xs={24} sm={0}>
-                <Typography.Title level={5}>Para modificar, ve la versión movil</Typography.Title>
+              <Col
+                xs={24} sm={0}
+                style={{ textAlign: "center", marginTop: "20px" }}>
+                <Typography.Title level={5}>
+                  Para modificar, ve a la versión web
+                </Typography.Title>
               </Col>
-            </Col>
-            <Col
-              span={16}
-              style={{
-                border: "1px solid #ccc",
-                padding: "1rem",
-                borderRadius: "8px",
-                display: "flex",
-                flexDirection: "column",
-                height: "100%"
-              }}>
-              {showForm ? (
-                <NewRoomMapComponent
-                  onCancel={handleCancel}
-                  onSave={handleSave} />
+            </Row>
+          </Col>
+
+          <Col
+            xs={24}
+            md={14}
+            style={{ border: "1px solid #ccc", padding: "1rem", borderRadius: "8px", display: "flex", flexDirection: "column", height: "100%" }}>
+            {showForm ? (
+              <NewRoomMapComponent onCancel={handleCancel} onSave={handleSave} />
               ) : (
                 <EmptyDescription />
               )}
-            </Col>
-          </Row>
-        </Col>
-      </Row>
-    </>
+          </Col>
+        </Row>
+      </Col>
+    </Row>
   )
 }
 
