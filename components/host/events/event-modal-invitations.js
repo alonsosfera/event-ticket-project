@@ -1,6 +1,8 @@
 import React from "react"
-import { Button, Modal, Form, Input, Flex, Divider } from "antd"
-import Title from "antd/es/typography/Title"
+import { Button, Modal, Form, Input, Flex, Divider, Typography, InputNumber } from "antd"
+
+const { Title } = Typography
+
 
 const InvitateGuestModal = ({ visible, onCancel, onSubmit }) => {
   const handleSubmit = values => {
@@ -34,7 +36,7 @@ const InvitateGuestModal = ({ visible, onCancel, onSubmit }) => {
           label="Cantidad de invitados"
           rules={[{ required: true, message: "Por favor ingresa el número de invitados" }]}
           colon={false}>
-          <Input type="number" placeholder="2" />
+          <InputNumber style={{ width: "100%" }}  placeholder="2" />
         </Form.Item>
         <Form.Item
           name="phone"
