@@ -1,6 +1,7 @@
 import React from "react"
-import { Button, Modal, Form, Input, DatePicker, Flex } from "antd"
-import Title from "antd/es/typography/Title"
+import { Button, Modal, Form, Input, DatePicker, Flex, Typography } from "antd"
+
+const { Title } = Typography
 
 const EventModal = ({ visible, onCancel, onSubmit }) => {
   const handleSubmit = values => {
