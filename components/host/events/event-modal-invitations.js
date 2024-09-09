@@ -46,7 +46,7 @@ const InvitateGuestModal = ({ visible, onCancel, onSubmit }) => {
             { pattern: /^\d{10}$/, message: "El número de teléfono debe tener exactamente 10 dígitos" }
           ]}
           colon={false}>
-          <Input placeholder="6394650090" />
+          <Input placeholder="WhatsApp" />
         </Form.Item>
         <Form.Item>
           <Flex justify="end" gap={10}>
