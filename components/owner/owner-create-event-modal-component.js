@@ -1,7 +1,8 @@
 import React from "react"
-import { Button, Modal, Form, Input, DatePicker, Flex, Typography } from "antd"
+import { Button, Modal, Form, Input, DatePicker, Flex, Typography, Select } from "antd"
 
 const { Title } = Typography
+const { Option } = Select
 
 const EventModal = ({ visible, onCancel, onSubmit }) => {
   const handleSubmit = values => {
@@ -33,9 +34,13 @@ const EventModal = ({ visible, onCancel, onSubmit }) => {
         <Form.Item
           name="host"
           label="Anfitrión"
-          rules={[{ required: true, message: "Por favor ingresa el nombre del anfitrión" }]}
+          rules={[{ required: true, message: "Por favor selecciona el anfitrión" }]}
           colon={false}>
-          <Input placeholder="Anfitrión" />
+          <Select placeholder="Selecciona el anfitrión">
+            <Option value="host1">Anfitrión 1</Option>
+            <Option value="host2">Anfitrión 2</Option>
+            <Option value="host3">Anfitrión 3</Option>
+          </Select>
         </Form.Item>
         <Form.Item
           name="eventType"
