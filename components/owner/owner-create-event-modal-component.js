@@ -36,7 +36,7 @@ const EventModal = ({ visible, onCancel, onSubmit }) => {
           label="Anfitrión"
           rules={[{ required: true, message: "Por favor selecciona el anfitrión" }]}
           colon={false}>
-          <Select placeholder="Selecciona el anfitrión">
+          <Select placeholder="Selecciona un anfitrión">
             <Option value="host1">Anfitrión 1</Option>
             <Option value="host2">Anfitrión 2</Option>
             <Option value="host3">Anfitrión 3</Option>
@@ -68,21 +68,33 @@ const EventModal = ({ visible, onCancel, onSubmit }) => {
           label="Acomodo de mesas"
           rules={[{ required: true, message: "Por favor ingresa el acomodo de mesas" }]}
           colon={false}>
-          <Input placeholder="Acomodo de mesas" />
+          <Select placeholder="Selecciona un acomodo de mesas">
+            <Option value="host1">Acomodo 1</Option>
+            <Option value="host2">Acomodo 2</Option>
+            <Option value="host3">Acomodo 3</Option>
+          </Select>
         </Form.Item>
         <Form.Item
           name="venue"
           label="Salón"
           rules={[{ required: true, message: "Por favor ingresa el nombre del salón" }]}
           colon={false}>
-          <Input placeholder="Salón" />
+          <Select placeholder="Selecciona un salón">
+            <Option value="host1">Salón 1</Option>
+            <Option value="host2">Salón 2</Option>
+            <Option value="host3">Salón 3</Option>
+          </Select>
         </Form.Item>
         <Form.Item
           name="passDesign"
           label="Diseño de pase"
           rules={[{ required: true, message: "Por favor ingresa el diseño de pase" }]}
           colon={false}>
-          <Input placeholder="Diseño de pase" />
+          <Select placeholder="Selecciona un pase">
+            <Option value="host1">Pase 1</Option>
+            <Option value="host2">Pase 2</Option>
+            <Option value="host3">Pase 3</Option>
+          </Select>
         </Form.Item>
         <Form.Item>
           <Flex justify="end" gap={10}>
