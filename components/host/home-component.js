@@ -5,35 +5,48 @@ const HomeComponent = () => {
 
   return (
     <Row
-      className="home-component" gutter={[40, 24]}
+      className="home-component" gutter={[16, 24]}
       justify="center" align="middle">
       <Col span={24}>
         <Typography.Title level={1}>Home</Typography.Title>
         <Row justify="space-between" align="middle">
-          <Col>
+          <Col xs={0}>
             <Typography.Title level={5}>Próximo Evento: Cumple Claudia</Typography.Title>
           </Col>
-          <Col>
+          <Col xs={0}>
             <Text type="secondary">28/04/2024</Text>
           </Col>
         </Row>
-        <Row gutter={[36, 24]} justify="center">
-          <Col span={6}>
+
+        <Row gutter={[16, 24]} justify="center">
+          <Col
+            xs={12}
+            sm={12}
+            md={6}>
             <Card>
               <Statistic title="Invitaciones enviadas" value={50} />
             </Card>
           </Col>
-          <Col span={6}>
+          <Col
+            xs={12}
+            sm={12}
+            md={6}>
             <Card>
               <Statistic title="Invitaciones por enviar" value={103} />
             </Card>
           </Col>
-          <Col span={6}>
+          <Col
+            xs={0}
+            sm={12}
+            md={6}>
             <Card>
               <Statistic title="Invitados" value={80} />
             </Card>
           </Col>
-          <Col span={6}>
+          <Col
+            xs={0}
+            sm={12}
+            md={6}>
             <Card>
               <Statistic title="Invitados restantes" value={150} />
             </Card>
@@ -42,15 +55,19 @@ const HomeComponent = () => {
       </Col>
 
       <Col span={24}>
-        <Row gutter={[36, 24]} justify="center">
-          <Col span={6}>
+        <Row gutter={[16, 24]} justify="center">
+          <Col
+            xs={24} md={12}
+            lg={6}>
             <Card>
               <Typography.Title level={5}>Invitación</Typography.Title>
               <Text type="secondary">Actualizada hace 2 días</Text>
               <Image src="/party-invitation.png" alt="Party Invitation" />
             </Card>
           </Col>
-          <Col span={18}>
+          <Col
+            xs={24} md={12}
+            lg={18}>
             <Card>
               <Typography.Title level={5}>Acomodo de invitados</Typography.Title>
               <Text type="secondary">Actualizada hace 2 días</Text>
@@ -61,23 +78,35 @@ const HomeComponent = () => {
 
       <Col span={24} className="no-border-col">
         <Typography.Title level={5}>Próximos Eventos</Typography.Title>
-        <Row gutter={[36, 24]} justify="center">
-          <Col span={6}>
+        <Row gutter={[16, 24]} justify="center">
+          <Col
+            xs={24}
+            sm={12}
+            md={6}>
             <Card>
               <Statistic title="14/04/2024" value={"50 Años Martha"} />
             </Card>
           </Col>
-          <Col span={6}>
+          <Col
+            xs={0}
+            sm={12}
+            md={6}>
             <Card>
               <Statistic title="14/04/2024" value={"Xv Carla"} />
             </Card>
           </Col>
-          <Col span={6}>
+          <Col
+            xs={0}
+            sm={12}
+            md={6}>
             <Card>
               <Statistic title="14/04/2024" value={"50 Años Martha"} />
             </Card>
           </Col>
-          <Col span={6}>
+          <Col
+            xs={0}
+            sm={12}
+            md={6}>
             <Card>
               <Statistic title="14/04/2024" value={"50 Años Martha"} />
             </Card>
