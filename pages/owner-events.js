@@ -3,11 +3,9 @@ import OwnerEventsComponent from "@/components/owner/owner-events-component"
 
 const OwnerEvents = () => {
   return (
-    <div>
-      <Layout>
-        <OwnerEventsComponent />
-      </Layout>
-    </div>
+    <Layout>
+      <OwnerEventsComponent />
+    </Layout>
   )
 }
 
