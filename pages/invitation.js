@@ -1,9 +1,9 @@
 import InvitationNotFound from "@/components/invitation-not-found-component"
 
-const invitation = () => {
+const Invitation = () => {
   return (
     <InvitationNotFound />
   )
 }
 
-export default invitation
+export default Invitation

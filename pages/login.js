@@ -1,6 +1,6 @@
 import LoginComponent from "@/components/auth/login-component"
 
-function login() {
+function Login() {
   return (
     <div>
       <LoginComponent />
@@ -8,4 +8,4 @@ function login() {
   )
 }
 
-export default login
+export default Login
