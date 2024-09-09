@@ -1,5 +1,5 @@
 import React from "react"
-import { Button, Modal, Form, Input, DatePicker, Flex, Typography, Select } from "antd"
+import { Button, Modal, Form, Input, DatePicker, Flex, Typography, Select, InputNumber } from "antd"
 
 const { Title } = Typography
 const { Option } = Select
@@ -61,7 +61,7 @@ const EventModal = ({ visible, onCancel, onSubmit }) => {
           label="Invitados"
           rules={[{ required: true, message: "Por favor ingresa el número de invitados" }]}
           colon={false}>
-          <Input placeholder="Número de invitados" />
+          <InputNumber placeholder="Número de invitados" style={{ width: "100%" }} />
         </Form.Item>
         <Form.Item
           name="tableArrangement"
