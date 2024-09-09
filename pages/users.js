@@ -1,10 +1,13 @@
 import { pageAuth } from "@/helpers/page-auth"
 import UserRoleEnum from "@/models/user-role-enum"
 import Users from "@/components/user/users-component"
+import Layout from "@/components/layout/layout-component"
 
 export default function UsersPage() {
   return(
-    <Users />
+    <Layout>
+      <Users />
+    </Layout>
   )
 }
 
