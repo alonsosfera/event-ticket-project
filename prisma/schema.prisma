@@ -13,7 +13,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum UserType {
+enum UserRole {
   OWNER
   ADMIN
   HOST
@@ -33,7 +33,7 @@ model User {
   name             String
   phone            String            @unique
   phoneVerified    DateTime?
-  type             UserType
+  role             UserRole
   password         String
   createdAt        DateTime          @default(now()) @db.Timestamp(6)
   events           Event[]
