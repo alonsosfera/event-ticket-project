@@ -27,6 +27,6 @@ export const pageAuth = async (context, userRoles = null) => {
   }
 
   return {
-    props: { role }
+    props: { user: session.user }
   }
 }

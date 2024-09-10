@@ -12,8 +12,8 @@ export default async function handler(req, res) {
           console.error("Error comparing passwords:", err)
           res.status(500).end()
         } else if (result) {
-          const { name, phone, type, tenants } = user
-          res.json({ user: { name, phone, type, tenants } })
+          const { name, phone, role, tenants } = user
+          res.json({ user: { name, phone, role, tenants } })
         } else {
           res.status(401).end()
         }
