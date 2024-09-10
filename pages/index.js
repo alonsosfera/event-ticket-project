@@ -5,7 +5,8 @@ import HomeComponent from "@/components/host/home-component"
 import OwnerHomeComponent from "@/components/owner/owner-home-component"
 import { pageAuth } from "@/helpers/page-auth"
 
-export default function HomePage({ role }) {
+export default function HomePage({ user }) {
+  const { role } = user
   return (
     <>
       <Head>
@@ -13,8 +14,7 @@ export default function HomePage({ role }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <Layout>
-        {role === UserRoleEnum.ADMIN && <div>ADMIN PAGE</div>}
-        {role === UserRoleEnum.OWNER && <OwnerHomeComponent />}
+        {[UserRoleEnum.OWNER, UserRoleEnum.ADMIN].includes(role) && <OwnerHomeComponent />}
         {role === UserRoleEnum.HOST && <HomeComponent />}
       </Layout>
     </>

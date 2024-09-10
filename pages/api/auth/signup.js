@@ -5,7 +5,7 @@ import { prisma } from "@/lib/prisma"
 export default async function handler(req, res) {
   if (req.method === "POST"){
     try {
-      const { name, phone, type, tenantId } = req.body
+      const { name, phone, role, tenantId } = req.body
 
       const randomPassword = Math.random().toString(36).slice(-10)
       const hash = bcrypt.hashSync(randomPassword, SALT_ROUNDS)
@@ -23,7 +23,7 @@ export default async function handler(req, res) {
         await prisma.user.create({
           data: {
             name,
-            type,
+            role,
             phone,
             password: hash,
             tenants: { connect: { id: tenantId } }

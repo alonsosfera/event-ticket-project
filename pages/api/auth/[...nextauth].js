@@ -18,7 +18,7 @@ export const authOptions = {
       if (user) {
         token.id = user.id
         token.name = user.name
-        token.role = user.type
+        token.role = user.role
         token.tenants = user.tenants
       }
       return token
