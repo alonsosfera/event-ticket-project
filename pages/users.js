@@ -5,8 +5,8 @@ import { useDispatch } from "react-redux"
 
 import { pageAuth } from "@/helpers/page-auth"
 import UserRoleEnum from "@/models/user-role-enum"
-import Users from "@/components/user/users-component"
 import Layout from "@/components/layout/layout-component"
+import UsersComponent from "@/components/user/users-component"
 import { fetchUsersList, setUsersList } from "@/slices/users-slice"
 
 export default function UsersPage({ user }) {
@@ -24,7 +24,7 @@ export default function UsersPage({ user }) {
         <title>PartyPass - Usuarios</title>
       </Head>
       <Layout>
-        <Users />
+        <UsersComponent />
       </Layout>
     </>
   )

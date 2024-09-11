@@ -1,11 +1,14 @@
-import { Button , Col , Row , Typography , Input , Space , Modal , List } from "antd"
-import { SettingOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons"
-import NewUser from "@/components/user/new-user-component"
 import { useState } from "react"
+import { useSelector } from "react-redux"
+import { SettingOutlined, EditOutlined, DeleteOutlined, LoadingOutlined } from "@ant-design/icons"
+import { Button, Col, Row, Typography, Input, Space, Modal, List, Flex, Spin } from "antd"
+
+import NewUser from "@/components/user/new-user-component"
 import UsersTableComponent from "@/components/user/users-table-component"
 import DescriptionListComponent from "@/components/shared/description-list-component"
 
-const Users = () => {
+const UsersComponent = () => {
+  const { list, isLoading } = useSelector(state => state.usersSlice)
   const [isModalVisible, setIsModalVisible] = useState(false)
 
   const showModal = () => {
@@ -16,20 +19,12 @@ const Users = () => {
     setIsModalVisible(false)
   }
 
-  const dataSource = [
-    {
-      key: "1",
-      name: "Mike",
-      phone: "625 896 87 32",
-      role: "ADMIN"
-    },
-    {
-      key: "2",
-      name: "John",
-      phone: "614 121 58 98",
-      role: "HOST"
-    }
-  ]
+  const dataSource = list?.map(({ id, ...user }) => ({
+    key: user.id,
+    role: user.role,
+    name: user.name,
+    phone: user.phone
+  }))
 
   const columns = [
     {
@@ -67,58 +62,69 @@ const Users = () => {
 
   return (
     <>
-      <Row style={{ padding: "20px" }} gutter={[24, 0]}>
-        <Col span={24} style={{ marginBottom: "10px" }}>
-          <Row justify="space-between" align="middle">
-            <Col>
-              <Typography.Title level={2} style={{ color: "#2F333C" }}>Usuarios</Typography.Title>
-            </Col>
-            <Col
-              xs={9}
-              md={4}
-              lg={4}>
-              <Button
-                key="submit"
-                onClick={showModal}
-                style={{ backgroundColor: "#2F333C", color: "#fff" }}>
-                Agregar Usuario
-              </Button>
-            </Col>
-          </Row>
+      <Row align="middle" gutter={[24, 12]}>
+        <Col
+          xs={24}
+          md={19}
+          xl={21}
+          order={1}>
+          <Typography.Title className="page-title">Usuarios</Typography.Title>
+        </Col>
+        <Col
+          xs={{ span: 12, order: 3 }}
+          md={{ span: 5, order: 2 }}
+          xl={3}>
+          <Button
+            key="submit"
+            type="primary"
+            onClick={showModal}
+            style={{ width: "100%" }}>
+            Agregar Usuario
+          </Button>
+        </Col>
+        <Col xs={{ span: 12, order: 2 }} md={{ span: 4, order: 3 }}>
+          <Button style={{ width: "100%" }}>Descargar</Button>
+        </Col>
+        <Col
+          xs={24}
+          order={4}
+          lg={{ span: 12, offset: 8 }}
+          xl={{ span: 8, offset: 12 }}
+          xxl={{ span: 6, offset: 14 }}>
+          <Space.Compact style={{ width: "100%" }}>
+            <Input />
+            <Button
+              type="primary"
+              icon={<SettingOutlined />}>
+              Buscar
+            </Button>
+          </Space.Compact>
         </Col>
 
-        <Col span={24}>
-          <Row
-            justify="end" align="middle"
-            gutter={[28, 6]}>
+        {isLoading ? (
+          <Col order={5} span={24}>
+            <Flex
+              align="center"
+              justify="center"
+              style={{ height: "10vh" }}>
+              <Spin indicator={<LoadingOutlined spin />} size="large" />
+            </Flex>
+          </Col>
+        ) : (
+          <>
             <Col
-              xs={24}
-              lg={12}>
-              <Space.Compact style={{ width: "100%" }}>
-                <Input />
-                <Button
-                  icon={<SettingOutlined />}
-                  style={{ backgroundColor: "#2F333C", color: "#FFFF" }}>
-                  Buscar
-                </Button>
-              </Space.Compact>
-            </Col>
-            <Col xs={8} md={4}>
-              <Button>Descargar</Button>
-            </Col>
-          </Row>
-        </Col>
-
-        <Col span={24}>
-          <Row gutter={[24, 24]}>
-            <Col
-              xs={0} md={24}>
+              xs={0}
+              md={24}
+              order={5}>
               <UsersTableComponent
                 dataSource={dataSource}
                 columns={columns}
                 rowSelection={rowSelection} />
             </Col>
-            <Col xs={24} md={0}>
+            <Col
+              md={0}
+              xs={24}
+              order={5}>
               <List
                 dataSource={dataSource}
                 renderItem={item => (
@@ -126,14 +132,13 @@ const Users = () => {
                     <DescriptionListComponent items={[
                       { label: "Nombre", value: item.name },
                       { label: "Telefono", value: item.phone },
-                      // eslint-disable-next-line max-lines
                       { label: "Rol", value: item.role }
                     ]} />
                   </List.Item>
                 )} />
             </Col>
-          </Row>
-        </Col>
+          </>
+        )}
       </Row>
 
       <Modal
@@ -149,4 +154,4 @@ const Users = () => {
   )
 }
 
-export default Users
+export default UsersComponent
