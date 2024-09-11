@@ -1,4 +1,4 @@
-import { Row, Col, Button, Divider, Flex, Grid, Modal, Typography } from "antd"
+import { Row, Col, Button, Divider, Flex, Grid } from "antd"
 import { FileImageOutlined, UnorderedListOutlined, NumberOutlined, FileTextOutlined } from "@ant-design/icons"
 import EventHeader from "./event-header-component"
 import { useEvent } from "../../events/event-context"

@@ -148,7 +148,7 @@ const Rooms = () => {
 
       <Modal
         title="Nuevo salón"
-        visible={isModalVisible}
+        open={isModalVisible}
         onCancel={handleCancel}
         cancelLabel="Cancelar"
         onOk={handleSubmit}
