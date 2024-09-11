@@ -6,7 +6,6 @@ import RoomsTableComponent from "@/components/rooms/rooms-table-component"
 import DescriptionListComponent from "@/components/shared/description-list-component"
 
 const Rooms = () => {
-
   const [isModalVisible, setIsModalVisible] = useState(false)
 
   const showModal = () => {
@@ -122,11 +121,11 @@ const Rooms = () => {
             </Col>
           </Row>
         </Col>
-
         <Col span={24}>
           <Row gutter={[24, 24]}>
             <Col xs={0} md={24}>
               <RoomsTableComponent dataSource={dataSource} columns={columns} />
+              {/* eslint-disable-next-line max-lines */}
             </Col>
             <Col xs={24} md={0}>
               <List
