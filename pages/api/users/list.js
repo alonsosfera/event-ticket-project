@@ -3,12 +3,12 @@ import { withAuthApi } from "@/helpers/with-api-auth"
 
 async function handler(req, res) {
   try {
-    if (!req.query.tentantId) {
+    if (!req.query.tenantId) {
       return res.status(400).json({ message: "Falta el id del tenant." })
     }
 
     const users = await prisma.user.findMany({
-      where: { tenants: { some: { id: req.query.tentantId } } },
+      where: { tenants: { some: { id: req.query.tenantId } } },
       select: { id: true, name: true, role: true, phone: true }
     })
     res.json({ users })
