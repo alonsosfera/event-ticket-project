@@ -19,45 +19,43 @@ const EventButtons = () => {
 
   return (
     <>
-      <Row className="owner-header-buttons" gutter={[24, 0]}>
-        <Col span={24} className="buttons-header">
-          <Row justify="space-between" align="middle">
-            <Col>
-              <Typography.Title className="page-title">Eventos</Typography.Title>
-            </Col>
-            <Col>
-              <Button
-                className="owner-buttons"
-                onClick={showCreateEventModal}>
-                Agregar evento
-              </Button>
-            </Col>
-          </Row>
+      <Row align="middle" gutter={[24, 12]}>
+        <Col
+          xs={24}
+          md={19}
+          xl={21}
+          order={1}>
+          <Typography.Title className="page-title">Usuarios</Typography.Title>
         </Col>
-        <Col span={24}>
-          <Row
-            justify="end"
-            align="middle"
-            style={{ marginBottom: "25px" }}
-            gutter={[28, 6]}>
-            <Col
-              xs={24}
-              lg={12}>
-              <Space.Compact>
-                <Input />
-                <Button
-                  className="owner-buttons"
-                  icon={<SettingOutlined />}>
-                  Buscar
-                </Button>
-              </Space.Compact>
-            </Col>
-            <Col>
-              <Button>
-                Descargar
-              </Button>
-            </Col>
-          </Row>
+        <Col
+          xs={{ span: 12, order: 3 }}
+          md={{ span: 5, order: 2 }}
+          xl={3}>
+          <Button
+            key="submit"
+            type="primary"
+            onClick={showCreateEventModal}
+            style={{ width: "100%" }}>
+            Agregar evento
+          </Button>
+        </Col>
+        <Col xs={{ span: 12, order: 2 }} md={{ span: 4, order: 3 }}>
+          <Button style={{ width: "100%" }}>Descargar</Button>
+        </Col>
+        <Col
+          xs={24}
+          order={4}
+          lg={{ span: 12, offset: 8 }}
+          xl={{ span: 8, offset: 12 }}
+          xxl={{ span: 6, offset: 14 }}>
+          <Space.Compact style={{ width: "100%" }}>
+            <Input />
+            <Button
+              type="primary"
+              icon={<SettingOutlined />}>
+              Buscar
+            </Button>
+          </Space.Compact>
         </Col>
       </Row>
 
