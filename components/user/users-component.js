@@ -131,7 +131,7 @@ const UsersComponent = () => {
                   <List.Item>
                     <DescriptionListComponent items={[
                       { label: "Nombre", value: item.name },
-                      { label: "Telefono", value: item.phone },
+                      { label: "Teléfono", value: item.phone },
                       { label: "Rol", value: item.role }
                     ]} />
                   </List.Item>
