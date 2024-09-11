@@ -1,3 +1,5 @@
+@import "./_variables.scss";
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -34,11 +36,16 @@ body {
   font-size: 40px;
   font-weight: 700;
   color: #576176;
+  margin-bottom: 0;
 }
 
 .ant-typography {
   font-family: 'Roboto', sans-serif;
 }
 
-@import "./_variables.scss";
+.ant-btn.ant-btn-primary {
+  color: #fff;
+  background-color: $primary-light-black;
+}
+
 @import "./_components.scss";

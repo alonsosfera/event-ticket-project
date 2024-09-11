@@ -96,6 +96,7 @@ export default function LoginComponent() {
 
             <Form.Item>
               <Button
+                type="primary"
                 htmlType="submit"
                 className="button"
                 loading={isLoading}>

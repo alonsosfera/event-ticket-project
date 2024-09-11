@@ -90,6 +90,7 @@ const Rooms = () => {
             <Col>
               <Button
                 key="submit"
+                type="primary"
                 onClick={showModal}>
                 Agregar salón
               </Button>
