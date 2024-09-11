@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "UserType" AS ENUM ('OWNER', 'ADMIN', 'HOST');
+CREATE TYPE "UserRole" AS ENUM ('OWNER', 'ADMIN', 'HOST');
 
 -- CreateTable
 CREATE TABLE "Tentant" (
@@ -16,7 +16,7 @@ CREATE TABLE "User" (
     "name" TEXT NOT NULL,
     "phone" TEXT NOT NULL,
     "phoneVerified" TIMESTAMP(3),
-    "type" "UserType" NOT NULL,
+    "role" "UserRole" NOT NULL,
     "password" TEXT NOT NULL,
     "createdAt" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "tenantId" TEXT NOT NULL,
