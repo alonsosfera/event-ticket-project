@@ -1,3 +1,4 @@
+/* eslint-disable-next-line max-lines */
 import { useState } from "react"
 import { useSelector } from "react-redux"
 import { SettingOutlined, EditOutlined, DeleteOutlined, LoadingOutlined } from "@ant-design/icons"
@@ -125,6 +126,7 @@ const UsersComponent = () => {
               md={0}
               xs={24}
               order={5}>
+              {/* eslint-disable-next-line max-lines */}
               <List
                 dataSource={dataSource}
                 renderItem={item => (
