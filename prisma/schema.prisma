@@ -63,6 +63,7 @@ model Event {
   id        String   @id @default(uuid())
   name      String
   createdAt DateTime @default(now()) @db.Timestamp(6)
+  guestQuantity Int
   guests    Guest[]
   users     User[]
   updatedAt DateTime @updatedAt
