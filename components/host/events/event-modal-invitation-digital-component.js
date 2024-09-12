@@ -1,5 +1,4 @@
 import { Modal, Row, Col, Upload, Typography } from "antd"
-import ImgCrop from "antd-img-crop"
 import { useState } from "react"
 import EmptyDescription from "@/components/shared/empty-component"
 import { InboxOutlined } from "@ant-design/icons"
@@ -44,20 +43,18 @@ const ConfigInvitationDigital = ({ visible, onCancel }) => {
       <Row gutter={[16, 16]}>
         <Col md={24}>
           <Title level={5}>Selecciona el diseño</Title>
-          <ImgCrop>
-            <Upload
-              listType="picture-card"
-              fileList={fileList}
-              onChange={onChange}
-              iconRender={() => <InboxOutlined style={{ fontSize: 25 }} />}>
-              {fileList.length < 5 && (
-                <div>
-                  <InboxOutlined style={{ fontSize: 25 }} />
-                  <p className="ant-upload-text">Carga tu diseño</p>
-                </div>
+          <Upload
+            listType="picture-card"
+            fileList={fileList}
+            onChange={onChange}
+            iconRender={() => <InboxOutlined style={{ fontSize: 25 }} />}>
+            {fileList.length < 5 && (
+            <div>
+              <InboxOutlined style={{ fontSize: 25 }} />
+              <p className="ant-upload-text">Carga tu diseño</p>
+            </div>
               )}
-            </Upload>
-          </ImgCrop>
+          </Upload>
         </Col>
         <Col md={24}>
           <Title level={5}>Aquí Componente Konva</Title>
