@@ -19,7 +19,7 @@ enum UserRole {
   HOST
 }
 
-model Tentant {
+model Tenant {
   id         String      @id @default(uuid())
   name       String
   createdAt  DateTime    @default(now()) @db.Timestamp(6)
@@ -38,7 +38,7 @@ model User {
   createdAt        DateTime          @default(now()) @db.Timestamp(6)
   events           Event[]
   passwordRecovery PasswordRecovery?
-  tenants          Tentant[]
+  tenants          Tenant[]
 }
 
 model PasswordRecovery {
@@ -56,7 +56,7 @@ model EventHall {
   events    Event[]
 
   tenantId String
-  tenant   Tentant @relation(fields: [tenantId], references: [id])
+  tenant   Tenant @relation(fields: [tenantId], references: [id])
 }
 
 model Event {
