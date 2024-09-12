@@ -50,23 +50,24 @@ model PasswordRecovery {
 }
 
 model EventHall {
-  id        String   @id @default(uuid())
-  name      String
-  createdAt DateTime @default(now()) @db.Timestamp(6)
-  events    Event[]
+  id          String   @id @default(uuid())
+  name        String
+  locationUrl String?
+  createdAt   DateTime @default(now()) @db.Timestamp(6)
+  events      Event[]
 
   tenantId String
   tenant   Tenant @relation(fields: [tenantId], references: [id])
 }
 
 model Event {
-  id        String   @id @default(uuid())
-  name      String
-  createdAt DateTime @default(now()) @db.Timestamp(6)
+  id            String   @id @default(uuid())
+  name          String
+  createdAt     DateTime @default(now()) @db.Timestamp(6)
   guestQuantity Int
-  guests    Guest[]
-  users     User[]
-  updatedAt DateTime @updatedAt
+  guests        Guest[]
+  users         User[]
+  updatedAt     DateTime @updatedAt
 
   eventHallId String
   eventHall   EventHall @relation(fields: [eventHallId], references: [id])
