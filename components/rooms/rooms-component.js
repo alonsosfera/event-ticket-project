@@ -16,8 +16,7 @@ const Rooms = () => {
     setIsModalVisible(false)
   }
 
-  const handleSubmit = values => {
-    (values)
+  const handleSubmit = () => {
     setIsModalVisible(false)
   }
 
@@ -125,8 +124,8 @@ const Rooms = () => {
           <Row gutter={[24, 24]}>
             <Col xs={0} md={24}>
               <RoomsTableComponent dataSource={dataSource} columns={columns} />
-              {/* eslint-disable-next-line max-lines */}
             </Col>
+            {/* eslint-disable-next-line max-lines */}
             <Col xs={24} md={0}>
               <List
                 dataSource={dataSource}
