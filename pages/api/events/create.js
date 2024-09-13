@@ -6,11 +6,10 @@ async function handler(req, res) {
     return res.status(405).json({ message: "Método no permitido" })
   }
 
-  const { name, guestQuantity, eventHallId, userId } = req.body // Agregar userId al destructuring
-  const updatedAt = new Date() // Establece updatedAt a la fecha actual
+  const { name, guestQuantity, eventHallId, userId, eventDate } = req.body
+  const updatedAt = new Date()
 
-  // Validar que todos los campos requeridos estén presentes
-  if (!name || !guestQuantity || !eventHallId || !userId) {
+  if (!name || !guestQuantity || !eventHallId || !userId || !eventDate) {
     return res.status(400).json({ message: "Todos los campos son requeridos: name, guestQuantity, eventHallId, userId" })
   }
 
@@ -20,11 +19,12 @@ async function handler(req, res) {
         name,
         guestQuantity,
         updatedAt,
+        eventDate,
         eventHall: {
-          connect: { id: eventHallId } // Conectar con el EventHall existente
+          connect: { id: eventHallId }
         },
         users: {
-          connect: { id: userId } // Conectar con el usuario existente
+          connect: { id: userId }
         }
       }
     })
