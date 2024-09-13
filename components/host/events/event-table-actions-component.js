@@ -1,10 +1,11 @@
-import { Row, Col, Button, Divider, Flex, Grid, Modal } from "antd"
+import { Row, Col, Button, Divider, Flex, Grid } from "antd"
 import { FileImageOutlined, UnorderedListOutlined, NumberOutlined, FileTextOutlined } from "@ant-design/icons"
 import EventHeader from "./event-header-component"
 import { useEvent } from "../../events/event-context"
 import InvitateGuestModal from "./event-modal-invitations"
 import { useState } from "react"
 import ConfigInvitationDigital from "@/components/host/events/event-modal-invitation-digital-component"
+import ConfigRoomMaps from "@/components/host/events/event-modal-room-maps-component"
 
 const TableActions = ({ dataSource, selectedRowKeys, setDataSource, setSelectedRowKeys }) => {
   const { selectedEvent } = useEvent()
@@ -132,12 +133,10 @@ const TableActions = ({ dataSource, selectedRowKeys, setDataSource, setSelectedR
         visible={isDigitalInvitationModalVisible}
         onCancel={handleCancelDigitalInvitationModal} />
 
-      <Modal
-        title="Acomodo de Invitados"
-        open={isArrangeGuestsModalVisible}
-        onCancel={handleCancelArrangeGuestsModal}
-        footer={null}>
-      </Modal>
+      <ConfigRoomMaps
+        isArrangeGuestsModalVisible={isArrangeGuestsModalVisible}
+        handleCancelArrangeGuestsModal={handleCancelArrangeGuestsModal} />
+      {/* eslint-disable-next-line max-lines */}
     </>
   )
 }
