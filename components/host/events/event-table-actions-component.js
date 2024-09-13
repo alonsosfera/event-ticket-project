@@ -1,4 +1,4 @@
-import { Row, Col, Button, Divider, Flex, Grid } from "antd"
+import { Row, Col, Button, Divider, Flex, Grid, Modal } from "antd"
 import { FileImageOutlined, UnorderedListOutlined, NumberOutlined, FileTextOutlined } from "@ant-design/icons"
 import EventHeader from "./event-header-component"
 import { useEvent } from "../../events/event-context"
@@ -12,6 +12,7 @@ const TableActions = ({ dataSource, selectedRowKeys, setDataSource, setSelectedR
 
   const [isDigitalInvitationModalVisible, setIsDigitalInvitationModalVisible] = useState(false)
   const [isInvitateGuestModalVisible, setIsInvitateGuestModalVisible] = useState(false)
+  const [isArrangeGuestsModalVisible, setIsArrangeGuestsModalVisible] = useState(false)
 
   const handleDigitalInvitation = () => {
     setIsDigitalInvitationModalVisible(true)
@@ -21,7 +22,13 @@ const TableActions = ({ dataSource, selectedRowKeys, setDataSource, setSelectedR
     setIsDigitalInvitationModalVisible(false)
   }
 
-  const handleArrangeGuests = () => { }
+  const handleArrangeGuests = () => {
+    setIsArrangeGuestsModalVisible(true)
+  }
+
+  const handleCancelArrangeGuestsModal = () => {
+    setIsArrangeGuestsModalVisible(false)
+  }
 
   const handleLoadGuestList = () => { }
 
@@ -124,6 +131,13 @@ const TableActions = ({ dataSource, selectedRowKeys, setDataSource, setSelectedR
       <ConfigInvitationDigital
         visible={isDigitalInvitationModalVisible}
         onCancel={handleCancelDigitalInvitationModal} />
+
+      <Modal
+        title="Acomodo de Invitados"
+        open={isArrangeGuestsModalVisible}
+        onCancel={handleCancelArrangeGuestsModal}
+        footer={null}>
+      </Modal>
     </>
   )
 }
