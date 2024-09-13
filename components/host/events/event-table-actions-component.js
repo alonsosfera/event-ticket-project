@@ -2,44 +2,52 @@ import { Row, Col, Button, Divider, Flex, Grid } from "antd"
 import { FileImageOutlined, UnorderedListOutlined, NumberOutlined, FileTextOutlined } from "@ant-design/icons"
 import EventHeader from "./event-header-component"
 import { useEvent } from "../../events/event-context"
+import InvitateGuestModal from "./event-modal-invitations"
+import { useState } from "react"
+import ConfigInvitationDigital from "@/components/host/events/event-modal-invitation-digital-component"
 
 const TableActions = ({ dataSource, selectedRowKeys, setDataSource, setSelectedRowKeys }) => {
   const { selectedEvent } = useEvent()
   const { xs, md, lg } = Grid.useBreakpoint()
 
+  const [isDigitalInvitationModalVisible, setIsDigitalInvitationModalVisible] = useState(false)
+  const [isInvitateGuestModalVisible, setIsInvitateGuestModalVisible] = useState(false)
+
   const handleDigitalInvitation = () => {
-
+    setIsDigitalInvitationModalVisible(true)
   }
 
-  const handleArrangeGuests = () => {
-
+  const handleCancelDigitalInvitationModal = () => {
+    setIsDigitalInvitationModalVisible(false)
   }
 
-  const handleLoadGuestList = () => {
+  const handleArrangeGuests = () => { }
 
-  }
+  const handleLoadGuestList = () => { }
 
-  const handleDownloadNumbering = () => {
+  const handleDownloadNumbering = () => { }
 
-  }
-
-  const handleDownloadPasses = () => {
-
-  }
+  const handleDownloadPasses = () => { }
 
   const handleBulkDelete = () => {
-    //Borrar datos en masa
     const newDataSource = dataSource.filter(item => !selectedRowKeys.includes(item.key))
     setDataSource(newDataSource)
     setSelectedRowKeys([])
   }
 
-  const handleSendInvitation = () => {
-
-  }
+  const handleSendInvitation = () => { }
 
   const handleAddGuests = () => {
+    setIsInvitateGuestModalVisible(true)
+  }
 
+  const handleCancelModal = () => {
+    setIsInvitateGuestModalVisible(false)
+  }
+
+  const handleSubmitModal = values => {
+    values
+    setIsInvitateGuestModalVisible(false)
   }
 
   return (
@@ -86,18 +94,19 @@ const TableActions = ({ dataSource, selectedRowKeys, setDataSource, setSelectedR
         <Col xs={24} xl={12}>
           <Flex justify={lg || xs ? "end" : "start"} gap={12}>
             {md && (
-            <>
-              <Button
-                className="invitation-buttons"
-                onClick={handleBulkDelete}>
-                Eliminar
-              </Button>
-              <Button
-                className="invitation-buttons"
-                onClick={handleSendInvitation}>
-                Enviar invitación
-              </Button>
-            </>)}
+              <>
+                <Button
+                  className="invitation-buttons"
+                  onClick={handleBulkDelete}>
+                  Eliminar
+                </Button>
+                <Button
+                  className="invitation-buttons"
+                  onClick={handleSendInvitation}>
+                  Enviar invitación
+                </Button>
+              </>
+            )}
             <Button
               className="invitation-buttons"
               onClick={handleAddGuests}>
@@ -106,6 +115,15 @@ const TableActions = ({ dataSource, selectedRowKeys, setDataSource, setSelectedR
           </Flex>
         </Col>
       </Row>
+
+      <InvitateGuestModal
+        visible={isInvitateGuestModalVisible}
+        onCancel={handleCancelModal}
+        onSubmit={handleSubmitModal} />
+
+      <ConfigInvitationDigital
+        visible={isDigitalInvitationModalVisible}
+        onCancel={handleCancelDigitalInvitationModal} />
     </>
   )
 }

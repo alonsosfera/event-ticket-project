@@ -6,7 +6,7 @@ import EventCard from "@/components/events/event-card-component"
 import { LeftOutlined } from "@ant-design/icons"
 import DescriptionListComponent from "@/components/shared/description-list-component"
 
-const { Title } = Typography
+const { Title, Text } = Typography
 
 const dataSource = Array.from({ length: 46 }).map((_, i) => ({
   key: i,
@@ -48,10 +48,10 @@ const TableMobile = () => {
             renderItem={item => (
               <List.Item>
                 <DescriptionListComponent items={[
-                  { label: "Familia", value: item.familia },
-                  { label: "Invitados", value: item.invitados },
-                  { label: "WhatsApp", value: item.whatsapp },
-                  { label: "Estatus", value: item.estatus }
+                  { label: <Text strong>Familia</Text>, value: item.familia },
+                  { label: <Text strong>Invitados</Text>, value: item.invitados },
+                  { label: <Text strong>WhatsApp</Text>, value: item.whatsapp },
+                  { label: <Text strong>Estatus</Text>, value: item.estatus }
                 ]} />
               </List.Item>
             )} />

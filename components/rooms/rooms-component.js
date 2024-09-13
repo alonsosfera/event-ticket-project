@@ -6,7 +6,6 @@ import RoomsTableComponent from "@/components/rooms/rooms-table-component"
 import DescriptionListComponent from "@/components/shared/description-list-component"
 
 const Rooms = () => {
-
   const [isModalVisible, setIsModalVisible] = useState(false)
 
   const showModal = () => {
@@ -17,8 +16,7 @@ const Rooms = () => {
     setIsModalVisible(false)
   }
 
-  const handleSubmit = values => {
-    (values)
+  const handleSubmit = () => {
     setIsModalVisible(false)
   }
 
@@ -90,6 +88,7 @@ const Rooms = () => {
             <Col>
               <Button
                 key="submit"
+                type="primary"
                 onClick={showModal}>
                 Agregar salón
               </Button>
@@ -121,12 +120,12 @@ const Rooms = () => {
             </Col>
           </Row>
         </Col>
-
         <Col span={24}>
           <Row gutter={[24, 24]}>
             <Col xs={0} md={24}>
               <RoomsTableComponent dataSource={dataSource} columns={columns} />
             </Col>
+            {/* eslint-disable-next-line max-lines */}
             <Col xs={24} md={0}>
               <List
                 dataSource={dataSource}
@@ -147,7 +146,7 @@ const Rooms = () => {
 
       <Modal
         title="Nuevo salón"
-        visible={isModalVisible}
+        open={isModalVisible}
         onCancel={handleCancel}
         cancelLabel="Cancelar"
         onOk={handleSubmit}

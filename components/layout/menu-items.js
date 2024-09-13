@@ -28,3 +28,4 @@ export const menuItems = [
     label: <Link href="/users">Usuarios</Link>
   }
 ]
+
