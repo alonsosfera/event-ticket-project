@@ -18,9 +18,9 @@ export const menuItems = [
     label: <Link href="/rooms">Salones</Link>
   },
   {
-    key: "/roommap",
+    key: "/room-maps",
     icon: <PlusOutlined />,
-    label: <Link href="/roommap">Acomodo de mesas</Link>
+    label: <Link href="/room-maps">Acomodo de mesas</Link>
   },
   {
     key: "/users",
