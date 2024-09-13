@@ -67,6 +67,7 @@ model Event {
   guestQuantity Int
   guests        Guest[]
   users         User[]
+  eventDate     DateTime
   updatedAt     DateTime @updatedAt
 
   eventHallId String
