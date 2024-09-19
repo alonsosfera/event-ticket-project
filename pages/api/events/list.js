@@ -1,34 +1,55 @@
+// pages/api/events/list.js
 import { prisma } from "@/lib/prisma"
 import { withAuthApi } from "@/helpers/with-api-auth"
+import { getServerSession } from "next-auth"
+import { authOptions } from "../auth/[...nextauth]"
 
 async function handler(req, res) {
+  const session = await getServerSession(req, res, authOptions)
+
+  if (!session) {
+    return res.status(401).json({ message: "No autorizado. Debes iniciar sesión." })
+  }
+
   if (req.method !== "GET") {
     return res.status(405).json({ message: "Método no permitido" })
   }
 
-  const { id } = req.query
-
   try {
-    if (id) {
-      const event = await prisma.event.findUnique({
-        where: { id },
-        include: { eventHall: true, guests: true, users: true }
+    let response
+
+    if (session.user.role === "HOST") {
+      // Si el rol es HOST, obtener todos los eventos del usuario
+      response = await prisma.event.findMany({
+        where: { users: { some: { id: session.user.id } } },
+        include: { eventHall: true }
+      })
+    } else if (session.user.role === "ADMIN") {
+      // Si el rol es ADMIN, obtener todos los eventos de los eventHall
+      const allEventHalls = await prisma.eventHall.findMany({
+        where: { tenantId: { in: session.user.tenants.map(tenant => tenant.id) } },
+        select: {
+          name: true,
+          events: {
+            include: {
+              users: {
+                select: { name: true }
+              }
+            }
+          }
+        }
       })
 
-      if (!event) {
-        return res.status(404).json({ message: "Evento no encontrado" })
-      }
-
-      return res.status(200).json(event)
+      // Filtrar solo los EventHalls que tienen eventos
+      response = allEventHalls.filter(eventHall => eventHall.events.length > 0)
     } else {
-      const events = await prisma.event.findMany({
-        include: { eventHall: true, guests: true, users: true }
-      })
-
-      return res.status(200).json(events)
+      return res.status(403).json({ message: "Acceso denegado." })
     }
+
+    return res.status(200).json(response)
+
   } catch (error) {
-    res.status(500).json({ message: "Error al obtener eventos", error })
+    res.status(500).json({ message: "Error al obtener datos", error })
   }
 }
 
