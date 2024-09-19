@@ -6,16 +6,19 @@ async function handler(req, res) {
     return res.status(405).json({ message: "Método no permitido" })
   }
 
-  const { eventId } = req.query
+  const { id } = req.query
 
   try {
-
-    const guests = await prisma.guest.findMany({
-      where: { eventId }
+    const guest = await prisma.guest.findUnique({
+      where: { id },
+      include: { event: true }
     })
 
-    return res.status(200).json(guests)
+    if (!guest) {
+      return res.status(404).json({ message: "invitado no encontrado" })
+    }
 
+    return res.status(200).json(guest)
   } catch (error) {
     res.status(500).json({ message: "Error al obtener invitados", error })
   }
