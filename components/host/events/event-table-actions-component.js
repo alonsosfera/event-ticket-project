@@ -5,6 +5,7 @@ import { useEvent } from "../../events/event-context"
 import InvitateGuestModal from "./event-modal-invitations"
 import { useState } from "react"
 import ConfigInvitationDigital from "@/components/host/events/event-modal-invitation-digital-component"
+import ConfigRoomMaps from "@/components/host/events/event-modal-room-maps-component"
 
 const TableActions = ({ dataSource, selectedRowKeys, setDataSource, setSelectedRowKeys }) => {
   const { selectedEvent } = useEvent()
@@ -12,6 +13,7 @@ const TableActions = ({ dataSource, selectedRowKeys, setDataSource, setSelectedR
 
   const [isDigitalInvitationModalVisible, setIsDigitalInvitationModalVisible] = useState(false)
   const [isInvitateGuestModalVisible, setIsInvitateGuestModalVisible] = useState(false)
+  const [isArrangeGuestsModalVisible, setIsArrangeGuestsModalVisible] = useState(false)
 
   const handleDigitalInvitation = () => {
     setIsDigitalInvitationModalVisible(true)
@@ -21,7 +23,13 @@ const TableActions = ({ dataSource, selectedRowKeys, setDataSource, setSelectedR
     setIsDigitalInvitationModalVisible(false)
   }
 
-  const handleArrangeGuests = () => { }
+  const handleArrangeGuests = () => {
+    setIsArrangeGuestsModalVisible(true)
+  }
+
+  const handleCancelArrangeGuestsModal = () => {
+    setIsArrangeGuestsModalVisible(false)
+  }
 
   const handleLoadGuestList = () => { }
 
@@ -124,6 +132,11 @@ const TableActions = ({ dataSource, selectedRowKeys, setDataSource, setSelectedR
       <ConfigInvitationDigital
         visible={isDigitalInvitationModalVisible}
         onCancel={handleCancelDigitalInvitationModal} />
+
+      <ConfigRoomMaps
+        isArrangeGuestsModalVisible={isArrangeGuestsModalVisible}
+        handleCancelArrangeGuestsModal={handleCancelArrangeGuestsModal} />
+      {/* eslint-disable-next-line max-lines */}
     </>
   )
 }
