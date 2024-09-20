@@ -7,10 +7,6 @@ import { authOptions } from "../auth/[...nextauth]"
 async function handler(req, res) {
   const session = await getServerSession(req, res, authOptions)
 
-  if (!session) {
-    return res.status(401).json({ message: "No autorizado. Debes iniciar sesión." })
-  }
-
   if (req.method !== "GET") {
     return res.status(405).json({ message: "Método no permitido" })
   }
@@ -41,7 +37,12 @@ async function handler(req, res) {
       })
 
       // Filtrar solo los EventHalls que tienen eventos
-      response = allEventHalls.filter(eventHall => eventHall.events.length > 0)
+      response = allEventHalls.flatMap(eventHall =>
+        eventHall.events.map(event => ({
+          ...event,
+          eventHall: eventHall.name
+        }))
+      )
     } else {
       return res.status(403).json({ message: "Acceso denegado." })
     }
