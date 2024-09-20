@@ -1,5 +1,5 @@
 import { useEvent } from "@/components/events/event-context"
-import { Card , Col , Row } from "antd"
+import { Card, Col, Row } from "antd"
 
 const EventCard = ({ events }) => {
   const { setSelectedEvent } = useEvent()
@@ -8,6 +8,13 @@ const EventCard = ({ events }) => {
     <Row justify={"center"} gutter={[16, 6]}>
       {events?.map((event, index) => {
         const cardClass = `card-container card-color-${(index % 4) + 1}`
+
+        const formattedDate = new Date(event.eventDate).toLocaleDateString("es-ES", {
+          year: "numeric",
+          month: "long",
+          day: "numeric"
+        })
+
         return (
           <Col
             key={index}
@@ -16,11 +23,15 @@ const EventCard = ({ events }) => {
             xl={6}>
             <Card
               className={cardClass}
-              title={<span title={event.name} className="card-title">{event.name}</span>}
+              title={
+                <span title={event.name} className="card-title">
+                  {index + 1}. {event.name}
+                </span>
+              }
               onClick={() => setSelectedEvent(event)}
               hoverable>
               <div className="card-content">
-                <p>{event.eventDate}</p>
+                <p>{formattedDate}</p>
                 <p>{event.eventHall}</p>
               </div>
               <div className="card-invites">
