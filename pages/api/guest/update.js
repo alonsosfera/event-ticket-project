@@ -1,14 +1,6 @@
 import { prisma } from "@/lib/prisma"
 import { withAuthApi } from "@/helpers/with-api-auth"
-
-function handleError(res, statusCode, message, error = null) {
-  console.error(message, error)
-  res.status(statusCode).json({
-    success: false,
-    message,
-    ...(error && { error: error.message })
-  })
-}
+import { handleError } from "@/helpers/error-handler"
 
 async function handler(req, res) {
   if (req.method !== "PUT") {
@@ -22,15 +14,8 @@ async function handler(req, res) {
     return handleError(res, 400, "ID del invitado requerido")
   }
 
-  if (!name && guestQuantity === undefined && !phone) {
+  if (!name && guestQuantity && !phone) {
     return handleError(res, 400, "Al menos uno de los campos a actualizar es requerido")
-  }
-
-  if (guestQuantity !== undefined) {
-    const quantity = parseInt(guestQuantity, 10)
-    if (isNaN(quantity) || quantity <= 0) {
-      return handleError(res, 400, "guestQuantity debe ser un número entero positivo")
-    }
   }
 
   try {
@@ -38,7 +23,7 @@ async function handler(req, res) {
       where: { id },
       data: {
         name,
-        guestQuantity: guestQuantity !== undefined ? parseInt(guestQuantity, 10) : undefined,
+        guestQuantity,
         phone
       }
     })
