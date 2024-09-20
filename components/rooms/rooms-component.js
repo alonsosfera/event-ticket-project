@@ -1,9 +1,10 @@
-import { Button , Col , Row , Typography , Input , Space , Checkbox , Modal , List } from "antd"
-import { DeleteOutlined , EditOutlined , SettingOutlined } from "@ant-design/icons"
+import { Button , Col , Row , Typography , Input , Space, Modal , List } from "antd"
+import { SettingOutlined } from "@ant-design/icons"
 import { useState } from "react"
 import NewRoom from "@/components/rooms/new-room-component"
 import RoomsTableComponent from "@/components/rooms/rooms-table-component"
 import DescriptionListComponent from "@/components/shared/description-list-component"
+import { dataSource, columns } from "@/components/rooms/rooms-data"
 
 const Rooms = () => {
   const [isModalVisible, setIsModalVisible] = useState(false)
@@ -19,63 +20,6 @@ const Rooms = () => {
   const handleSubmit = () => {
     setIsModalVisible(false)
   }
-
-  const dataSource = [
-    {
-      key: "1",
-      room: "Aduitorio Telmex",
-      capacity: "150",
-      addres: "Avenida solidaridad 3100, col. El Marques, CUU",
-      image: "foto"
-    },
-    {
-      key: "2",
-      room: "Manuel Bernardo",
-      capacity: "300",
-      addres: "Avenida solidaridad 3100, col. El Marques, CUU",
-      image: "foto"
-    }
-  ]
-
-  const columns = [
-    {
-      title: "",
-      dataIndex: "checkbox",
-      key: "checkbox",
-      render: () => <Checkbox />
-    },
-    {
-      title: "Salón",
-      dataIndex: "room",
-      key: "room"
-    },
-    {
-      title: "Capacidad",
-      dataIndex: "capacity",
-      key: "capacity"
-    },
-    {
-      title: "Dirección",
-      dataIndex: "addres",
-      key: "addres"
-    },
-    {
-      title: "Imágenes",
-      dataIndex: "image",
-      key: "image"
-    },
-    {
-      title: "Acciones",
-      key: "action",
-      render: () => (
-        <Space size="middle">
-          <Button shape="circle" icon={<EditOutlined />} />
-          <Button
-            shape="circle" icon={<DeleteOutlined />} />
-        </Space>
-      )
-    }
-  ]
 
   return (
     <>
@@ -125,7 +69,6 @@ const Rooms = () => {
             <Col xs={0} md={24}>
               <RoomsTableComponent dataSource={dataSource} columns={columns} />
             </Col>
-            {/* eslint-disable-next-line max-lines */}
             <Col xs={24} md={0}>
               <List
                 dataSource={dataSource}

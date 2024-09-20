@@ -1,15 +1,16 @@
-import { Row, Col, Button, Divider, Flex, Grid } from "antd"
-import { FileImageOutlined, UnorderedListOutlined, NumberOutlined, FileTextOutlined } from "@ant-design/icons"
+import { Row, Col, Button, Divider } from "antd"
+import { FileImageOutlined } from "@ant-design/icons"
 import EventHeader from "./event-header-component"
 import { useEvent } from "../../events/event-context"
 import InvitateGuestModal from "./event-modal-invitations"
 import { useState } from "react"
 import ConfigInvitationDigital from "@/components/host/events/event-modal-invitation-digital-component"
 import ConfigRoomMaps from "@/components/host/events/event-modal-room-maps-component"
+import ActionsButtons from "@/components/host/events/event-table-actions-buttons"
 
-const TableActions = ({ dataSource, selectedRowKeys, setDataSource, setSelectedRowKeys }) => {
+const TableActions = () => {
   const { selectedEvent } = useEvent()
-  const { xs, md, lg } = Grid.useBreakpoint()
+
 
   const [isDigitalInvitationModalVisible, setIsDigitalInvitationModalVisible] = useState(false)
   const [isInvitateGuestModalVisible, setIsInvitateGuestModalVisible] = useState(false)
@@ -29,24 +30,6 @@ const TableActions = ({ dataSource, selectedRowKeys, setDataSource, setSelectedR
 
   const handleCancelArrangeGuestsModal = () => {
     setIsArrangeGuestsModalVisible(false)
-  }
-
-  const handleLoadGuestList = () => { }
-
-  const handleDownloadNumbering = () => { }
-
-  const handleDownloadPasses = () => { }
-
-  const handleBulkDelete = () => {
-    const newDataSource = dataSource.filter(item => !selectedRowKeys.includes(item.key))
-    setDataSource(newDataSource)
-    setSelectedRowKeys([])
-  }
-
-  const handleSendInvitation = () => { }
-
-  const handleAddGuests = () => {
-    setIsInvitateGuestModalVisible(true)
   }
 
   const handleCancelModal = () => {
@@ -76,53 +59,8 @@ const TableActions = ({ dataSource, selectedRowKeys, setDataSource, setSelectedR
         </Col>
       </Row>
       <Divider />
-      <Row justify={"space-between"}>
-        <Col xs={24} xl={12}>
-          <Flex justify={xs ? "end" : "start"} gap={12}>
-            {md && <Button
-              type="text"
-              icon={<UnorderedListOutlined />}
-              onClick={handleLoadGuestList}>
-              Cargar lista de invitados
-            </Button>}
-            <Button
-              type="text"
-              icon={<NumberOutlined />}
-              onClick={handleDownloadNumbering}>
-              Descargar numeración
-            </Button>
-            <Button
-              type="text"
-              icon={<FileTextOutlined />}
-              onClick={handleDownloadPasses}>
-              Descargar pases
-            </Button>
-          </Flex>
-        </Col>
-        <Col xs={24} xl={12}>
-          <Flex justify={lg || xs ? "end" : "start"} gap={12}>
-            {md && (
-              <>
-                <Button
-                  className="invitation-buttons"
-                  onClick={handleBulkDelete}>
-                  Eliminar
-                </Button>
-                <Button
-                  className="invitation-buttons"
-                  onClick={handleSendInvitation}>
-                  Enviar invitación
-                </Button>
-              </>
-            )}
-            <Button
-              className="invitation-buttons"
-              onClick={handleAddGuests}>
-              Agregar invitados
-            </Button>
-          </Flex>
-        </Col>
-      </Row>
+
+      <ActionsButtons />
 
       <InvitateGuestModal
         visible={isInvitateGuestModalVisible}
@@ -136,7 +74,6 @@ const TableActions = ({ dataSource, selectedRowKeys, setDataSource, setSelectedR
       <ConfigRoomMaps
         isArrangeGuestsModalVisible={isArrangeGuestsModalVisible}
         handleCancelArrangeGuestsModal={handleCancelArrangeGuestsModal} />
-      {/* eslint-disable-next-line max-lines */}
     </>
   )
 }
