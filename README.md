@@ -1,4 +1,4 @@
-# PARTY PASS
+# EVENT TICKETS
 
 ## Node Version: v20.3.1
 
