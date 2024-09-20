@@ -12,7 +12,7 @@ async function handler(req, res) {
   try {
     const event = await prisma.event.findUnique({
       where: { id },
-      include: { eventHall: true, users: true }
+      include: { eventHall: true, guests: true }
     })
 
     if (!event) {
