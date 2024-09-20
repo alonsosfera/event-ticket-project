@@ -7,10 +7,6 @@ async function handler(req, res) {
 
   const session = await getServerSession(req, res, authOptions)
 
-  if (!session) {
-    return res.status(401).json({ message: "No autorizado. Debes iniciar sesión." })
-  }
-
   const tenantId = session.user.tenants?.[0]?.id
 
   if (req.method !== "POST") {
@@ -19,16 +15,16 @@ async function handler(req, res) {
 
   const { name, locationUrl } = req.body
 
-  if (!name || !locationUrl) {
-    return res.status(400).json({ message: "Falta el locationUrl o el nombre del EventHall." })
+  if (!name) {
+    return res.status(400).json({ message: "Falta el nombre del EventHall." })
   }
 
   try {
     const eventHall = await prisma.eventHall.create({
       data: {
         name,
-        locationUrl,
-        tenantId
+        tenantId,
+        ...(locationUrl && { locationUrl })
       }
     })
 
