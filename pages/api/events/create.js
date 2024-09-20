@@ -7,10 +7,9 @@ async function handler(req, res) {
   }
 
   const { name, guestQuantity, eventHallId, userId, eventDate } = req.body
-  const updatedAt = new Date()
 
   if (!name || !guestQuantity || !eventHallId || !userId || !eventDate) {
-    return res.status(400).json({ message: "Todos los campos son requeridos: name, guestQuantity, eventHallId, userId" })
+    return res.status(400).json({ message: "Todos los campos son requeridos: nombre, cantidad de invitados, salón, usuario y fecha" })
   }
 
   try {
@@ -18,7 +17,6 @@ async function handler(req, res) {
       data: {
         name,
         guestQuantity,
-        updatedAt,
         eventDate,
         eventHall: {
           connect: { id: eventHallId }
