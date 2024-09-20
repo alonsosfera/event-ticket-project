@@ -46,7 +46,7 @@ const EventTable = () => {
         <div>
           <EmptyDescription
             description="Seleccione un evento para ver aquí sus detalles" />
-          <EventCard />
+          <EventCard  events={list} />
         </div>
       )}
     </div>

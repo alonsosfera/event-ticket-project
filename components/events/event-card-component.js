@@ -1,14 +1,12 @@
-import { Card, Row, Col } from "antd"
-import React from "react"
-import { useEvent } from "./event-context"
+import { useEvent } from "@/components/events/event-context"
+import { Card , Col , Row } from "antd"
 
-const EventCard = () => {
+const EventCard = ({ events }) => {
   const { setSelectedEvent } = useEvent()
-  const { eventData } = useEvent()
 
   return (
     <Row justify={"center"} gutter={[16, 6]}>
-      {eventData.map((event, index) => {
+      {events?.map((event, index) => {
         const cardClass = `card-container card-color-${(index % 4) + 1}`
         return (
           <Col
@@ -18,16 +16,16 @@ const EventCard = () => {
             xl={6}>
             <Card
               className={cardClass}
-              title={<span title={event.title} className="card-title">{event.title}</span>}
+              title={<span title={event.name} className="card-title">{event.name}</span>}
               onClick={() => setSelectedEvent(event)}
               hoverable>
               <div className="card-content">
-                <p>{event.date}</p>
-                <p>{event.location}</p>
+                <p>{event.eventDate}</p>
+                <p>{event.eventHall}</p>
               </div>
               <div className="card-invites">
-                <span>{event.totalInvites} invitados</span>
-                <span>{event.remainingInvites} invitados restantes</span>
+                <span>{event.guestQuantity} invitados</span>
+                <span>{event.guestQuantity} invitados restantes</span>
               </div>
             </Card>
           </Col>
@@ -35,7 +33,6 @@ const EventCard = () => {
       })}
     </Row>
   )
-
 }
 
 export default EventCard
