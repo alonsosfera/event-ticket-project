@@ -12,6 +12,14 @@ const { Title, Text } = Typography
 
 const HeaderBar = () => {
 
+  const { data: session } = useSession()
+  const userRole = session?.user?.role
+
+  const filteredMenuItems = menuItems.filter(item => {
+    if (userRole === "ADMIN") return true
+    if (userRole === "HOST") return item.key === "/" || item.key === "/events"
+  })
+
   const { data } = useSession()
 
   const menuUser = [
@@ -26,7 +34,7 @@ const HeaderBar = () => {
       <div className="mobile-menu-button">
         <Dropdown
           trigger={["click"]}
-          menu={{ items: menuItems }}>
+          menu={{ items: filteredMenuItems }}>
           <Button icon={<MenuOutlined className="menu-icon" />} type="text" />
         </Dropdown>
       </div>
