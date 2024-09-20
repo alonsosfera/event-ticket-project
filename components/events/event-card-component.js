@@ -6,7 +6,7 @@ const EventCard = ({ events }) => {
 
   return (
     <Row justify={"center"} gutter={[16, 6]}>
-      {events?.map((event, index) => {
+      {events?.slice(0, 4).map((event, index) => {
         const cardClass = `card-container card-color-${(index % 4) + 1}`
 
         const formattedDate = new Date(event.eventDate).toLocaleDateString("es-ES", {
@@ -36,7 +36,7 @@ const EventCard = ({ events }) => {
               </div>
               <div className="card-invites">
                 <span>{event.guestQuantity} invitados</span>
-                <span>{event.guestQuantity} invitados restantes</span>
+                <span>{event.remainingInvites} invitados restantes</span>
               </div>
             </Card>
           </Col>
