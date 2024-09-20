@@ -10,7 +10,6 @@ import DescriptionListComponent from "@/components/shared/description-list-compo
 const UsersComponent = () => {
   const { list, isLoading } = useSelector(state => state.usersSlice)
   const [isModalVisible, setIsModalVisible] = useState(false)
-
   const showModal = () => {
     setIsModalVisible(true)
   }

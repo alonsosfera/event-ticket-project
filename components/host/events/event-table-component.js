@@ -5,11 +5,14 @@ import TableActions from "./event-table-actions-component"
 import { columns, initialDataSource } from "./event-table-items"
 import EmptyDescription from "../../shared/empty-component"
 import EventCard from "@/components/events/event-card-component"
+import { useSelector } from "react-redux"
 
 const EventTable = () => {
   const [dataSource, setDataSource] = useState(initialDataSource)
   const [selectedRowKeys, setSelectedRowKeys] = useState([])
   const { selectedEvent, eventData } = useEvent()
+  const { list, isLoading } = useSelector(state => state.eventsSlice)
+  console.log (list)
 
   const onSelectChange = newSelectedRowKeys => {
     setSelectedRowKeys(newSelectedRowKeys)
