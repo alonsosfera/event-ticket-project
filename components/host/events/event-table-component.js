@@ -11,8 +11,8 @@ const EventTable = () => {
   const [dataSource, setDataSource] = useState(initialDataSource)
   const [selectedRowKeys, setSelectedRowKeys] = useState([])
   const { selectedEvent, eventData } = useEvent()
-  const { list, isLoading } = useSelector(state => state.eventsSlice)
-  console.log (list)
+  const { list } = useSelector(state => state.eventsSlice)
+
 
   const onSelectChange = newSelectedRowKeys => {
     setSelectedRowKeys(newSelectedRowKeys)
@@ -39,7 +39,7 @@ const EventTable = () => {
             bordered
             rowSelection={{ selectedRowKeys, onChange: onSelectChange }}
             columns={columns}
-            dataSource={dataSource} />
+            list={dataSource} />
           <EventCard />
         </>
       ) : (
