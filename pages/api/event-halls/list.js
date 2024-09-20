@@ -1,42 +1,24 @@
 import { prisma } from "@/lib/prisma"
 import { withAuthApi } from "@/helpers/with-api-auth"
+import { getServerSession } from "next-auth"
+import { authOptions } from "../auth/[...nextauth]"
 
 async function handler(req, res) {
-  const { id } = req.query
+  const session = await getServerSession(req, res, authOptions)
 
-  if (req.method === "GET") {
-    if (id) {
-      return getEventHallById(res, id)
-    } else {
-      return getAllEventHalls(res)
-    }
+  if (req.method !== "GET") {
+    return res.status(405).json({ message: "Método no permitido" })
   }
 
-  return res.status(405).json({ message: "Método no permitido" })
-}
-
-async function getAllEventHalls(res) {
   try {
-    const eventHalls = await prisma.eventHall.findMany()
-    res.status(200).json(eventHalls)
-  } catch (error) {
-    res.status(500).json({ message: "Error al obtener los salones", error })
-  }
-}
-
-async function getEventHallById(res, id) {
-  try {
-    const eventHall = await prisma.eventHall.findUnique({
-      where: { id: id }
+    const response = await prisma.eventHall.findMany({
+      where: { tenantId: { in: session.user.tenants.map(tenant => tenant.id) } }
     })
 
-    if (!eventHall) {
-      return res.status(404).json({ message: "Salón no encontrado" })
-    }
+    return res.status(200).json(response)
 
-    res.status(200).json(eventHall)
   } catch (error) {
-    res.status(500).json({ message: "Error al obtener el salón", error })
+    res.status(500).json({ message: "Error al obtener datos", error })
   }
 }
 
