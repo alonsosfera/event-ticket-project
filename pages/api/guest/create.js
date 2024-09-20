@@ -18,19 +18,14 @@ async function handler(req, res) {
   const { name, guestQuantity, phone, eventId } = req.body
 
   if (!name || !guestQuantity || !phone || !eventId) {
-    return handleError(res, 400, "Todos los campos son requeridos: name, guestQuantity, phone, eventId")
-  }
-
-  const quantity = parseInt(guestQuantity, 10)
-  if (isNaN(quantity) || quantity <= 0) {
-    return handleError(res, 400, "guestQuantity debe ser un número entero positivo")
+    return handleError(res, 400, "Todos los campos son requeridos: nombre, cantidad de invitados, whatsapp y evento")
   }
 
   try {
     const newGuest = await prisma.guest.create({
       data: {
         name,
-        guestQuantity: quantity,
+        guestQuantity,
         phone,
         event: {
           connect: { id: eventId }
