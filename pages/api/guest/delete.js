@@ -1,14 +1,6 @@
 import { prisma } from "@/lib/prisma"
 import { withAuthApi } from "@/helpers/with-api-auth"
-
-function handleError(res, statusCode, message, error = null) {
-  console.error(message, error)
-  res.status(statusCode).json({
-    success: false,
-    message,
-    ...(error && { error: error.message })
-  })
-}
+import { handleError } from "@/helpers/error-handler"
 
 async function handler(req, res) {
   if (req.method !== "DELETE") {
