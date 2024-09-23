@@ -1,10 +1,11 @@
-import { Button , Col , Row , Typography , Input , Space, Modal , List } from "antd"
-import { SettingOutlined } from "@ant-design/icons"
+import { Button, Col, Row, Typography, Input, Space, Checkbox, Modal, List } from "antd"
+import { DeleteOutlined, EditOutlined, SettingOutlined } from "@ant-design/icons"
 import { useState } from "react"
 import NewRoom from "@/components/rooms/new-room-component"
 import RoomsTableComponent from "@/components/rooms/rooms-table-component"
 import DescriptionListComponent from "@/components/shared/description-list-component"
 import { dataSource, columns } from "@/components/rooms/rooms-data"
+import { useSelector } from "react-redux"
 
 const Rooms = () => {
   const [isModalVisible, setIsModalVisible] = useState(false)
@@ -20,6 +21,49 @@ const Rooms = () => {
   const handleSubmit = () => {
     setIsModalVisible(false)
   }
+
+  const rooms = useSelector(state => state.roomsSlice.list)
+
+const columns = [
+  {
+    title: "",
+    dataIndex: "checkbox",
+    key: "checkbox",
+    render: () => <Checkbox />
+  },
+  {
+    title: "Salón",
+    dataIndex: "name",
+    key: "room"
+  },
+  {
+    title: "Capacidad",
+    dataIndex: "capacity",
+    key: "capacity",
+    render: text => text || "No disponible"
+  },
+  {
+    title: "Dirección",
+    dataIndex: "locationUrl",
+    key: "address"
+  },
+  {
+    title: "Imágenes",
+    dataIndex: "image",
+    key: "image",
+    render: text => text || "No disponible"
+  },
+  {
+    title: "Acciones",
+    key: "action",
+    render: () => (
+      <Space size="middle">
+        <Button shape="circle" icon={<EditOutlined />} />
+        <Button shape="circle" icon={<DeleteOutlined />} />
+      </Space>
+    )
+  }
+]
 
   return (
     <>
@@ -46,11 +90,9 @@ const Rooms = () => {
             align="middle"
             style={{ marginBottom: "25px" }}
             gutter={[28, 6]}>
-            <Col
-              xs={24}
-              lg={12}>
+            <Col xs={24} lg={12}>
               <Space.Compact>
-                <Input />
+                <Input placeholder="Buscar salón" />
                 <Button
                   icon={<SettingOutlined />}>
                   Buscar
@@ -67,21 +109,21 @@ const Rooms = () => {
         <Col span={24}>
           <Row gutter={[24, 24]}>
             <Col xs={0} md={24}>
-              <RoomsTableComponent dataSource={dataSource} columns={columns} />
+              <RoomsTableComponent dataSource={rooms} columns={columns} />
             </Col>
             <Col xs={24} md={0}>
               <List
-                dataSource={dataSource}
+                dataSource={rooms}
                 renderItem={item => (
-                  <List.Item>
+                  <List.Item key={item.id}>
                     <DescriptionListComponent items={[
-                    { label: "Salón", value: item.room },
-                    { label: "Capacidad", value: item.capacity },
-                    { label: "Dirección", value: item.addres },
+                      { label: "Salón", value: item.room },
+                      { label: "Capacidad", value: item.capacity },
+                      { label: "Dirección", value: item.address },
                       { label: "Imágenes", value: item.image }
-                  ]} />
+                    ]} />
                   </List.Item>
-              )} />
+                )} />
             </Col>
           </Row>
         </Col>
