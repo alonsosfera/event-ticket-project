@@ -18,7 +18,7 @@ const Rooms = () => {
   }
 
   const handleSubmit = values => {
-    console.log(values)
+    values
     setIsModalVisible(false)
   }
 
