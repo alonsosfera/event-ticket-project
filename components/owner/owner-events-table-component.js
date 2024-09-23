@@ -1,54 +1,51 @@
-import React, { useState } from "react"
+import React from "react"
 import { Table, Button, Space } from "antd"
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons"
+import { useSelector } from "react-redux"
+import moment from "moment"
 
 const OwnerEventsTable = () => {
-  const [dataSource, setDataSource] = useState(initialDataSource)
+  const { list } = useSelector(state => state.eventsSlice)
 
   const handleEdit = record => {
-    record
+    console.log("Editar:", record)
   }
 
   const handleDelete = key => {
-    const newDataSource = dataSource.filter(item => item.key !== key)
-    setDataSource(newDataSource)
+    console.log("Eliminar:", key)
   }
 
   const columns = [
     {
       title: "Evento",
-      dataIndex: "evento"
-    },
-    {
-      title: "Fecha",
-      dataIndex: "fecha"
-    },
-    {
-      title: "Tipo de evento",
-      dataIndex: "tipoEvento"
-    },
-    {
-      title: "Invitados",
-      dataIndex: "invitados"
-    },
-    {
-      title: "Acomodo de mesas",
-      dataIndex: "acomodo"
+      dataIndex: "name",
+      key: "name"
     },
     {
       title: "Anfitrión",
-      dataIndex: "anfitrion"
+      dataIndex: "users",
+      key: "users",
+      render: users => users && users.length > 0 ? users[0].name : "Sin anfitrión"
+    },
+    {
+      title: "Fecha del Evento",
+      dataIndex: "eventDate",
+      key: "eventDate",
+      render: text => moment(text).format("YYYY-MM-DD HH:mm")
+    },
+    {
+      title: "Invitados",
+      dataIndex: "guestQuantity",
+      key: "guestQuantity"
     },
     {
       title: "Salón",
-      dataIndex: "salon"
-    },
-    {
-      title: "Pase",
-      dataIndex: "pase"
+      dataIndex: "eventHall",
+      key: "eventHall"
     },
     {
       title: "Acciones",
+      key: "actions",
       render: (_, record) => (
         <Space>
           <Button
@@ -58,7 +55,7 @@ const OwnerEventsTable = () => {
           <Button
             icon={<DeleteOutlined />}
             shape="circle"
-            onClick={() => handleDelete(record.key)} />
+            onClick={() => handleDelete(record.id)} />
         </Space>
       )
     }
@@ -68,22 +65,17 @@ const OwnerEventsTable = () => {
     <Table
       className="owner-table"
       columns={columns}
-      dataSource={dataSource}
+      dataSource={list.map(item => ({
+        key: item.id,
+        name: item.name,
+        eventDate: item.eventDate,
+        guestQuantity: item.guestQuantity,
+        eventHall: item.eventHall,
+        users: item.users
+      }))}
       pagination={{ pageSize: 10 }}
       scroll={{ x: "1000px" }} />
   )
 }
-
-const initialDataSource = Array.from({ length: 46 }).map((_, i) => ({
-  key: i,
-  evento: `Evento ${i}`,
-  fecha: `2024-09-0${i % 10 + 1}`,
-  tipoEvento: `Tipo ${i}`,
-  invitados: `${i * 10}`,
-  acomodo: `Acomodo ${i}`,
-  anfitrion: `Anfitrión ${i}`,
-  salon: `Salón ${i}`,
-  pase: `Pase ${i}`
-}))
 
 export default OwnerEventsTable
