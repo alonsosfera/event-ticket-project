@@ -1,75 +1,88 @@
-import { Form, Input } from "antd"
-import Dragger from "antd/es/upload/Dragger"
-import { InboxOutlined } from "@ant-design/icons"
-import { useState } from "react"
+import { Button, Modal, Form, Input, Flex, Divider, Typography, message } from "antd"
+import axios from "axios"
+import { useDispatch } from "react-redux"
+import { createRoom } from "@/slices/rooms-slice"
 
-const NewRoom = ({  onSubmit }) => {
-  const [fileList, setFileList] = useState([
-    {
-      uid: "-1",
-      name: "File.png",
-      status: "done",
-      url: "https://www.google.com"
-    }
-  ])
+const { Title } = Typography
 
-  const handleChange = info => {
-    let newFileList = [...info.fileList]
-    newFileList = newFileList.slice(-2) // Limitar a 2 archivos recientes
-    newFileList = newFileList.map(file => {
-      if (file.response) {
-        file.url = file.response.url
+const NewRoomModalComponent = ({ isModalVisible, handleCancel }) => {
+  const dispatch = useDispatch()
+  const [form] = Form.useForm()
+
+  const onSubmit = async values => {
+    try {
+      const response = await axios.post("/api/event-halls/create", {
+        name: values.roomName,
+        locationUrl: values.locationUrl
+      })
+
+      if (response.status === 201) {
+        message.open({
+          content: "Salón creado exitosamente",
+          duration: 3
+        })
+
+        dispatch(createRoom(response.data.eventHall))
+
+        form.resetFields()
+        handleCancel()
       }
-      return file
-    })
-    setFileList(newFileList)
-  }
-
-  const uploadProps = {
-    action: "https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload",
-    onChange: handleChange,
-    multiple: true,
-    fileList
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || "Error al crear el salón, intenta nuevamente."
+      message.error(errorMessage)
+      console.error("Error al crear el salón:", error)
+    }
   }
 
   return (
-    <Form
-      layout="vertical"
-      initialValues={{ remember: true }}
-      autoComplete="off"
-      onFinish={onSubmit}>
-
-      <Form.Item
-        label="Nombre"
-        name="name"
-        rules={[{ message: "Por favor introduce nombre!" }]}>
-        <Input />
-      </Form.Item>
-
-      <Form.Item
-        label="Dirección"
-        name="addres"
-        rules={[{ message: "Por favor confirma la dirección" }]}>
-        <Input />
-      </Form.Item>
-
-      <Form.Item
-        label="Capacidad"
-        name="capacity"
-        rules={[{ message: "Por favor confirma la capacidad del salón" }]}>
-        <Input />
-      </Form.Item>
-
-      <Form.Item label="Sube tus archivos">
-        <Dragger {...uploadProps}>
-          <p className="ant-upload-drag-icon">
-            <InboxOutlined style={{ color: "#2F333C" }} />
-          </p>
-          <p className="ant-upload-text">Haz clic o arrastra aquí tu archivo</p>
-        </Dragger>
-      </Form.Item>
-    </Form>
+    <Modal
+      open={isModalVisible}
+      centered
+      onCancel={handleCancel}
+      footer={null}
+      width={383}>
+      <Title level={3}>Nuevo salón</Title>
+      <Divider style={{ background: "black", margin: "0px 0px 20px 0px" }} />
+      <Form
+        form={form}
+        requiredMark={false}
+        layout="vertical"
+        autoComplete="off"
+        onFinish={onSubmit}>
+        <Form.Item
+          name="roomName"
+          label="Nombre"
+          rules={[{ required: true, message: "Por favor ingresa el nombre del salón" }]}
+          colon={false}>
+          <Input placeholder="Salón campestre" />
+        </Form.Item>
+        <Form.Item
+          name="locationUrl"
+          label="Dirección"
+          rules={[{ required: true, message: "Por favor ingresa la Dirección" }]}
+          colon={false}>
+          <Input placeholder="Avenida 20 sur 201" />
+        </Form.Item>
+        <Form.Item
+          name="capacity"
+          label="Capacidad"
+          // rules={[{ required: true, message: "Por favor ingresa la Dirección" }]}
+          colon={false}>
+          <Input placeholder="Avenida 20 sur 201" />
+        </Form.Item>
+        <Form.Item>
+          <Flex justify="end" gap={10}>
+            <Button type="default" onClick={handleCancel}>
+              Cancelar
+            </Button>
+            <Button type="primary" htmlType="submit">
+              Crear salón
+            </Button>
+          </Flex>
+        </Form.Item>
+      </Form>
+    </Modal>
   )
 }
 
-export default NewRoom
+export default NewRoomModalComponent
