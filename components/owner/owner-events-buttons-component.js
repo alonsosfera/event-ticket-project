@@ -25,7 +25,7 @@ const EventButtons = () => {
           md={19}
           xl={21}
           order={1}>
-          <Typography.Title className="page-title">Usuarios</Typography.Title>
+          <Typography.Title className="page-title">Eventos</Typography.Title>
         </Col>
         <Col
           xs={{ span: 12, order: 3 }}
