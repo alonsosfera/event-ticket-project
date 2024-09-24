@@ -10,14 +10,22 @@ import { deleteRoom } from "@/slices/rooms-slice"
 
 const Rooms = () => {
   const [isModalVisible, setIsModalVisible] = useState(false)
+  const [roomData, setRoomData] = useState(null)
   const dispatch = useDispatch()
 
   const showModal = () => {
+    setRoomData(null)
     setIsModalVisible(true)
   }
 
   const handleCancel = () => {
     setIsModalVisible(false)
+    setRoomData(null)
+  }
+
+  const handleEdit = room => {
+    setRoomData(room)
+    setIsModalVisible(true)
   }
 
   const handleDelete = async id => {
@@ -32,12 +40,16 @@ const Rooms = () => {
           duration: 3
         })
         dispatch(deleteRoom(id))
-      } else {
-        message.error("Hubo un error al borrar el salón")
       }
     } catch (error) {
+      // Verificar el mensaje de error del servidor
+      if (error.response?.data?.message === "El salón ya tiene eventos asignados") {
+        message.error("No se puede eliminar el salón porque ya tiene eventos asignados", 3)
+      } else {
+        message.error("Hubo un error al intentar borrar el salón", 3)
+      }
+
       console.error("Error:", error)
-      message.error("Hubo un error al borrar el salón")
     }
   }
 
@@ -56,13 +68,15 @@ const Rooms = () => {
         <Col span={24}>
           <RoomsTableComponent
             rooms={rooms}
-            handleDelete={handleDelete} />
+            handleDelete={handleDelete}
+            handleEdit={handleEdit} />
         </Col>
       </Row>
 
       <NewRoomModalComponent
         isModalVisible={isModalVisible}
-        handleCancel={handleCancel} />
+        handleCancel={handleCancel}
+        roomData={roomData} />
     </>
   )
 }

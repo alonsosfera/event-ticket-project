@@ -1,7 +1,25 @@
-import { Space, Button, Checkbox, Table } from "antd"
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons"
+import { Space, Button, Checkbox, Table, Modal } from "antd"
+import { DeleteOutlined, EditOutlined, ExclamationCircleOutlined } from "@ant-design/icons"
 
-const RoomsTableComponent = ({ rooms, handleDelete }) => {
+const { confirm } = Modal
+
+const RoomsTableComponent = ({ rooms, handleDelete, handleEdit }) => {
+
+  const showDeleteConfirm = id => {
+    confirm({
+      title: "¿Estás seguro que deseas eliminar este salón?",
+      icon: <ExclamationCircleOutlined />,
+      content: "Esta acción no se puede deshacer y eliminará permanentemente el salón.",
+      okText: "Sí, eliminar",
+      okType: "danger",
+      cancelText: "Cancelar",
+      onOk() {
+        handleDelete(id)
+      },
+      onCancel() {
+      }
+    })
+  }
 
   const columns = [
     {
@@ -27,27 +45,23 @@ const RoomsTableComponent = ({ rooms, handleDelete }) => {
       key: "address"
     },
     {
-      title: "Imágenes",
-      dataIndex: "image",
-      key: "image",
-      render: text => text || "No disponible"
-    },
-    {
       title: "Acciones",
       key: "action",
-      render: record => (
+      render: room => (
         <Space size="middle">
-          <Button shape="circle" icon={<EditOutlined />} />
+          <Button
+            shape="circle" icon={<EditOutlined />}
+            onClick={() => handleEdit(room)} />
           <Button
             shape="circle"
             icon={<DeleteOutlined />}
-            onClick={() => handleDelete(record.id)} />
+            onClick={() => showDeleteConfirm(room.id)} />
         </Space>
       )
     }
   ]
 
-  return(
+  return (
     <Table
       dataSource={rooms} columns={columns}
       rowKey="id" />
