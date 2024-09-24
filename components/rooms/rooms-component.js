@@ -1,14 +1,17 @@
-import { Button, Col, Row, Typography, Input, Space, Checkbox, Modal, List } from "antd"
+import { Button, Col, Row, Typography, Input, Space, Checkbox, Modal, List, message } from "antd"
 import { DeleteOutlined, EditOutlined, SettingOutlined } from "@ant-design/icons"
 import { useState } from "react"
 import NewRoom from "@/components/rooms/new-room-component"
 import RoomsTableComponent from "@/components/rooms/rooms-table-component"
 import DescriptionListComponent from "@/components/shared/description-list-component"
 import { dataSource, columns } from "@/components/rooms/rooms-data"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
+import { deleteRoom } from "@/slices/rooms-slice"
+import axios from "axios"
 
 const Rooms = () => {
   const [isModalVisible, setIsModalVisible] = useState(false)
+  const dispatch = useDispatch()
 
   const showModal = () => {
     setIsModalVisible(true)
@@ -21,6 +24,30 @@ const Rooms = () => {
   const handleSubmit = () => {
     setIsModalVisible(false)
   }
+
+
+  const handleDelete = async id => {
+    try {
+      const response = await axios.delete("/api/event-halls/delete", {
+        params: { id }
+      })
+
+      if (response.status === 200) {
+        message.open({
+          content: "Salón eliminado con éxito",
+          duration: 3
+        })
+        dispatch(deleteRoom(id))
+
+      } else {
+        message.error("Hubo un error al borrar el salón")
+      }
+    } catch (error) {
+      console.error("Error:", error)
+      message.error("Hubo un error al borrar el salón")
+    }
+  }
+
 
   const rooms = useSelector(state => state.roomsSlice.list)
 
@@ -56,12 +83,18 @@ const columns = [
   {
     title: "Acciones",
     key: "action",
-    render: () => (
+    render: record => (
       <Space size="middle">
         <Button shape="circle" icon={<EditOutlined />} />
-        <Button shape="circle" icon={<DeleteOutlined />} />
+        <Button
+          shape="circle"
+          icon={<DeleteOutlined />}
+          onClick={() => {
+            handleDelete(record.id)
+          }} />
       </Space>
     )
+
   }
 ]
 
