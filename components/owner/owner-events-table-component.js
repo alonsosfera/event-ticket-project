@@ -7,12 +7,10 @@ import dayjs from "dayjs"
 const OwnerEventsTable = () => {
   const { list } = useSelector(state => state.eventsSlice)
 
-  const handleEdit = record => {
-    console.log("Editar:", record)
+  const handleEdit = () => {
   }
 
-  const handleDelete = key => {
-    console.log("Eliminar:", key)
+  const handleDelete = () => {
   }
 
   const columns = [
