@@ -7,10 +7,13 @@ import RoomsSearchComponent from "./rooms-search-component"
 import RoomsTableComponent from "./rooms-table-component"
 import NewRoomModalComponent from "./new-room-component"
 import { deleteRoom } from "@/slices/rooms-slice"
+import LoadingComponent from "../shared/loading-component"
 
 const Rooms = () => {
+  const { isLoading } = useSelector(state => state.roomsSlice)
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [roomData, setRoomData] = useState(null)
+  const [searchTerm, setSearchTerm] = useState("")
   const dispatch = useDispatch()
 
   const showModal = () => {
@@ -42,7 +45,6 @@ const Rooms = () => {
         dispatch(deleteRoom(id))
       }
     } catch (error) {
-      // Verificar el mensaje de error del servidor
       if (error.response?.data?.message === "El salón ya tiene eventos asignados") {
         message.error("No se puede eliminar el salón porque ya tiene eventos asignados", 3)
       } else {
@@ -55,6 +57,11 @@ const Rooms = () => {
 
   const rooms = useSelector(state => state.roomsSlice.list)
 
+  // Filtrar los salones según el término de búsqueda
+  const filteredRooms = rooms.filter(room =>
+    room.name.toLowerCase().includes(searchTerm.toLowerCase())
+  )
+
   return (
     <>
       <Row className="rooms-container" gutter={[24, 0]}>
@@ -63,15 +70,20 @@ const Rooms = () => {
         </Col>
 
         <Col span={24}>
-          <RoomsSearchComponent />
+          <RoomsSearchComponent onSearch={setSearchTerm} />
         </Col>
 
-        <Col span={24}>
-          <RoomsTableComponent
-            rooms={rooms}
-            handleDelete={handleDelete}
-            handleEdit={handleEdit} />
-        </Col>
+
+        {isLoading ? (
+          <LoadingComponent />
+        ) : (
+          <Col span={24}>
+            <RoomsTableComponent
+              rooms={filteredRooms}
+              handleDelete={handleDelete}
+              handleEdit={handleEdit} />
+          </Col>
+        )}
       </Row>
 
       <NewRoomModalComponent

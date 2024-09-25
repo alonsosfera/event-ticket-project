@@ -1,11 +1,12 @@
 import { useState } from "react"
 import { useSelector } from "react-redux"
-import { SettingOutlined, EditOutlined, DeleteOutlined, LoadingOutlined } from "@ant-design/icons"
-import { Button, Col, Row, Typography, Input, Space, Modal, List, Flex, Spin } from "antd"
+import { SettingOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons"
+import { Button, Col, Row, Typography, Input, Space, Modal, List } from "antd"
 
 import NewUser from "@/components/user/new-user-component"
 import UsersTableComponent from "@/components/user/users-table-component"
 import DescriptionListComponent from "@/components/shared/description-list-component"
+import LoadingComponent from "../shared/loading-component"
 
 const UsersComponent = () => {
   const { list, isLoading } = useSelector(state => state.usersSlice)
@@ -102,14 +103,7 @@ const UsersComponent = () => {
         </Col>
 
         {isLoading ? (
-          <Col order={5} span={24}>
-            <Flex
-              align="center"
-              justify="center"
-              style={{ height: "10vh" }}>
-              <Spin indicator={<LoadingOutlined spin />} size="large" />
-            </Flex>
-          </Col>
+          <LoadingComponent />
         ) : (
           <>
             <Col
