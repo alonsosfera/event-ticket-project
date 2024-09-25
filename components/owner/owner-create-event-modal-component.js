@@ -2,6 +2,7 @@ import React from "react"
 import { Button, Modal, Form, Input, DatePicker, Typography, Select, InputNumber } from "antd"
 import { useDispatch } from "react-redux"
 import { createEvent } from "@/slices/events-slice"
+import axios from "axios"
 
 const { Title } = Typography
 const { Option } = Select
@@ -9,10 +10,26 @@ const { Option } = Select
 const EventModal = ({ visible, onCancel }) => {
   const dispatch = useDispatch()
 
-  const handleSubmit = values => {
-    dispatch(createEvent(values))
-    onCancel()
+  const handleSubmit = async values => {
+    try {
+      const eventData = {
+        name: values.name,
+        guestQuantity: values.guestQuantity,
+        eventDate: values.eventDate || new Date().toISOString(),
+        eventHallId: values.eventHallId || "3ee77bbc-f7da-4244-9314-6b9c02acb6da",
+        userId: values.userId || "63b4a3fb-f101-45ef-827c-cfd0ebc84a91"
+      }
+
+      const response = await axios.post("/api/events/create", eventData)
+
+      dispatch(createEvent, response.data)
+
+      onCancel()
+    } catch (error) {
+      console.error("Error al crear el evento:", error)
+    }
   }
+
 
   return (
     <Modal
