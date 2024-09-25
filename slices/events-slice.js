@@ -21,9 +21,12 @@ const eventsSlice = createSlice({
     setEventsError: (state, action) => {
       state.isLoading = false
       state.error = action.payload
+    },
+    createEvent: (state, action) => {
+      state.list = [action.payload, ...state.list]
     }
   }
 })
 
-export const { fetchEventsList, setEventsList, setEventsError } = eventsSlice.actions
+export const { fetchEventsList, setEventsList, setEventsError,createEvent } = eventsSlice.actions
 export default eventsSlice.reducer
