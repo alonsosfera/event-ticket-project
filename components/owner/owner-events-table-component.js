@@ -2,7 +2,7 @@ import React from "react"
 import { Table, Button, Space } from "antd"
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons"
 import { useSelector } from "react-redux"
-import moment from "moment"
+import dayjs from "dayjs"
 
 const OwnerEventsTable = () => {
   const { list } = useSelector(state => state.eventsSlice)
@@ -31,7 +31,7 @@ const OwnerEventsTable = () => {
       title: "Fecha del Evento",
       dataIndex: "eventDate",
       key: "eventDate",
-      render: text => moment(text).format("YYYY-MM-DD HH:mm")
+      render: text => dayjs(text).format("YYYY-MM-DD HH:mm")
     },
     {
       title: "Invitados",
