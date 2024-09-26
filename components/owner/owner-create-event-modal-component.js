@@ -19,7 +19,7 @@ const EventModal = ({ visible, onCancel }) => {
         name: values.name,
         guestQuantity: values.guestQuantity,
         eventDate: values.eventDate || new Date().toISOString(),
-        eventHallId: values.eventHallId || "3ee77bbc-f7da-4244-9314-6b9c02acb6da",
+        eventHallId: values.eventHallId,
         userId: values.userId
       }
 
@@ -56,7 +56,7 @@ const EventModal = ({ visible, onCancel }) => {
         <Form.Item
           name="userId"
           label="Usuarios"
-          rules={[{ required: false, message: "Por favor selecciona el anfitrión" }]}
+          rules={[{ required: true, message: "Por favor selecciona el anfitrión" }]}
           colon={false}>
           <Select
             placeholder="Selecciona los usuarios"
