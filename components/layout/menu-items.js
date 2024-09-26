@@ -1,4 +1,4 @@
-import { DragOutlined , HomeOutlined , ScheduleOutlined , ShopOutlined } from "@ant-design/icons"
+import { HomeOutlined , ScheduleOutlined , ShopOutlined, UserOutlined, PlusOutlined } from "@ant-design/icons"
 import Link from "next/link"
 
 export const menuItems = [
@@ -19,7 +19,13 @@ export const menuItems = [
   },
   {
     key: "/room-maps",
-    icon: <DragOutlined />,
-    label: <Link href="/room-maps">Acomodo de Mesas</Link>
+    icon: <PlusOutlined />,
+    label: <Link href="/room-maps">Acomodo de mesas</Link>
+  },
+  {
+    key: "/users",
+    icon: <UserOutlined />,
+    label: <Link href="/users">Usuarios</Link>
   }
 ]
+

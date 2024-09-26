@@ -39,3 +39,4 @@ export default RoomsPage
 export async function getServerSideProps(context) {
   return pageAuth(context, [UserRoleEnum.OWNER, UserRoleEnum.ADMIN])
 }
+

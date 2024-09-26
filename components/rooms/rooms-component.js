@@ -1,3 +1,4 @@
+
 import { Row, Col, message } from "antd"
 import { useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
@@ -57,7 +58,6 @@ const Rooms = () => {
 
   const rooms = useSelector(state => state.roomsSlice.list)
 
-  // Filtrar los salones según el término de búsqueda
   const filteredRooms = rooms.filter(room =>
     room.name.toLowerCase().includes(searchTerm.toLowerCase())
   )
