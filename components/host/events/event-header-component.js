@@ -18,9 +18,6 @@ const EventHeader = ({ selectedEvent }) => {
       </Col>
       <Row gutter={16} className="row-header">
         <Col span={12}>
-          <Text>{selectedEvent.location}</Text>
-        </Col>
-        <Col span={12}>
           <Flex justify="end">
             <Text>{selectedEvent.date}</Text>
           </Flex>
@@ -29,13 +26,13 @@ const EventHeader = ({ selectedEvent }) => {
       <Row gutter={16} className="row-header">
         <Col span={24}>
           <Title level={2} className="col-title-event">
-            {selectedEvent.title}
+            {selectedEvent.name}
           </Title>
         </Col>
       </Row>
       <Row gutter={16} className="row-header">
         <Col span={12}>
-          <Text>{selectedEvent.totalInvites} invitados</Text>
+          <Text>{selectedEvent.guestQuantity} invitados</Text>
         </Col>
         <Col span={12}>
           <Flex justify="end">

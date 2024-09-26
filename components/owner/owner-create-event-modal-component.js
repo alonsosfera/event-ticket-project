@@ -1,19 +1,40 @@
 import React from "react"
-import { Button, Modal, Form, Input, DatePicker, Flex, Typography, Select, InputNumber } from "antd"
+import { Button, Modal, Form, Input, DatePicker, Typography, Select, InputNumber } from "antd"
+import { useDispatch , useSelector } from "react-redux"
+import { createEvent } from "@/slices/events-slice"
+import axios from "axios"
 
 const { Title } = Typography
 const { Option } = Select
 
-const EventModal = ({ visible, onCancel, onSubmit }) => {
-  const handleSubmit = values => {
-    values
-    onSubmit()
-    onCancel()
+const EventModal = ({ visible, onCancel }) => {
+
+  const { list } = useSelector(state => state.usersSlice)
+
+  const dispatch = useDispatch()
+
+  const handleSubmit = async values => {
+    try {
+      const eventData = {
+        name: values.name,
+        guestQuantity: values.guestQuantity,
+        eventDate: values.eventDate || new Date().toISOString(),
+        eventHallId: values.eventHallId,
+        userId: values.userId
+      }
+
+      const response = await axios.post("/api/events/create", eventData)
+
+      dispatch(createEvent(response.data))
+      onCancel()
+    } catch (error) {
+      console.error("Error al crear el evento:", error)
+    }
   }
 
   return (
     <Modal
-      title={ <Title level={3}>Nuevo evento </Title> }
+      title={<Title level={3}>Nuevo evento </Title>}
       open={visible}
       centered
       onCancel={onCancel}
@@ -25,86 +46,68 @@ const EventModal = ({ visible, onCancel, onSubmit }) => {
         autoComplete="off"
         onFinish={handleSubmit}>
         <Form.Item
-          name="eventName"
+          name="name"
           label="Nombre del evento"
           rules={[{ required: true, message: "Por favor ingresa el nombre del evento" }]}
           colon={false}>
           <Input placeholder="Nombre del evento" />
         </Form.Item>
+
         <Form.Item
-          name="host"
-          label="Anfitrión"
+          name="userId"
+          label="Usuarios"
           rules={[{ required: true, message: "Por favor selecciona el anfitrión" }]}
           colon={false}>
-          <Select placeholder="Selecciona un anfitrión">
-            <Option value="host1">Anfitrión 1</Option>
-            <Option value="host2">Anfitrión 2</Option>
-            <Option value="host3">Anfitrión 3</Option>
+          <Select
+            placeholder="Selecciona los usuarios"
+            optionFilterProp="children">
+            {list
+              .filter(user => user.role === "HOST")
+              .map(user => (
+                <Option key={user.id} value={user.id}>
+                  {user.name}
+                </Option>
+              ))}
           </Select>
         </Form.Item>
+
         <Form.Item
-          name="eventType"
-          label="Tipo de evento"
-          rules={[{ required: true, message: "Por favor ingresa el tipo de evento" }]}
-          colon={false}>
-          <Input placeholder="Tipo de evento" />
-        </Form.Item>
-        <Form.Item
-          name="date"
-          label="Fecha"
-          rules={[{ required: true, message: "Por favor selecciona una fecha" }]}
-          colon={false}>
-          <DatePicker style={{ width: "100%" }} />
-        </Form.Item>
-        <Form.Item
-          name="guests"
-          label="Invitados"
-          rules={[{ required: true, message: "Por favor ingresa el número de invitados" }]}
+          name="guestQuantity"
+          label="Cantidad de invitados"
+          rules={[{ required: true, message: "Por favor ingresa la cantidad de invitados" }]}
           colon={false}>
           <InputNumber placeholder="Número de invitados" style={{ width: "100%" }} />
         </Form.Item>
+
         <Form.Item
-          name="tableArrangement"
-          label="Acomodo de mesas"
-          rules={[{ required: true, message: "Por favor ingresa el acomodo de mesas" }]}
+          name="eventDate"
+          label="Fecha del evento"
+          rules={[{ required: true, message: "Por favor selecciona la fecha del evento" }]}
           colon={false}>
-          <Select placeholder="Selecciona un acomodo de mesas">
-            <Option value="host1">Acomodo 1</Option>
-            <Option value="host2">Acomodo 2</Option>
-            <Option value="host3">Acomodo 3</Option>
+          <DatePicker style={{ width: "100%" }} />
+        </Form.Item>
+
+        <Form.Item
+          name="eventHall"
+          label="Salón del evento"
+          rules={[{ required: true, message: "Por favor selecciona el salón del evento" }]}
+          colon={false}>
+          <Select placeholder="Selecciona el salón">
+            <Option value="hall1">Salón 1</Option>
+            <Option value="hall2">Salón 2</Option>
+            <Option value="hall3">Salón 3</Option>
           </Select>
         </Form.Item>
-        <Form.Item
-          name="venue"
-          label="Salón"
-          rules={[{ required: true, message: "Por favor ingresa el nombre del salón" }]}
-          colon={false}>
-          <Select placeholder="Selecciona un salón">
-            <Option value="host1">Salón 1</Option>
-            <Option value="host2">Salón 2</Option>
-            <Option value="host3">Salón 3</Option>
-          </Select>
-        </Form.Item>
-        <Form.Item
-          name="passDesign"
-          label="Diseño de pase"
-          rules={[{ required: true, message: "Por favor ingresa el diseño de pase" }]}
-          colon={false}>
-          <Select placeholder="Selecciona un pase">
-            <Option value="host1">Pase 1</Option>
-            <Option value="host2">Pase 2</Option>
-            <Option value="host3">Pase 3</Option>
-          </Select>
-        </Form.Item>
+
         <Form.Item>
-          <Flex justify="end" gap={10}>
-            <Button type="default" onClick={onCancel}>
-              Cancelar
-            </Button>
-            <Button htmlType="submit">
-              Crear evento
-            </Button>
-          </Flex>
+          <Button type="default" onClick={onCancel}>
+            Cancelar
+          </Button>
+          <Button
+            type="primary" htmlType="submit"
+            style={{ marginLeft: "10px" }}>
+            Crear evento
+          </Button>
         </Form.Item>
       </Form>
     </Modal>
