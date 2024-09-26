@@ -1,6 +1,6 @@
 import React from "react"
 import { Button, Modal, Form, Input, DatePicker, Typography, Select, InputNumber } from "antd"
-import { useDispatch } from "react-redux"
+import { useDispatch , useSelector } from "react-redux"
 import { createEvent } from "@/slices/events-slice"
 import axios from "axios"
 
@@ -8,6 +8,9 @@ const { Title } = Typography
 const { Option } = Select
 
 const EventModal = ({ visible, onCancel }) => {
+
+  const { list } = useSelector(state => state.usersSlice)
+
   const dispatch = useDispatch()
 
   const handleSubmit = async values => {
@@ -17,19 +20,17 @@ const EventModal = ({ visible, onCancel }) => {
         guestQuantity: values.guestQuantity,
         eventDate: values.eventDate || new Date().toISOString(),
         eventHallId: values.eventHallId || "3ee77bbc-f7da-4244-9314-6b9c02acb6da",
-        userId: values.userId || "63b4a3fb-f101-45ef-827c-cfd0ebc84a91"
+        userId: values.userId
       }
 
       const response = await axios.post("/api/events/create", eventData)
 
-      dispatch(createEvent, response.data)
-
+      dispatch(createEvent(response.data))
       onCancel()
     } catch (error) {
       console.error("Error al crear el evento:", error)
     }
   }
-
 
   return (
     <Modal
@@ -53,11 +54,21 @@ const EventModal = ({ visible, onCancel }) => {
         </Form.Item>
 
         <Form.Item
-          name="users"
+          name="userId"
           label="Usuarios"
-          rules={[{ required: false, message: "Por favor selecciona los usuarios" }]}
+          rules={[{ required: false, message: "Por favor selecciona el anfitrión" }]}
           colon={false}>
-          <Input placeholder="Nombre del host" />
+          <Select
+            placeholder="Selecciona los usuarios"
+            optionFilterProp="children">
+            {list
+              .filter(user => user.role === "HOST")
+              .map(user => (
+                <Option key={user.id} value={user.id}>
+                  {user.name}
+                </Option>
+              ))}
+          </Select>
         </Form.Item>
 
         <Form.Item
