@@ -10,7 +10,7 @@ import { deleteRoom } from "@/slices/rooms-slice"
 import LoadingComponent from "../shared/loading-component"
 
 const Rooms = () => {
-  const { isLoading } = useSelector(state => state.roomsSlice)
+  const { isLoading, list: rooms } = useSelector(state => state.roomsSlice)
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [roomData, setRoomData] = useState(null)
   const [searchTerm, setSearchTerm] = useState("")
@@ -54,8 +54,6 @@ const Rooms = () => {
       console.error("Error:", error)
     }
   }
-
-  const rooms = useSelector(state => state.roomsSlice.list)
 
   // Filtrar los salones según el término de búsqueda
   const filteredRooms = rooms.filter(room =>
