@@ -64,7 +64,7 @@ const Rooms = () => {
     <>
       <Row className="rooms-container" gutter={[24, 0]}>
         <Col span={24}>
-          <RoomsHeaderComponent showModal={showModal} />
+          <RoomsHeaderComponent onShowModal={showModal} />
         </Col>
 
         <Col span={24}>
