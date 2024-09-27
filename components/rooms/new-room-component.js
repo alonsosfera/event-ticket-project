@@ -1,4 +1,4 @@
-import { Button, Modal, Form, Input, Flex, Divider, Typography, message } from "antd"
+import { Button, Modal, Form, Input, Flex, Divider, Typography, message, InputNumber } from "antd"
 import axios from "axios"
 import { useDispatch } from "react-redux"
 import { createRoom, updateRoom } from "@/slices/rooms-slice"
@@ -77,20 +77,20 @@ const NewRoomModalComponent = ({ isModalVisible, handleCancel, roomData }) => {
         onFinish={onSubmit}>
         <Form.Item
           name="roomName"
-          label="Nombre"
+          label="Salón"
           rules={[{ required: true, message: "Por favor ingresa el nombre del salón" }]}>
           <Input placeholder="Salón campestre" />
         </Form.Item>
         <Form.Item
           name="locationUrl"
-          label="Dirección"
-          rules={[{ required: true, message: "Por favor ingresa la Dirección" }]}>
-          <Input placeholder="Avenida 20 sur 201" />
+          label="Ubicación del salón"
+          rules={[{ required: true, message: "Por favor ingresa el enlace de Ubicación" }]}>
+          <Input placeholder="https://maps.google.com/tu-enlace" />
         </Form.Item>
         <Form.Item
           name="capacity"
           label="Capacidad">
-          <Input placeholder="Capacidad" />
+          <InputNumber style={{ width: "100%" }} placeholder="0" />
         </Form.Item>
         <Form.Item>
           <Flex justify="end" gap={10}>

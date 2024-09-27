@@ -16,8 +16,10 @@ const RoomsSearchComponent = ({ onSearch }) => {
       <Col xs={24} lg={12}>
         <Space.Compact>
           <Input
+            allowClear
             placeholder="Buscar salón"
             value={searchTerm}
+            onPressEnter={handleSearch}
             onChange={e => setSearchTerm(e.target.value)} />
           <Button icon={<SettingOutlined />} onClick={handleSearch}>
             Buscar
