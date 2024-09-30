@@ -1,16 +1,37 @@
-import React from "react"
-import { Table, Button, Space } from "antd"
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons"
-import { useSelector } from "react-redux"
+import { useDispatch , useSelector } from "react-redux"
+import axios from "axios"
+import { Button , message , Space , Table } from "antd"
+import { deleteEvent } from "@/slices/events-slice"
 import dayjs from "dayjs"
+import { DeleteOutlined , EditOutlined } from "@ant-design/icons"
 
 const OwnerEventsTable = () => {
   const { list } = useSelector(state => state.eventsSlice)
+  const dispatch = useDispatch()
 
   const handleEdit = () => {
+
   }
 
-  const handleDelete = () => {
+  const handleDelete = async id => {
+    try {
+      const response = await axios.delete("/api/events/delete", {
+        params: { id }
+      })
+
+      if (response.status === 200) {
+        message.open({
+          content: "Salón eliminado con éxito",
+          duration: 3
+        })
+        dispatch(deleteEvent(id))
+      } else {
+        message.error("Hubo un error al borrar el salón")
+      }
+    } catch (error) {
+      console.error("Error:", error)
+      message.error("Hubo un error al borrar el salón")
+    }
   }
 
   const columns = [
@@ -53,7 +74,7 @@ const OwnerEventsTable = () => {
           <Button
             icon={<DeleteOutlined />}
             shape="circle"
-            onClick={() => handleDelete(record.id)} />
+            onClick={() => handleDelete(record.key)} />
         </Space>
       )
     }
