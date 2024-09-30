@@ -1,17 +1,29 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { Button, Modal, Form, Input, DatePicker, Typography, Select, InputNumber } from "antd"
-import { useDispatch , useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { createEvent } from "@/slices/events-slice"
 import axios from "axios"
+import dayjs from "dayjs"
 
 const { Title } = Typography
 const { Option } = Select
 
-const EventModal = ({ visible, onCancel }) => {
-
+const EventModal = ({ visible, onCancel, eventToEdit }) => {
   const { list } = useSelector(state => state.usersSlice)
-
   const dispatch = useDispatch()
+  const [form] = Form.useForm()
+
+  useEffect(() => {
+    if (eventToEdit) {
+      form.setFieldsValue({
+        name: eventToEdit.name,
+        userId: eventToEdit.users?.[0]?.name,
+        guestQuantity: eventToEdit.guestQuantity,
+        eventDate: eventToEdit.eventDate ? dayjs(eventToEdit.eventDate) : null,
+        eventHallId: eventToEdit.eventHall
+      })
+    }
+  }, [eventToEdit, form])
 
   const handleSubmit = async values => {
     try {
@@ -24,7 +36,6 @@ const EventModal = ({ visible, onCancel }) => {
       }
 
       const response = await axios.post("/api/events/create", eventData)
-
       dispatch(createEvent(response.data))
       onCancel()
     } catch (error) {
@@ -34,13 +45,14 @@ const EventModal = ({ visible, onCancel }) => {
 
   return (
     <Modal
-      title={<Title level={3}>Nuevo evento </Title>}
+      title={<Title level={3}>{eventToEdit ? "Editar evento" : "Nuevo evento"}</Title>}
       open={visible}
       centered
       onCancel={onCancel}
       footer={null}
       width={500}>
       <Form
+        form={form}
         requiredMark={false}
         layout="vertical"
         autoComplete="off"
@@ -58,9 +70,7 @@ const EventModal = ({ visible, onCancel }) => {
           label="Usuarios"
           rules={[{ required: true, message: "Por favor selecciona el anfitrión" }]}
           colon={false}>
-          <Select
-            placeholder="Selecciona los usuarios"
-            optionFilterProp="children">
+          <Select placeholder="Selecciona los usuarios" optionFilterProp="children">
             {list
               .filter(user => user.role === "HOST")
               .map(user => (
@@ -88,7 +98,7 @@ const EventModal = ({ visible, onCancel }) => {
         </Form.Item>
 
         <Form.Item
-          name="eventHall"
+          name="eventHallId"
           label="Salón del evento"
           rules={[{ required: true, message: "Por favor selecciona el salón del evento" }]}
           colon={false}>
@@ -106,7 +116,7 @@ const EventModal = ({ visible, onCancel }) => {
           <Button
             type="primary" htmlType="submit"
             style={{ marginLeft: "10px" }}>
-            Crear evento
+            {eventToEdit ? "Actualizar evento" : "Crear evento"}
           </Button>
         </Form.Item>
       </Form>
