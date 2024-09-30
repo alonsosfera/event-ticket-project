@@ -1,16 +1,25 @@
-import { useDispatch , useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import axios from "axios"
-import { Button , message , Space , Table } from "antd"
+import { Button, message, Space, Table, Modal } from "antd"
 import { deleteEvent } from "@/slices/events-slice"
 import dayjs from "dayjs"
-import { DeleteOutlined , EditOutlined } from "@ant-design/icons"
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons"
 
 const OwnerEventsTable = () => {
   const { list } = useSelector(state => state.eventsSlice)
   const dispatch = useDispatch()
 
   const handleEdit = () => {
+    // Lógica de edición aquí
+  }
 
+  const showConfirm = id => {
+    Modal.confirm({
+      title: "¿Estás seguro de que quieres eliminar este evento?",
+      onOk: () => handleDelete(id),
+      okText: "Eliminar",
+      cancelText: "Cancelar"
+    })
   }
 
   const handleDelete = async id => {
@@ -74,7 +83,7 @@ const OwnerEventsTable = () => {
           <Button
             icon={<DeleteOutlined />}
             shape="circle"
-            onClick={() => handleDelete(record.key)} />
+            onClick={() => showConfirm(record.key)} />
         </Space>
       )
     }
