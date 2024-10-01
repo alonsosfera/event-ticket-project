@@ -3,9 +3,9 @@ import { SettingOutlined } from "@ant-design/icons"
 import EventModal from "./owner-create-event-modal-component"
 import { useState } from "react"
 
-const EventButtons = () => {
-
+const EventButtons = ({ onSearch }) => {
   const [isCreateEventModalVisible, setIsCreateEventModalVisible] = useState(false)
+  const [searchText, setSearchText] = useState("")
 
   const showCreateEventModal = () => setIsCreateEventModalVisible(true)
   const closeCreateEventModal = () => setIsCreateEventModalVisible(false)
@@ -21,15 +21,12 @@ const EventButtons = () => {
     <>
       <Row align="middle" gutter={[24, 12]}>
         <Col
-          xs={24}
-          md={19}
-          xl={21}
-          order={1}>
+          xs={24} md={19}
+          xl={21} order={1}>
           <Typography.Title className="page-title">Eventos</Typography.Title>
         </Col>
         <Col
-          xs={{ span: 12, order: 3 }}
-          md={{ span: 5, order: 2 }}
+          xs={{ span: 12, order: 3 }} md={{ span: 5, order: 2 }}
           xl={3}>
           <Button
             key="submit"
@@ -49,10 +46,14 @@ const EventButtons = () => {
           xl={{ span: 8, offset: 12 }}
           xxl={{ span: 6, offset: 14 }}>
           <Space.Compact style={{ width: "100%" }}>
-            <Input />
-            <Button
-              type="primary"
-              icon={<SettingOutlined />}>
+            <Input
+              placeholder="Buscar eventos"
+              value={searchText}
+              onChange={e => {
+                setSearchText(e.target.value)
+                onSearch(e.target.value)
+              }} />
+            <Button type="primary" icon={<SettingOutlined />}>
               Buscar
             </Button>
           </Space.Compact>
@@ -62,7 +63,7 @@ const EventButtons = () => {
       <EventModal
         visible={isCreateEventModalVisible}
         onCancel={closeCreateEventModal}
-        onSubmit={CreateEventSubmit}  />
+        onSubmit={CreateEventSubmit} />
     </>
   )
 }
