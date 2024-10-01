@@ -21,7 +21,7 @@ const EventModal = ({ visible, onCancel, eventToEdit }) => {
         name: eventToEdit.name,
         guestQuantity: eventToEdit.guestQuantity,
         eventDate: eventToEdit.eventDate ? dayjs(eventToEdit.eventDate) : null,
-        eventHallId: eventToEdit.eventHall,
+        eventHall: eventToEdit.eventHall || "3ee77bbc-f7da-4244-9314-6b9c02acb6da",
         userId: eventToEdit.users?.[0]?.name
       })
     } else if (!visible) {
@@ -127,6 +127,7 @@ const EventModal = ({ visible, onCancel, eventToEdit }) => {
       </Form>
     </Modal>
   )
+// eslint-disable-next-line max-lines
 }
 
 export default EventModal
