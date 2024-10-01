@@ -15,7 +15,7 @@ const OwnerEventsTable = () => {
     setVisible(true)
   }
 
-  const handleDelete = id => {
+  const handleDelete = () => {
 
   }
 
