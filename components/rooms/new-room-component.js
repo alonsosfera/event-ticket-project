@@ -17,7 +17,8 @@ const NewRoomModalComponent = ({ isModalVisible, handleCancel, roomData }) => {
       if (roomData && roomData.id) {
         response = await axios.put(`/api/event-halls/update?id=${roomData.id}`, {
           name: values.roomName,
-          locationUrl: values.locationUrl
+          locationUrl: values.locationUrl,
+          capacity: values.capacity
         })
 
         if (response.status === 200) {
@@ -31,7 +32,8 @@ const NewRoomModalComponent = ({ isModalVisible, handleCancel, roomData }) => {
       } else {
         response = await axios.post("/api/event-halls/create", {
           name: values.roomName,
-          locationUrl: values.locationUrl
+          locationUrl: values.locationUrl,
+          capacity: values.capacity
         })
 
         if (response.status === 201) {
@@ -55,7 +57,8 @@ const NewRoomModalComponent = ({ isModalVisible, handleCancel, roomData }) => {
     if (roomData) {
       form.setFieldsValue({
         roomName: roomData.name,
-        locationUrl: roomData.locationUrl
+        locationUrl: roomData.locationUrl,
+        capacity: roomData.capacity
       })
     }
   }, [roomData, form])
@@ -89,7 +92,8 @@ const NewRoomModalComponent = ({ isModalVisible, handleCancel, roomData }) => {
         </Form.Item>
         <Form.Item
           name="capacity"
-          label="Capacidad">
+          label="Capacidad"
+          rules={[{ required: true, message: "Por favor ingresa la capacidad del salón" }]}>
           <InputNumber style={{ width: "100%" }} placeholder="0" />
         </Form.Item>
         <Form.Item>
