@@ -1,10 +1,11 @@
-import {  Form, Input, Select } from "antd"
+import { Form, Input, Select } from "antd"
 
-const NewUser = ({ onSubmit }) => {
+const NewUser = ({ onSubmit, form }) => {
   const { Option } = Select
 
   return (
     <Form
+      form={form}
       layout="vertical"
       autoComplete="off"
       onFinish={onSubmit}>

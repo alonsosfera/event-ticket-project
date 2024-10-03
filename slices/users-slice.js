@@ -15,9 +15,12 @@ const usersSlice = createSlice({
     setUsersList: (state, action) => {
       state.isLoading = false
       state.list = action.payload
+    },
+    createUser: (state, action) => {
+      state.list = [action.payload, ...state.list]
     }
   }
 })
 
-export const { setUsersList, fetchUsersList } = usersSlice.actions
+export const { setUsersList, fetchUsersList, createUser } = usersSlice.actions
 export default usersSlice.reducer
