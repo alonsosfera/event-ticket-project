@@ -49,6 +49,7 @@ const EventButtons = ({ onSearch }) => {
             <Input
               placeholder="Buscar eventos"
               value={searchText}
+              allowClear={true}
               onChange={e => {
                 setSearchText(e.target.value)
                 onSearch(e.target.value)
