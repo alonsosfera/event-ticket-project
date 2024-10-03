@@ -1,6 +1,6 @@
 import { Form, Input, Select } from "antd"
 
-const NewUser = ({ onSubmit, form }) => {
+const NewUser = ({ form, onSubmit }) => {
   const { Option } = Select
 
   return (
@@ -8,25 +8,26 @@ const NewUser = ({ onSubmit, form }) => {
       form={form}
       layout="vertical"
       autoComplete="off"
+      requiredMark={false}
       onFinish={onSubmit}>
       <Form.Item
         label="Nombre"
         name="name"
-        rules={[{ message: "Por favor introduce nombre!" }]}>
+        rules={[{ required: true, message: "Por favor introduce nombre!" }]}>
         <Input />
       </Form.Item>
 
       <Form.Item
         label="Número de teléfono"
         name="phone"
-        rules={[{ message: "Por favor confirma el número de teléfono!" }]}>
+        rules={[{ required: true, message: "Por favor confirma el número de teléfono!" }]}>
         <Input />
       </Form.Item>
 
       <Form.Item
         label="Rol"
         name="role"
-        rules={[{ message: "Por favor selecciona un rol!" }]}>
+        rules={[{ required: true, message: "Por favor selecciona un rol!" }]}>
         <Select placeholder="Selecciona un rol">
           <Option value="ADMIN">ADMIN</Option>
           <Option value="HOST">HOST</Option>
