@@ -1,24 +1,43 @@
-import React, { useState } from "react"
+import { useState, useEffect } from "react"
 import { Table } from "antd"
 import { useEvent } from "../../events/event-context"
 import TableActions from "./event-table-actions-component"
 import { columns, initialDataSource } from "./event-table-items"
 import EmptyDescription from "../../shared/empty-component"
 import EventCard from "@/components/events/event-card-component"
-import { useSelector } from "react-redux"
+import { useSession } from "next-auth/react"
+import axios from "axios"
 
 const EventTable = () => {
   const [dataSource, setDataSource] = useState(initialDataSource)
   const [selectedRowKeys, setSelectedRowKeys] = useState([])
-  const { selectedEvent, eventData } = useEvent()
-  const { list } = useSelector(state => state.eventsSlice)
+  const { selectedEvent } = useEvent()
+  const { data: session } = useSession()
 
+  const userId = session?.user?.id
+
+  const [userEvents, setUserEvents] = useState([])
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      if (userId) {
+        try {
+          const response = await axios.get(`/api/users/${userId}`)
+          setUserEvents(response.data)
+        } catch (error) {
+          console.error("Error al traer los eventos:", error)
+        }
+      }
+    }
+
+    fetchEvents()
+  }, [userId])
 
   const onSelectChange = newSelectedRowKeys => {
     setSelectedRowKeys(newSelectedRowKeys)
   }
 
-  if (!eventData || eventData.length === 0) {
+  if (!userEvents || userEvents.length === 0) {
     return (
       <EmptyDescription
         description="No hay eventos, favor de comunicarse con administración." />
@@ -39,14 +58,14 @@ const EventTable = () => {
             bordered
             rowSelection={{ selectedRowKeys, onChange: onSelectChange }}
             columns={columns}
-            list={dataSource} />
-          <EventCard />
+            dataSource={dataSource} />
+          <EventCard events={userEvents} />
         </>
       ) : (
         <div>
           <EmptyDescription
             description="Seleccione un evento para ver aquí sus detalles" />
-          <EventCard  events={list} />
+          <EventCard events={userEvents} />
         </div>
       )}
     </div>
