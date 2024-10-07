@@ -5,10 +5,12 @@ const { Title, Text } = Typography
 
 const EventHeader = ({ selectedEvent }) => {
   if (!selectedEvent) {
-    return (
-      null
-    )
+    return null
   }
+
+  const eventDate = new Date(selectedEvent.eventDate)
+  const formattedDate = eventDate.toLocaleDateString("es-ES")
+
   return (
     <>
       <Col
@@ -18,8 +20,11 @@ const EventHeader = ({ selectedEvent }) => {
       </Col>
       <Row gutter={16} className="row-header">
         <Col span={12}>
+          <Text>{selectedEvent.eventHall.name}</Text>
+        </Col>
+        <Col span={12}>
           <Flex justify="end">
-            <Text>{selectedEvent.date}</Text>
+            <Text>{formattedDate}</Text>
           </Flex>
         </Col>
       </Row>
