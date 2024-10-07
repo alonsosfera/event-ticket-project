@@ -4,41 +4,11 @@ const EventContext = createContext()
 
 export const EventProvider = ({ children }) => {
   const [ selectedEvent, setSelectedEvent ] = useState(null)
-  const [ eventData, setEventData ] = useState([])
 
   const fetchInitialEventsData = () => {
-    const initialEventData = [
-      {
-        title: "Fiesta de cumpleaños de Julia",
-        date: "15/06/2023",
-        location: "Centro de eventos Alpha",
-        totalInvites: "312",
-        remainingInvites: "117"
-      },
-      {
-        title: "Aniversario de empresa",
-        date: "22/09/2023",
-        location: "Hotel Plaza",
-        totalInvites: "467",
-        remainingInvites: "214"
-      },
-      {
-        title: "Conferencia de tecnología",
-        date: "08/11/2023",
-        location: "Salón la joya",
-        totalInvites: "230",
-        remainingInvites: "78"
-      },
-      {
-        title: "Fiesta de cumpleaños de Julia",
-        date: "15/06/2023",
-        location: "Centro de eventos Alpha",
-        totalInvites: "312",
-        remainingInvites: "117"
-      }
 
-    ]
-    setEventData(initialEventData)
+
+
   }
 
   useEffect(() => {
@@ -46,7 +16,7 @@ export const EventProvider = ({ children }) => {
   }, [])
 
   return (
-    <EventContext.Provider value={{ selectedEvent, setSelectedEvent, eventData, setEventData }}>
+    <EventContext.Provider value={{ selectedEvent, setSelectedEvent }}>
       {children}
     </EventContext.Provider>
   )
