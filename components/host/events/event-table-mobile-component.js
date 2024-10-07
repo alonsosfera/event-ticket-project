@@ -5,6 +5,7 @@ import EmptyDescription from "../../shared/empty-component"
 import EventCard from "@/components/events/event-card-component"
 import { LeftOutlined } from "@ant-design/icons"
 import DescriptionListComponent from "@/components/shared/description-list-component"
+import { useSelector } from "react-redux"
 
 const { Title, Text } = Typography
 
@@ -17,13 +18,14 @@ const dataSource = Array.from({ length: 46 }).map((_, i) => ({
 }))
 
 const TableMobile = () => {
-  const { selectedEvent, eventData } = useEvent()
+  const { userEvents } = useSelector(state => state.eventsSlice)
+  const { selectedEvent } = useEvent()
 
   const handleBack = () => {
     window.location.reload()
   }
 
-  if (!eventData || eventData.length === 0) {
+  if (!userEvents || userEvents.length === 0) {
     return (
       <EmptyDescription
         description="No hay eventos, favor de comunicarse con administración." />
@@ -59,7 +61,7 @@ const TableMobile = () => {
       ) : (
         <div>
           <Title className="title-event">Eventos</Title>
-          <EventCard />
+          <EventCard events={userEvents} />
         </div>
       )}
     </div>
