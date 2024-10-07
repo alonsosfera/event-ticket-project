@@ -7,23 +7,25 @@ import EmptyDescription from "../../shared/empty-component"
 import EventCard from "@/components/events/event-card-component"
 import { useSession } from "next-auth/react"
 import axios from "axios"
+import { useDispatch, useSelector } from "react-redux"
+import { setUserEventsList } from "@/slices/events-slice"
 
 const EventTable = () => {
   const [dataSource, setDataSource] = useState(initialDataSource)
   const [selectedRowKeys, setSelectedRowKeys] = useState([])
   const { selectedEvent } = useEvent()
   const { data: session } = useSession()
-
   const userId = session?.user?.id
+  const dispatch = useDispatch()
+  const userEvents = useSelector(state => state.eventsSlice.userEvents)
 
-  const [userEvents, setUserEvents] = useState([])
 
   useEffect(() => {
     const fetchEvents = async () => {
       if (userId) {
         try {
           const response = await axios.get(`/api/users/${userId}`)
-          setUserEvents(response.data)
+          dispatch(setUserEventsList(response.data))
         } catch (error) {
           console.error("Error al traer los eventos:", error)
         }
@@ -31,7 +33,7 @@ const EventTable = () => {
     }
 
     fetchEvents()
-  }, [userId])
+  }, [userId, dispatch])
 
   const onSelectChange = newSelectedRowKeys => {
     setSelectedRowKeys(newSelectedRowKeys)
