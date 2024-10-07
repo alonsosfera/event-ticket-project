@@ -32,7 +32,7 @@ const EventCard = ({ events }) => {
               hoverable>
               <div className="card-content">
                 <p>{formattedDate}</p>
-                <p>{event.eventHall}</p>
+                <p>{typeof event.eventHall === "string" ? event.eventHall : event.eventHall?.name}</p>
               </div>
               <div className="card-invites">
                 <span>{event.guestQuantity} invitados</span>
