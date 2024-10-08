@@ -45,10 +45,13 @@ const handleDelete = async guestId => {
     const response = await axios.delete(`/api/guest/delete?id=${guestId}`)
 
     if (response.data.success) {
-      message.success(response.data.message)
+      message.open({
+        content: "Invitado eliminado con éxito",
+        duration: 3
+      })
     }
   } catch (error) {
     const errorMessage = error.response?.data?.message || "Error al eliminar el invitado"
-    message.error(errorMessage) // Muestra un mensaje de error
+    message.error(errorMessage)
   }
 }
