@@ -16,8 +16,7 @@ const UsersComponent = () => {
 
   const filteredList = list?.filter(user =>
     user.name.toLowerCase().includes(searchText.toLowerCase()) ||
-    user.phone.includes(searchText)
-  )
+    user.phone.includes(searchText))
 
   const dataSource = filteredList?.map(({ id, ...user }) => ({
     key: id,
