@@ -16,11 +16,14 @@ const usersSlice = createSlice({
       state.isLoading = false
       state.list = action.payload
     },
+    createUser: (state, action) => {
+      state.list = [action.payload, ...state.list]
+    },
     deleteUser: (state, action) => {
       state.list = state.list.filter(room => room.id !== action.payload)
     }
   }
 })
 
-export const { setUsersList, fetchUsersList,deleteUser } = usersSlice.actions
+export const { setUsersList, fetchUsersList, createUser, deleteUser } = usersSlice.actions
 export default usersSlice.reducer
