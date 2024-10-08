@@ -1,17 +1,24 @@
-import { useDispatch, useSelector } from "react-redux"
-import axios from "axios"
-import { Button, message, Space, Table, Modal } from "antd"
-import { deleteEvent } from "@/slices/events-slice"
 import dayjs from "dayjs"
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons"
+import axios from "axios"
+import React, { useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { Button, message, Space, Table, Modal } from "antd"
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons"
 
-const OwnerEventsTable = () => {
+import { deleteEvent } from "@/slices/events-slice"
+import EventModal from "@/components/owner/owner-create-event-modal-component"
+
+const OwnerEventsTable = ({ searchText }) => {
   const { list } = useSelector(state => state.eventsSlice)
-  const dispatch = useDispatch()
+  const [editEvents, setEditEvents] = useState(null)
+  const [visible, setVisible] = useState(false)
 
-  const handleEdit = () => {
-    // Lógica de edición aquí
+  const handleEdit = record => {
+    setEditEvents(record)
+    setVisible(true)
   }
+  
+  const dispatch = useDispatch()
 
   const showConfirm = id => {
     Modal.confirm({
@@ -42,6 +49,10 @@ const OwnerEventsTable = () => {
       message.error("Hubo un error al borrar el salón")
     }
   }
+
+  const filteredList = list.filter(item =>
+    item.name.toLowerCase().includes(searchText.toLowerCase())
+  )
 
   const columns = [
     {
@@ -90,19 +101,26 @@ const OwnerEventsTable = () => {
   ]
 
   return (
-    <Table
-      className="owner-table"
-      columns={columns}
-      dataSource={list.map(item => ({
-        key: item.id,
-        name: item.name,
-        eventDate: item.eventDate,
-        guestQuantity: item.guestQuantity,
-        eventHall: item.eventHall,
-        users: item.users
-      }))}
-      pagination={{ pageSize: 10 }}
-      scroll={{ x: "1000px" }} />
+    <>
+      <Table
+        className="owner-table"
+        columns={columns}
+        dataSource={filteredList.map(item => ({
+          key: item.id,
+          name: item.name,
+          eventDate: item.eventDate,
+          guestQuantity: item.guestQuantity,
+          eventHall: item.eventHall,
+          users: item.users
+        }))}
+        pagination={{ pageSize: 10 }}
+        scroll={{ x: "1000px" }} />
+
+      <EventModal
+        visible={visible}
+        onCancel={() => setVisible(false)}
+        eventToEdit={editEvents} />
+    </>
   )
 }
 
