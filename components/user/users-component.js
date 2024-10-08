@@ -1,12 +1,11 @@
 import { useState } from "react"
 import { useSelector } from "react-redux"
-import { SettingOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons"
-import { Button, Col, Row, Typography, Input, Space, Modal, List } from "antd"
+import { SettingOutlined } from "@ant-design/icons"
+import { Button, Col, Row, Typography, Input, Space } from "antd"
 
-import NewUser from "@/components/user/new-user-component"
-import UsersTableComponent from "@/components/user/users-table-component"
-import DescriptionListComponent from "@/components/shared/description-list-component"
-import LoadingComponent from "../shared/loading-component"
+import UsersTable from "./users-table-component"
+import UsersActions from "./user-actions-component"
+import NewUserModal from "./user-modal-component"
 
 const UsersComponent = () => {
   const { list, isLoading } = useSelector(state => state.usersSlice)
@@ -48,37 +47,7 @@ const UsersComponent = () => {
           </Space.Compact>
         </Col>
 
-        {isLoading ? (
-          <LoadingComponent />
-        ) : (
-          <>
-            <Col
-              xs={0}
-              md={24}
-              order={5}>
-              <UsersTableComponent
-                dataSource={dataSource}
-                columns={columns}
-                rowSelection={rowSelection} />
-            </Col>
-            <Col
-              md={0}
-              xs={24}
-              order={5}>
-              <List
-                dataSource={dataSource}
-                renderItem={item => (
-                  <List.Item>
-                    <DescriptionListComponent items={[
-                      { label: "Nombre", value: item.name },
-                      { label: "Teléfono", value: item.phone },
-                      { label: "Rol", value: item.role }
-                    ]} />
-                  </List.Item>
-                )} />
-            </Col>
-          </>
-        )}
+        <UsersTable dataSource={dataSource} isLoading={isLoading} />
       </Row>
 
       <NewUserModal isModalVisible={isModalVisible} handleCancel={handleCancel} />
