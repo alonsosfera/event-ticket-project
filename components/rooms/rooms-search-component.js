@@ -17,6 +17,7 @@ const RoomsSearchComponent = ({ onSearch }) => {
         <Space.Compact>
           <Input
             allowClear
+            onClear={ () => onSearch("")}
             placeholder="Buscar salón"
             value={searchTerm}
             onPressEnter={handleSearch}
