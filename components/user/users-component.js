@@ -15,7 +15,7 @@ const UsersComponent = () => {
   const handleCancel = () => setIsModalVisible(false)
 
   const dataSource = list?.map(({ id, ...user }) => ({
-    key: user.id,
+    key: id,
     role: user.role,
     name: user.name,
     phone: user.phone

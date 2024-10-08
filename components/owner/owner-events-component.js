@@ -3,7 +3,7 @@ import OwnerEventTableMobile from "./owner-events-mobile-table-component"
 import OwnerEventsTable from "./owner-events-table-component"
 import { Col, Row } from "antd"
 import { useDispatch, useSelector } from "react-redux"
-import { useEffect } from "react"
+import { useEffect , useState } from "react"
 import { fetchEventsList, setEventsError, setEventsList } from "@/slices/events-slice"
 import axios from "axios"
 import { fetchUsersList, setUsersList } from "@/slices/users-slice"
@@ -16,6 +16,7 @@ const OwnerEventsComponent = () => {
   const dispatch = useDispatch()
   const events = useSelector(state => state.eventsSlice.list)
   const users = useSelector(state => state.usersSlice.list)
+  const [searchText, setSearchText] = useState("")
 
   useEffect(() => {
     if (status === "authenticated") {
@@ -47,9 +48,9 @@ const OwnerEventsComponent = () => {
 
   return (
     <>
-      <EventButtons />
+      <EventButtons onSearch={setSearchText} />
       <Row>
-        <Col xs={0} md={24}><OwnerEventsTable /></Col>
+        <Col xs={0} md={24}><OwnerEventsTable searchText={searchText} /></Col>
         <Col xs={24} md={0}><OwnerEventTableMobile /></Col>
       </Row>
     </>
