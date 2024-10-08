@@ -9,11 +9,17 @@ import UsersTable from "@/components/user/users-table-component"
 const UsersComponent = () => {
   const { list, isLoading } = useSelector(state => state.usersSlice)
   const [isModalVisible, setIsModalVisible] = useState(false)
+  const [searchText, setSearchText] = useState("")
 
   const showModal = () => setIsModalVisible(true)
   const handleCancel = () => setIsModalVisible(false)
 
-  const dataSource = list?.map(({ id, ...user }) => ({
+  const filteredList = list?.filter(user =>
+    user.name.toLowerCase().includes(searchText.toLowerCase()) ||
+    user.phone.includes(searchText)
+  )
+
+  const dataSource = filteredList?.map(({ id, ...user }) => ({
     key: id,
     role: user.role,
     name: user.name,
@@ -37,7 +43,10 @@ const UsersComponent = () => {
           xl={{ span: 8, offset: 12 }}
           xxl={{ span: 6, offset: 14 }}>
           <Space.Compact style={{ width: "100%" }}>
-            <Input />
+            <Input
+              placeholder="Buscar usuario"
+              onChange={e => setSearchText(e.target.value)}
+              value={searchText} />
             <Button
               type="primary"
               icon={<SettingOutlined />}>
