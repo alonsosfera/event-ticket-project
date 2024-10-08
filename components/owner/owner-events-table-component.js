@@ -1,8 +1,11 @@
-import React, { useState } from "react"
-import { Table, Button, Space } from "antd"
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons"
-import { useSelector } from "react-redux"
 import dayjs from "dayjs"
+import axios from "axios"
+import React, { useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { Button, message, Space, Table, Modal } from "antd"
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons"
+
+import { deleteEvent } from "@/slices/events-slice"
 import EventModal from "@/components/owner/owner-create-event-modal-component"
 
 const OwnerEventsTable = ({ searchText }) => {
@@ -14,8 +17,37 @@ const OwnerEventsTable = ({ searchText }) => {
     setEditEvents(record)
     setVisible(true)
   }
+  
+  const dispatch = useDispatch()
 
-  const handleDelete = () => {
+  const showConfirm = id => {
+    Modal.confirm({
+      title: "¿Estás seguro de que quieres eliminar este evento?",
+      onOk: () => handleDelete(id),
+      okText: "Eliminar",
+      cancelText: "Cancelar"
+    })
+  }
+
+  const handleDelete = async id => {
+    try {
+      const response = await axios.delete("/api/events/delete", {
+        params: { id }
+      })
+
+      if (response.status === 200) {
+        message.open({
+          content: "Salón eliminado con éxito",
+          duration: 3
+        })
+        dispatch(deleteEvent(id))
+      } else {
+        message.error("Hubo un error al borrar el salón")
+      }
+    } catch (error) {
+      console.error("Error:", error)
+      message.error("Hubo un error al borrar el salón")
+    }
   }
 
   const filteredList = list.filter(item =>
@@ -62,7 +94,7 @@ const OwnerEventsTable = ({ searchText }) => {
           <Button
             icon={<DeleteOutlined />}
             shape="circle"
-            onClick={() => handleDelete(record.id)} />
+            onClick={() => showConfirm(record.key)} />
         </Space>
       )
     }
