@@ -1,18 +1,19 @@
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons"
-import { Button, Space } from "antd"
+import { Button, Space, message } from "antd"
+import axios from "axios"
 
 export const columns = [
   {
     title: "Familia",
-    dataIndex: "familia"
+    dataIndex: "name"
   },
   {
     title: "Invitados",
-    dataIndex: "invitados"
+    dataIndex: "quantity"
   },
   {
     title: "WhatsApp",
-    dataIndex: "whatsapp"
+    dataIndex: "phone"
   },
   {
     title: "Estatus",
@@ -29,24 +30,25 @@ export const columns = [
         <Button
           icon={<DeleteOutlined />}
           shape="circle"
-          onClick={() => handleDelete(record.key)} />
+          onClick={() => handleDelete(record.id)} />
       </Space>
     )
   }
 ]
 
-export const initialDataSource = Array.from({ length: 46 }).map((_, i) => ({
-  key: i,
-  familia: `Edwa King ${i}`,
-  invitados: 32,
-  whatsapp: `6394650090 ${i}`,
-  estatus: "pendiente"
-}))
-
 const handleEdit = record => {
   record
 }
 
-const handleDelete = record => {
-   record
+const handleDelete = async guestId => {
+  try {
+    const response = await axios.delete(`/api/guest/delete?id=${guestId}`)
+
+    if (response.data.success) {
+      message.success(response.data.message)
+    }
+  } catch (error) {
+    const errorMessage = error.response?.data?.message || "Error al eliminar el invitado"
+    message.error(errorMessage) // Muestra un mensaje de error
+  }
 }
