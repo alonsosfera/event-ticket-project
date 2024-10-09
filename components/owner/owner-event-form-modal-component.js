@@ -98,7 +98,6 @@ const EventForm = ({ eventToEdit, onCancel }) => {
           ))}
         </Select>
       </Form.Item>
-
       <Form.Item>
         <Button type="default" onClick={onCancel}>Cancelar</Button>
         <Button
