@@ -3,9 +3,13 @@ import { FileTextOutlined , NumberOutlined , UnorderedListOutlined } from "@ant-
 import { useState } from "react"
 import axios from "axios"
 import InvitateGuestModal from "./event-modal-invitations"
-
+import { useDispatch } from "react-redux"
+import { createGuest } from "@/slices/guests-slice"
 
 const ActionsButtons = () => {
+
+  const dispatch = useDispatch()
+
   const { xs, md, lg } = Grid.useBreakpoint()
 
   const [isInvitateGuestModalVisible, setIsInvitateGuestModalVisible] = useState(false)
@@ -42,6 +46,7 @@ const ActionsButtons = () => {
       })
 
       if (response.data.success) {
+        dispatch(createGuest(response.data))
         message.open({
           content: "Invitado agregado correctamente",
           duration: 3
