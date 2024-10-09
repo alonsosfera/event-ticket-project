@@ -60,7 +60,7 @@ const TableActions = () => {
       </Row>
       <Divider />
 
-      <ActionsButtons />
+      <ActionsButtons  selectedEvent={selectedEvent} />
 
       <InvitateGuestModal
         visible={isInvitateGuestModalVisible}
