@@ -12,12 +12,18 @@ const guestsSlice = createSlice({
     fetchGuestsList: state => {
       state.isLoading = true
     },
-    setGuestsList: (state, action) => {
+    setUserEventsList: (state, action) => {
       state.isLoading = false
       state.list = action.payload
     },
     createGuest: (state, action) => {
-      state.list = [action.payload, ...state.list]
+      const eventIndex = state.list.findIndex(event => event.id === action.payload.eventId)
+      if (eventIndex !== -1) {
+        state.list[eventIndex].guests = [
+          ...state.list[eventIndex].guests,
+          action.payload
+        ]
+      }
     },
     deleteGuest: (state, action) => {
       state.list = state.list.filter(guest => guest.id !== action.payload)
@@ -33,5 +39,5 @@ const guestsSlice = createSlice({
   }
 })
 
-export const { fetchGuestsList, setGuestsList, createGuest, deleteGuest, updateGuest } = guestsSlice.actions
+export const { fetchGuestsList, setGuestsList, createGuest, deleteGuest, updateGuest, setUserEventsList } = guestsSlice.actions
 export default guestsSlice.reducer
