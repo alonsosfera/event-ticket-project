@@ -17,7 +17,7 @@ const OwnerEventsTable = ({ searchText }) => {
     setEditEvents(record)
     setVisible(true)
   }
-  
+
   const dispatch = useDispatch()
 
   const showConfirm = id => {
