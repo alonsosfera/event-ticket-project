@@ -7,9 +7,10 @@ import { EditOutlined, DeleteOutlined } from "@ant-design/icons"
 
 import { deleteEvent } from "@/slices/events-slice"
 import EventModal from "@/components/owner/owner-create-event-modal-component"
+import LoadingComponent from "@/components/shared/loading-component"
 
 const OwnerEventsTable = ({ searchText }) => {
-  const { list } = useSelector(state => state.eventsSlice)
+  const { isLoading, list } = useSelector(state => state.eventsSlice)
   const [editEvents, setEditEvents] = useState(null)
   const [visible, setVisible] = useState(false)
 
@@ -102,19 +103,23 @@ const OwnerEventsTable = ({ searchText }) => {
 
   return (
     <>
-      <Table
-        className="owner-table"
-        columns={columns}
-        dataSource={filteredList.map(item => ({
-          key: item.id,
-          name: item.name,
-          eventDate: item.eventDate,
-          guestQuantity: item.guestQuantity,
-          eventHall: item.eventHall,
-          users: item.users
-        }))}
-        pagination={{ pageSize: 10 }}
-        scroll={{ x: "1000px" }} />
+      {isLoading ? (
+        <LoadingComponent />
+      ) : (
+        <Table
+          className="owner-table"
+          columns={columns}
+          dataSource={filteredList.map(item => ({
+            key: item.id,
+            name: item.name,
+            eventDate: item.eventDate,
+            guestQuantity: item.guestQuantity,
+            eventHall: item.eventHall,
+            users: item.users
+          }))}
+          pagination={{ pageSize: 10 }}
+          scroll={{ x: "1000px" }} />
+      )}
 
       <EventModal
         visible={visible}
