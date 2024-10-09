@@ -47,6 +47,7 @@ const UsersComponent = () => {
               placeholder="Buscar usuario"
               onChange={e => setSearchText(e.target.value)}
               allowClear={true}
+              onClear={ () => searchText("")}
               value={searchText} />
             <Button
               type="primary"
