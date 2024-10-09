@@ -9,6 +9,7 @@ const { Option } = Select
 
 const EventForm = ({ eventToEdit, onCancel }) => {
   const { list } = useSelector(state => state.usersSlice)
+  const { list: rooms } = useSelector(state => state.roomsSlice)
   const [form] = Form.useForm()
   const dispatch = useDispatch()
 
@@ -90,9 +91,11 @@ const EventForm = ({ eventToEdit, onCancel }) => {
         rules={[{ required: true, message: "Selecciona el salón" }]}
         colon={false}>
         <Select placeholder="Selecciona el salón">
-          <Option value="hall1">Salón 1</Option>
-          <Option value="hall2">Salón 2</Option>
-          <Option value="hall3">Salón 3</Option>
+          {rooms.map(room => (
+            <Option key={room.id} value={room.id}>
+              {room.name}
+            </Option>
+          ))}
         </Select>
       </Form.Item>
       <Form.Item>
