@@ -46,7 +46,7 @@ const ActionsButtons = () => {
       })
 
       if (response.data.success) {
-        dispatch(createGuest(response.data))
+        dispatch(createGuest(response.data.guest))
         message.open({
           content: "Invitado agregado correctamente",
           duration: 3
