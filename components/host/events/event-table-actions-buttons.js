@@ -6,7 +6,7 @@ import InvitateGuestModal from "./event-modal-invitations"
 import { useDispatch } from "react-redux"
 import { createGuest } from "@/slices/guests-slice"
 
-const ActionsButtons = () => {
+const ActionsButtons = ({ selectedEvent }) => {
 
   const dispatch = useDispatch()
 
@@ -42,7 +42,7 @@ const ActionsButtons = () => {
         name: values.familyName,
         guestQuantity: values.numberGuests,
         phone: values.phone,
-        eventId: "4a63afb6-604d-49f7-bbf0-c906c3917ff6"
+        eventId: selectedEvent.id
       })
 
       if (response.data.success) {
