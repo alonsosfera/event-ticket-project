@@ -1,10 +1,11 @@
 import { useState } from "react"
 import { useSelector } from "react-redux"
-import { Row, Col, Typography, Button, Space, Input } from "antd"
 import { SettingOutlined } from "@ant-design/icons"
-import UsersActions from "@/components/user/user-actions-component"
-import NewUserModal from "@/components/user/user-modal-component"
-import UsersTable from "@/components/user/users-table-component"
+import { Button, Col, Row, Typography, Input, Space } from "antd"
+
+import UsersTable from "./users-table-component"
+import UsersActions from "./user-actions-component"
+import NewUserModal from "./user-modal-component"
 
 const UsersComponent = () => {
   const { list, isLoading } = useSelector(state => state.usersSlice)

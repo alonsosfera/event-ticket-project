@@ -52,6 +52,7 @@ model PasswordRecovery {
 model EventHall {
   id          String   @id @default(uuid())
   name        String
+  capacity    Int?
   locationUrl String?
   createdAt   DateTime @default(now()) @db.Timestamp(6)
   events      Event[]
