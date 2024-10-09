@@ -9,11 +9,7 @@ const EventCard = ({ events }) => {
       {events?.slice(0, 4).map((event, index) => {
         const cardClass = `card-container card-color-${(index % 4) + 1}`
 
-        const formattedDate = new Date(event.eventDate).toLocaleDateString("es-ES", {
-          year: "numeric",
-          month: "long",
-          day: "numeric"
-        })
+        const formattedDate = new Date(event.eventDate).toLocaleDateString("es-ES")
 
         return (
           <Col
