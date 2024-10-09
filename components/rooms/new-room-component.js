@@ -82,7 +82,7 @@ const NewRoomModalComponent = ({ isModalVisible, handleCancel, roomData }) => {
           name="roomName"
           label="Salón"
           rules={[{ required: true, message: "Por favor ingresa el nombre del salón" }]}>
-          <Input placeholder="Salón campestre" />
+          <Input placeholder="Salón" />
         </Form.Item>
         <Form.Item
           name="locationUrl"
