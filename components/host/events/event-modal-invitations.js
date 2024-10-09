@@ -54,7 +54,7 @@ const InvitateGuestModal = ({ visible, onCancel, onSubmit }) => {
               Cancelar
             </Button>
             <Button htmlType="submit">
-              Crear evento
+              Invitar
             </Button>
           </Flex>
         </Form.Item>
