@@ -8,7 +8,7 @@ import EventCard from "@/components/events/event-card-component"
 import { useSession } from "next-auth/react"
 import axios from "axios"
 import { useDispatch, useSelector } from "react-redux"
-import { setUserEventsList } from "@/slices/events-slice"
+import { setUserEventsList } from "@/slices/guests-slice"
 
 const EventTable = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([])
@@ -16,7 +16,7 @@ const EventTable = () => {
   const { data: session } = useSession()
   const userId = session?.user?.id
   const dispatch = useDispatch()
-  const userEvents = useSelector(state => state.eventsSlice.userEvents)
+  const userEvents = useSelector(state => state.guestsSlice.list)
 
   useEffect(() => {
     const fetchEvents = async () => {
