@@ -8,20 +8,20 @@ import { useSelector } from "react-redux"
 
 const { Title, Text } = Typography
 
-const dataSource = Array.from({ length: 46 }).map((_, i) => ({
-  key: i,
-  familia: `Edwa King ${i}`,
-  invitados: 32,
-  whatsapp: `6394650090 ${i}`,
-  estatus: "pendiente"
-}))
-
 const TableMobile = ({ selectedEvent, setSelectedEvent }) => {
   const userEvents = useSelector(state => state.guestsSlice.list)
 
   const handleBack = () => {
     setSelectedEvent(null)
   }
+
+  const getSelectedGuests = () => {
+    if (!selectedEvent) return []
+    const event = userEvents.find(event => event.id === selectedEvent.id)
+    return event?.guests || []
+  }
+
+  const selectedGuests = getSelectedGuests()
 
   if (!userEvents || userEvents.length === 0) {
     return (
@@ -44,14 +44,14 @@ const TableMobile = ({ selectedEvent, setSelectedEvent }) => {
         <>
           <TableActions selectedEvent={selectedEvent} />
           <List
-            dataSource={dataSource}
+            dataSource={selectedGuests}
             renderItem={item => (
               <List.Item>
                 <DescriptionListComponent items={[
-                  { label: <Text strong>Familia</Text>, value: item.familia },
-                  { label: <Text strong>Invitados</Text>, value: item.invitados },
-                  { label: <Text strong>WhatsApp</Text>, value: item.whatsapp },
-                  { label: <Text strong>Estatus</Text>, value: item.estatus }
+                  { label: <Text strong>Familia</Text>, value: item.name },
+                  { label: <Text strong>Invitados</Text>, value: item.guestQuantity },
+                  { label: <Text strong>WhatsApp</Text>, value: item.phone },
+                  { label: <Text strong>Estatus</Text>, value: item.status || "Pendiente" }
                 ]} />
               </List.Item>
             )} />
