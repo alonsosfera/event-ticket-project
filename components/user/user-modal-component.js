@@ -1,14 +1,27 @@
-import { Modal, message, Form } from "antd"
-import NewUser from "@/components/user/new-user-component"
-import { useState } from "react"
+import { Modal, message, Form, Input, Select } from "antd"
+import { useState, useEffect } from "react"
 import { useSession } from "next-auth/react"
 import axios from "axios"
 
-const NewUserModal = ({ isModalVisible, handleCancel }) => {
+const { Option } = Select
+
+const NewUserModal = ({ isModalVisible, handleCancel, editUser }) => {
   const [loading, setLoading] = useState(false)
   const { data: session } = useSession()
   const [form] = Form.useForm()
   const tenantId = session?.user?.tenants[0]?.id
+
+  useEffect(() => {
+    if (editUser) {
+      form.setFieldsValue({
+        name: editUser.name,
+        phone: editUser.phone,
+        role: editUser.role
+      })
+    } else {
+      form.resetFields()
+    }
+  }, [editUser, form])
 
   const handleSubmit = async values => {
     setLoading(true)
@@ -32,7 +45,7 @@ const NewUserModal = ({ isModalVisible, handleCancel }) => {
 
   return (
     <Modal
-      title="Nuevo Usuario"
+      title={editUser ? "Editar Usuario" : "Nuevo Usuario"}  // Título dinámico
       open={isModalVisible}
       onCancel={handleCancel}
       cancelText="Cancelar"
@@ -42,7 +55,36 @@ const NewUserModal = ({ isModalVisible, handleCancel }) => {
         form.submit()
       }}
       width={381}>
-      <NewUser form={form} onSubmit={handleSubmit} />
+      <Form
+        form={form}
+        layout="vertical"
+        autoComplete="off"
+        requiredMark={false}
+        onFinish={handleSubmit}>
+        <Form.Item
+          label="Nombre"
+          name="name"
+          rules={[{ required: true, message: "Por favor introduce nombre!" }]}>
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          label="Número de teléfono"
+          name="phone"
+          rules={[{ required: true, message: "Por favor confirma el número de teléfono!" }]}>
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          label="Rol"
+          name="role"
+          rules={[{ required: true, message: "Por favor selecciona un rol!" }]}>
+          <Select placeholder="Selecciona un rol">
+            <Option value="ADMIN">ADMIN</Option>
+            <Option value="HOST">HOST</Option>
+          </Select>
+        </Form.Item>
+      </Form>
     </Modal>
   )
 }

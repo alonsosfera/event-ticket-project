@@ -5,7 +5,7 @@ import axios from "axios"
 import { useDispatch } from "react-redux"
 import { deleteUser } from "@/slices/users-slice"
 
-const UsersTable = ({ dataSource, isLoading }) => {
+const UsersTable = ({ dataSource, isLoading, handleEdit }) => {
   const dispatch = useDispatch()
 
   const showConfirm = id => {
@@ -49,7 +49,9 @@ const UsersTable = ({ dataSource, isLoading }) => {
       render: (text, record) => {
         return (
           <Space size="middle">
-            <Button shape="circle" icon={<EditOutlined />} />
+            <Button
+              shape="circle" icon={<EditOutlined />}
+              onClick={() => handleEdit(record)} />
             <Button
               shape="circle"
               icon={<DeleteOutlined />}
