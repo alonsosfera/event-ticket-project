@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
-import { Table } from "antd"
+import { Table, Space, Button, message } from "antd"
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons"
 import { useEvent } from "../../events/event-context"
 import TableActions from "./event-table-actions-component"
 import { columns } from "./event-table-items"
@@ -8,7 +9,7 @@ import EventCard from "@/components/events/event-card-component"
 import { useSession } from "next-auth/react"
 import axios from "axios"
 import { useDispatch, useSelector } from "react-redux"
-import { setUserEventsList } from "@/slices/guests-slice"
+import { setUserEventsList, deleteGuest } from "@/slices/guests-slice"
 
 const EventTable = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([])
@@ -45,6 +46,27 @@ const EventTable = () => {
 
   const selectedGuests = getSelectedGuests()
 
+  const handleEdit = record => {
+    record
+  }
+
+  const handleDelete = async guestId => {
+    try {
+      const response = await axios.delete(`/api/guest/delete?id=${guestId}`)
+
+      if (response.data.success) {
+        message.open({
+          content: "Invitado eliminado con éxito",
+          duration: 3
+        })
+        dispatch(deleteGuest(response.data.deletedGuest.id))
+      }
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || "Error al eliminar el invitado"
+      message.error(errorMessage)
+    }
+  }
+
   if (!userEvents || userEvents.length === 0) {
     return (
       <EmptyDescription description="No hay eventos, favor de comunicarse con administración." />
@@ -61,6 +83,27 @@ const EventTable = () => {
     }))
   }
 
+  const columnsWithActions = columns.map(column => {
+    if (column.title === "Acciones") {
+      return {
+        ...column,
+        render: (_, record) => (
+          <Space>
+            <Button
+              icon={<EditOutlined />}
+              shape="circle"
+              onClick={() => handleEdit(record)} />
+            <Button
+              icon={<DeleteOutlined />}
+              shape="circle"
+              onClick={() => handleDelete(record.id)} />
+          </Space>
+        )
+      }
+    }
+    return column
+  })
+
   return (
     <div className="event-container">
       {selectedEvent ? (
@@ -72,7 +115,7 @@ const EventTable = () => {
             size="small"
             bordered
             rowSelection={{ selectedRowKeys, onChange: onSelectChange }}
-            columns={columns}
+            columns={columnsWithActions}
             dataSource={mapGuests(selectedGuests)} />
           <EventCard events={userEvents} />
         </>
@@ -87,3 +130,4 @@ const EventTable = () => {
 }
 
 export default EventTable
+
