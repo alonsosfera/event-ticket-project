@@ -26,7 +26,14 @@ const guestsSlice = createSlice({
       }
     },
     deleteGuest: (state, action) => {
-      state.list = state.list.filter(guest => guest.id !== action.payload)
+      const eventIndex = state.list.findIndex(event =>
+        event.guests.some(guest => guest.id === action.payload)
+      )
+      if (eventIndex !== -1) {
+        state.list[eventIndex].guests = state.list[eventIndex].guests.filter(
+          guest => guest.id !== action.payload
+        )
+      }
     },
     updateGuest: (state, action) => {
       state.list = state.list.map(guest => {
