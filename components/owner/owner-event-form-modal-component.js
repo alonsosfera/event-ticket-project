@@ -1,7 +1,7 @@
 import React, { useEffect } from "react"
 import { Form, Input, DatePicker, Select, InputNumber, Button } from "antd"
 import { useDispatch, useSelector } from "react-redux"
-import { createEvent } from "@/slices/events-slice"
+import { createEvent, updateEvent } from "@/slices/events-slice"
 import axios from "axios"
 import dayjs from "dayjs"
 
@@ -13,38 +13,47 @@ const EventForm = ({ eventToEdit, onCancel }) => {
   const [form] = Form.useForm()
   const dispatch = useDispatch()
 
+  const handleSubmit = async values => {
+    try {
+      const eventData = {
+        name: values.name || eventToEdit.name,
+        guestQuantity: values.guestQuantity || eventToEdit.guestQuantity,
+        eventDate: values.eventDate
+          ? values.eventDate.toISOString()
+          : eventToEdit.eventDate
+            ? dayjs(eventToEdit.eventDate).toISOString()
+            : new Date().toISOString(),
+        eventHallId: values.eventHall || eventToEdit.eventHallId,
+        userId: values.userId || eventToEdit.userId
+      }
+
+      const response = eventToEdit
+        ? await axios.put(`/api/events/update?id=${eventToEdit.key}`, eventData)
+        : await axios.post("/api/events/create", eventData)
+
+      if (eventToEdit) {
+        dispatch(updateEvent(response.data))
+      } else {
+        dispatch(createEvent(response.data))
+      }
+      form.resetFields()
+      onCancel()
+    } catch (error) {
+      console.error("Error al crear o actualizar el evento:", error)
+    }
+  }
+
   useEffect(() => {
     if (eventToEdit) {
       form.setFieldsValue({
         name: eventToEdit.name,
         guestQuantity: eventToEdit.guestQuantity,
         eventDate: eventToEdit.eventDate ? dayjs(eventToEdit.eventDate) : null,
-        eventHall: eventToEdit.eventHall || "hall1",
-        userId: eventToEdit.users?.[0]?.name
+        eventHall: eventToEdit.eventHallId,
+        userId: eventToEdit.userId
       })
     }
   }, [eventToEdit, form])
-
-  const handleSubmit = async values => {
-    try {
-      const eventData = {
-        name: values.name,
-        guestQuantity: values.guestQuantity,
-        eventDate: values.eventDate || new Date().toISOString(),
-        eventHallId: values.eventHall,
-        userId: values.userId
-      }
-
-      const response = eventToEdit
-        ? await axios.put(`/api/events/update?id=${eventToEdit.id}`, eventData)
-        : await axios.post("/api/events/create", eventData)
-
-      dispatch(createEvent(response.data))
-      onCancel()
-    } catch (error) {
-      console.error("Error al crear o actualizar el evento:", error)
-    }
-  }
 
   return (
     <Form
@@ -53,6 +62,7 @@ const EventForm = ({ eventToEdit, onCancel }) => {
       layout="vertical"
       autoComplete="off"
       onFinish={handleSubmit}>
+
       <Form.Item
         name="name"
         label="Nombre del evento"
@@ -60,6 +70,7 @@ const EventForm = ({ eventToEdit, onCancel }) => {
         colon={false}>
         <Input placeholder="Nombre del evento" />
       </Form.Item>
+
       <Form.Item
         name="userId"
         label="Usuarios"
@@ -67,10 +78,13 @@ const EventForm = ({ eventToEdit, onCancel }) => {
         colon={false}>
         <Select placeholder="Selecciona los usuarios">
           {list.filter(user => user.role === "HOST").map(user => (
-            <Option key={user.id} value={user.id}>{user.name}</Option>
+            <Option key={user.id} value={user.id}>
+              {user.name}
+            </Option>
           ))}
         </Select>
       </Form.Item>
+
       <Form.Item
         name="guestQuantity"
         label="Cantidad de invitados"
@@ -78,6 +92,7 @@ const EventForm = ({ eventToEdit, onCancel }) => {
         colon={false}>
         <InputNumber placeholder="Número de invitados" style={{ width: "100%" }} />
       </Form.Item>
+
       <Form.Item
         name="eventDate"
         label="Fecha del evento"
@@ -85,6 +100,7 @@ const EventForm = ({ eventToEdit, onCancel }) => {
         colon={false}>
         <DatePicker style={{ width: "100%" }} />
       </Form.Item>
+
       <Form.Item
         name="eventHall"
         label="Salón del evento"
@@ -98,6 +114,7 @@ const EventForm = ({ eventToEdit, onCancel }) => {
           ))}
         </Select>
       </Form.Item>
+
       <Form.Item>
         <Button type="default" onClick={onCancel}>Cancelar</Button>
         <Button
