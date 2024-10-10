@@ -20,7 +20,7 @@ const TableMobile = ({ selectedEvent, setSelectedEvent }) => {
   const userEvents = useSelector(state => state.guestsSlice.list)
 
   const handleBack = () => {
-    setSelectedEvent(null) // Resetea la selección del evento al volver
+    setSelectedEvent(null)
   }
 
   if (!userEvents || userEvents.length === 0) {
@@ -61,7 +61,8 @@ const TableMobile = ({ selectedEvent, setSelectedEvent }) => {
           <Title className="title-event">Eventos</Title>
           <EventCard
             events={userEvents}
-            setSelectedEvent={setSelectedEvent} />
+            setSelectedEvent={setSelectedEvent}
+            clickable={true} />
         </div>
       )}
     </div>
