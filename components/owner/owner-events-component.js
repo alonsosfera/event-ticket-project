@@ -8,6 +8,7 @@ import { fetchEventsList, setEventsError, setEventsList } from "@/slices/events-
 import axios from "axios"
 import { fetchUsersList, setUsersList } from "@/slices/users-slice"
 import { useSession } from "next-auth/react"
+import { fetchRoomsList , setRoomsList } from "@/slices/rooms-slice"
 
 const OwnerEventsComponent = () => {
   const { data: session, status } = useSession()
@@ -16,11 +17,11 @@ const OwnerEventsComponent = () => {
   const dispatch = useDispatch()
   const events = useSelector(state => state.eventsSlice.list)
   const users = useSelector(state => state.usersSlice.list)
+  const rooms = useSelector(state => state.roomsSlice.list)
   const [searchText, setSearchText] = useState("")
 
   useEffect(() => {
     if (status === "authenticated") {
-      // Si hay sesión y no hay eventos cargados, hacer la solicitud
       if (!events.length) {
         dispatch(fetchEventsList())
         axios.get("/api/events/list")
@@ -32,7 +33,6 @@ const OwnerEventsComponent = () => {
           })
       }
 
-      // Si no hay usuarios cargados, hacer la solicitud
       if (!users.length && userTenantId) {
         dispatch(fetchUsersList())
         axios.get(`/api/users/list?tenantId=${userTenantId}`)
@@ -43,8 +43,20 @@ const OwnerEventsComponent = () => {
             console.error("Error obteniendo usuarios:", error.message)
           })
       }
+
+      if (!rooms.length) {
+        dispatch(fetchRoomsList())
+        axios.get("/api/rooms/list")
+          .then(({ data }) => {
+            dispatch(setRoomsList(data))
+          })
+          .catch(error => {
+            console.error("Error obteniendo habitaciones:", error.message)
+          })
+      }
     }
-  }, [status, dispatch, events, users, userTenantId])
+  }, [status, dispatch, events, users, rooms, userTenantId])
+
 
   return (
     <>
