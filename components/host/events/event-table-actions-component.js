@@ -1,17 +1,13 @@
 import { Row, Col, Button, Divider } from "antd"
 import { FileImageOutlined } from "@ant-design/icons"
 import EventHeader from "./event-header-component"
-import { useEvent } from "../../events/event-context"
 import InvitateGuestModal from "./event-modal-invitations"
 import { useState } from "react"
 import ConfigInvitationDigital from "@/components/host/events/event-modal-invitation-digital-component"
 import ConfigRoomMaps from "@/components/host/events/event-modal-room-maps-component"
 import ActionsButtons from "@/components/host/events/event-table-actions-buttons"
 
-const TableActions = () => {
-  const { selectedEvent } = useEvent()
-
-
+const TableActions = ({ selectedEvent }) => {
   const [isDigitalInvitationModalVisible, setIsDigitalInvitationModalVisible] = useState(false)
   const [isInvitateGuestModalVisible, setIsInvitateGuestModalVisible] = useState(false)
   const [isArrangeGuestsModalVisible, setIsArrangeGuestsModalVisible] = useState(false)
@@ -46,9 +42,7 @@ const TableActions = () => {
       <EventHeader selectedEvent={selectedEvent} />
       <Row justify={"end"} gutter={16}>
         <Col>
-          <Button
-            icon={<FileImageOutlined />}
-            onClick={handleDigitalInvitation}>
+          <Button icon={<FileImageOutlined />} onClick={handleDigitalInvitation}>
             Invitación digital
           </Button>
         </Col>
@@ -60,7 +54,7 @@ const TableActions = () => {
       </Row>
       <Divider />
 
-      <ActionsButtons  selectedEvent={selectedEvent} />
+      <ActionsButtons selectedEvent={selectedEvent} />
 
       <InvitateGuestModal
         visible={isInvitateGuestModalVisible}

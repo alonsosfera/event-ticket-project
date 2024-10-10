@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react"
 import { Table, Space, Button, message } from "antd"
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons"
-import { useEvent } from "../../events/event-context"
 import TableActions from "./event-table-actions-component"
 import { columns } from "./event-table-items"
 import EmptyDescription from "../../shared/empty-component"
@@ -13,7 +12,7 @@ import { setUserEventsList, deleteGuest } from "@/slices/guests-slice"
 
 const EventTable = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([])
-  const { selectedEvent } = useEvent()
+  const [selectedEvent, setSelectedEvent] = useState(null)
   const { data: session } = useSession()
   const userId = session?.user?.id
   const dispatch = useDispatch()
@@ -110,19 +109,28 @@ const EventTable = () => {
         <>
           <TableActions
             selectedRowKeys={selectedRowKeys}
-            setSelectedRowKeys={setSelectedRowKeys} />
+            setSelectedRowKeys={setSelectedRowKeys}
+            selectedEvent={selectedEvent}
+            setSelectedEvent={setSelectedEvent} />
           <Table
             size="small"
             bordered
             rowSelection={{ selectedRowKeys, onChange: onSelectChange }}
             columns={columnsWithActions}
             dataSource={mapGuests(selectedGuests)} />
-          <EventCard events={userEvents} />
+          <EventCard
+            events={userEvents}
+            selectedEvent={selectedEvent}
+            setSelectedEvent={setSelectedEvent}
+            clickable={true} />
         </>
       ) : (
         <div>
           <EmptyDescription description="Seleccione un evento para ver aquí sus detalles" />
-          <EventCard events={userEvents} />
+          <EventCard
+            events={userEvents} selectedEvent={selectedEvent}
+            setSelectedEvent={setSelectedEvent}
+            clickable={true} />
         </div>
       )}
     </div>
@@ -130,4 +138,3 @@ const EventTable = () => {
 }
 
 export default EventTable
-

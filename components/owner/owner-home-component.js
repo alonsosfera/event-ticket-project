@@ -21,7 +21,9 @@ const OwnerHomeComponent = () => {
       <Col>
         <Title level={5} style={{ fontWeight: "bold", marginBottom: "20px" }}>Eventos esta semana</Title>
       </Col>
-      <EventCard events={list} />
+      <EventCard
+        events={list} clickable={false}
+        cursor="default" />
       <Col>
         <Title level={5} style={{ fontWeight: "bold", marginBottom: "20px", marginTop: "20px" }}>Proximos eventos</Title>
       </Col>

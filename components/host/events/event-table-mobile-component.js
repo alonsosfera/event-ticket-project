@@ -1,4 +1,3 @@
-import { useEvent } from "../../events/event-context"
 import TableActions from "./event-table-actions-component"
 import { List, Typography, Button } from "antd"
 import EmptyDescription from "../../shared/empty-component"
@@ -17,12 +16,11 @@ const dataSource = Array.from({ length: 46 }).map((_, i) => ({
   estatus: "pendiente"
 }))
 
-const TableMobile = () => {
-  const { userEvents } = useSelector(state => state.eventsSlice)
-  const { selectedEvent } = useEvent()
+const TableMobile = ({ selectedEvent, setSelectedEvent }) => {
+  const userEvents = useSelector(state => state.guestsSlice.list)
 
   const handleBack = () => {
-    window.location.reload()
+    setSelectedEvent(null) // Resetea la selección del evento al volver
   }
 
   if (!userEvents || userEvents.length === 0) {
@@ -35,16 +33,16 @@ const TableMobile = () => {
   return (
     <div className="event-container">
       {selectedEvent && (
-      <Button
-        type="text"
-        className="back-button"
-        icon={<LeftOutlined className="icon-back" />}
-        onClick={handleBack}>
-      </Button>
+        <Button
+          type="text"
+          className="back-button"
+          icon={<LeftOutlined className="icon-back" />}
+          onClick={handleBack}>
+        </Button>
       )}
       {selectedEvent ? (
         <>
-          <TableActions />
+          <TableActions selectedEvent={selectedEvent} />
           <List
             dataSource={dataSource}
             renderItem={item => (
@@ -61,7 +59,9 @@ const TableMobile = () => {
       ) : (
         <div>
           <Title className="title-event">Eventos</Title>
-          <EventCard events={userEvents} />
+          <EventCard
+            events={userEvents}
+            setSelectedEvent={setSelectedEvent} />
         </div>
       )}
     </div>
