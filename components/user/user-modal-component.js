@@ -2,6 +2,8 @@ import { Modal, message, Form, Input, Select } from "antd"
 import { useState, useEffect } from "react"
 import { useSession } from "next-auth/react"
 import axios from "axios"
+import { createUser , updateUser } from "@/slices/users-slice"
+import { useDispatch } from "react-redux"
 
 const { Option } = Select
 
@@ -10,6 +12,7 @@ const NewUserModal = ({ isModalVisible, handleCancel, editUser }) => {
   const { data: session } = useSession()
   const [form] = Form.useForm()
   const tenantId = session?.user?.tenants[0]?.id
+  const dispatch = useDispatch()
 
   useEffect(() => {
     if (editUser) {
@@ -26,18 +29,33 @@ const NewUserModal = ({ isModalVisible, handleCancel, editUser }) => {
   const handleSubmit = async values => {
     setLoading(true)
     try {
-      const response = await axios.post("/api/auth/signup", {
-        name: values.name,
-        phone: values.phone,
-        role: values.role,
-        tenantId: tenantId
-      })
-      message.success(response.data.message)
+      const userData = {
+        name: values.name || editUser?.name,
+        phone: values.phone || editUser?.phone,
+        role: values.role || editUser?.role,
+        tenantId: tenantId || editUser?.tenantId
+      }
+
+      let response
+      if (editUser) {
+        response = await axios.put(`/api/users/${editUser.id}`, userData)
+      } else {
+        response = await axios.post("/api/auth/signup", userData)
+      }
+
+      if (editUser) {
+        dispatch(updateUser(response.data))
+        message.success("El usuario ha sido editado correctamente")
+      } else {
+        dispatch(createUser(response.data))
+        message.success("El usuario ha sido guardado correctamente")
+      }
+
       handleCancel()
       form.resetFields()
     } catch (error) {
-      console.error("Error al crear el usuario:", error)
-      message.error("No se pudo crear el usuario")
+      console.error("Error al guardar el usuario:", error)
+      message.error("No se pudo guardar el usuario")
     } finally {
       setLoading(false)
     }
@@ -45,7 +63,7 @@ const NewUserModal = ({ isModalVisible, handleCancel, editUser }) => {
 
   return (
     <Modal
-      title={editUser ? "Editar Usuario" : "Nuevo Usuario"}  // Título dinámico
+      title={editUser ? "Editar Usuario" : "Nuevo Usuario"}
       open={isModalVisible}
       onCancel={handleCancel}
       cancelText="Cancelar"
@@ -64,7 +82,7 @@ const NewUserModal = ({ isModalVisible, handleCancel, editUser }) => {
         <Form.Item
           label="Nombre"
           name="name"
-          rules={[{ required: true, message: "Por favor introduce nombre!" }]}>
+          rules={[{ required: true, message: "Por favor introduce el nombre!" }]}>
           <Input />
         </Form.Item>
 

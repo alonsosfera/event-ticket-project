@@ -14,7 +14,11 @@ const UsersComponent = () => {
   const [editUser, setEditUser] = useState(null)
 
   const showModal = () => setIsModalVisible(true)
-  const handleCancel = () => setIsModalVisible(false)
+
+  const handleCancel = () => {
+    setIsModalVisible(false)
+    setEditUser(null)
+  }
 
   const handleEdit = record => {
     setEditUser(record)
@@ -27,10 +31,8 @@ const UsersComponent = () => {
   )
 
   const dataSource = filteredList?.map(user => ({
-    ...user,
-    key: user.id
+    ...user
   }))
-
 
   return (
     <>
