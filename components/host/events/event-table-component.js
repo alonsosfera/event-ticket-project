@@ -12,11 +12,11 @@ import { setUserEventsList, deleteGuest } from "@/slices/guests-slice"
 
 const EventTable = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([])
-  const [selectedEvent, setSelectedEvent] = useState(null)
   const { data: session } = useSession()
   const userId = session?.user?.id
   const dispatch = useDispatch()
   const userEvents = useSelector(state => state.guestsSlice.list)
+  const selectedEvent = useSelector(state => state.guestsSlice.selectedEvent)
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -109,9 +109,7 @@ const EventTable = () => {
         <>
           <TableActions
             selectedRowKeys={selectedRowKeys}
-            setSelectedRowKeys={setSelectedRowKeys}
-            selectedEvent={selectedEvent}
-            setSelectedEvent={setSelectedEvent} />
+            setSelectedRowKeys={setSelectedRowKeys} />
           <Table
             size="small"
             bordered
@@ -120,16 +118,13 @@ const EventTable = () => {
             dataSource={mapGuests(selectedGuests)} />
           <EventCard
             events={userEvents}
-            selectedEvent={selectedEvent}
-            setSelectedEvent={setSelectedEvent}
             clickable={true} />
         </>
       ) : (
         <div>
           <EmptyDescription description="Seleccione un evento para ver aquí sus detalles" />
           <EventCard
-            events={userEvents} selectedEvent={selectedEvent}
-            setSelectedEvent={setSelectedEvent}
+            events={userEvents}
             clickable={true} />
         </div>
       )}

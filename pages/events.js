@@ -1,6 +1,6 @@
 import axios from "axios"
 import { Row, Col } from "antd"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { pageAuth } from "@/helpers/page-auth"
 import UserRoleEnum from "@/models/user-role-enum"
@@ -13,7 +13,6 @@ import { fetchEventsList, setEventsList, setEventsError } from "@/slices/events-
 export default function EventsPage({ user }) {
   const { role } = user
   const dispatch = useDispatch()
-  const [selectedEvent, setSelectedEvent] = useState(null) // Definir el estado aquí
 
   useEffect(() => {
     dispatch(fetchEventsList())
@@ -28,14 +27,16 @@ export default function EventsPage({ user }) {
 
   return (
     <Layout>
-      {role === UserRoleEnum.HOST &&
-      <Row>
-        <Col md={24} xs={0}><EventTable /></Col>
-        <Col md={0} xs={24}><TableMobile
-          selectedEvent={selectedEvent}
-          setSelectedEvent={setSelectedEvent} /></Col>
-      </Row>
-        }
+      {role === UserRoleEnum.HOST && (
+        <Row>
+          <Col md={24} xs={0}>
+            <EventTable />
+          </Col>
+          <Col md={0} xs={24}>
+            <TableMobile />
+          </Col>
+        </Row>
+      )}
       {[UserRoleEnum.OWNER, UserRoleEnum.ADMIN].includes(role) && <OwnerEventsComponent />}
     </Layout>
   )

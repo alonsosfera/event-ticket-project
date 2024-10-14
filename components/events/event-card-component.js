@@ -1,6 +1,10 @@
 import { Card, Col, Row } from "antd"
+import { useDispatch } from "react-redux"
+import { setSelectedEvent } from "@/slices/guests-slice"
 
-const EventCard = ({ events, setSelectedEvent, clickable, cursor }) => {
+const EventCard = ({ events, clickable, cursor }) => {
+  const dispatch = useDispatch()
+
   return (
     <Row justify={"center"} gutter={[16, 6]}>
       {events?.slice(0, 4).map((event, index) => {
@@ -19,7 +23,9 @@ const EventCard = ({ events, setSelectedEvent, clickable, cursor }) => {
                   {index + 1}. {event.name}
                 </span>
               }
-              onClick={clickable ? () => setSelectedEvent(event) : null}
+              onClick={clickable ? () => {
+                dispatch(setSelectedEvent(event))
+              } : null}
               hoverable
               style={{ cursor }}>
               <div className="card-content">

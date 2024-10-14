@@ -1,14 +1,14 @@
-import { Button , Col , Flex , Grid , Row, message } from "antd"
-import { FileTextOutlined , NumberOutlined , UnorderedListOutlined } from "@ant-design/icons"
+import { Button, Col, Flex, Grid, Row, message } from "antd"
+import { FileTextOutlined, NumberOutlined, UnorderedListOutlined } from "@ant-design/icons"
 import { useState } from "react"
 import axios from "axios"
 import InvitateGuestModal from "./event-modal-invitations"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { createGuest } from "@/slices/guests-slice"
 
-const ActionsButtons = ({ selectedEvent }) => {
-
+const ActionsButtons = () => {
   const dispatch = useDispatch()
+  const selectedEvent = useSelector(state => state.guestsSlice.selectedEvent)
 
   const { xs, md, lg } = Grid.useBreakpoint()
 
@@ -62,18 +62,19 @@ const ActionsButtons = ({ selectedEvent }) => {
     }
   }
 
-  return(
-
+  return (
     <>
       <Row justify={"space-between"}>
         <Col xs={24} xl={12}>
           <Flex justify={xs ? "end" : "start"} gap={12}>
-            {md && <Button
-              type="text"
-              icon={<UnorderedListOutlined />}
-              onClick={handleLoadGuestList}>
-              Cargar lista de invitados
-            </Button>}
+            {md && (
+              <Button
+                type="text"
+                icon={<UnorderedListOutlined />}
+                onClick={handleLoadGuestList}>
+                Cargar lista de invitados
+              </Button>
+            )}
             <Button
               type="text"
               icon={<NumberOutlined />}
@@ -91,19 +92,19 @@ const ActionsButtons = ({ selectedEvent }) => {
         <Col xs={24} xl={12}>
           <Flex justify={lg || xs ? "end" : "start"} gap={12}>
             {md && (
-            <>
-              <Button
-                className="invitation-buttons"
-                onClick={handleBulkDelete}>
-                Eliminar
-              </Button>
-              <Button
-                className="invitation-buttons"
-                onClick={handleSendInvitation}>
-                Enviar invitación
-              </Button>
-            </>
-          )}
+              <>
+                <Button
+                  className="invitation-buttons"
+                  onClick={handleBulkDelete}>
+                  Eliminar
+                </Button>
+                <Button
+                  className="invitation-buttons"
+                  onClick={handleSendInvitation}>
+                  Enviar invitación
+                </Button>
+              </>
+            )}
             <Button
               className="invitation-buttons"
               onClick={handleAddGuests}>
@@ -112,7 +113,6 @@ const ActionsButtons = ({ selectedEvent }) => {
           </Flex>
         </Col>
       </Row>
-
 
       <InvitateGuestModal
         visible={isInvitateGuestModalVisible}

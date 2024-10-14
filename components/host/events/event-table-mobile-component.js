@@ -4,15 +4,18 @@ import EmptyDescription from "../../shared/empty-component"
 import EventCard from "@/components/events/event-card-component"
 import { LeftOutlined } from "@ant-design/icons"
 import DescriptionListComponent from "@/components/shared/description-list-component"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
+import { setSelectedEvent } from "@/slices/guests-slice"
 
 const { Title, Text } = Typography
 
-const TableMobile = ({ selectedEvent, setSelectedEvent }) => {
+const TableMobile = () => {
+  const dispatch = useDispatch()
   const userEvents = useSelector(state => state.guestsSlice.list)
+  const selectedEvent = useSelector(state => state.guestsSlice.selectedEvent)
 
   const handleBack = () => {
-    setSelectedEvent(null)
+    dispatch(setSelectedEvent(null))
   }
 
   const getSelectedGuests = () => {
@@ -61,7 +64,6 @@ const TableMobile = ({ selectedEvent, setSelectedEvent }) => {
           <Title className="title-event">Eventos</Title>
           <EventCard
             events={userEvents}
-            setSelectedEvent={setSelectedEvent}
             clickable={true} />
         </div>
       )}

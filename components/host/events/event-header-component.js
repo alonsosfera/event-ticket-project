@@ -1,9 +1,12 @@
 import React from "react"
 import { Row, Col, Typography, Flex } from "antd"
+import { useSelector } from "react-redux"
 
 const { Title, Text } = Typography
 
-const EventHeader = ({ selectedEvent }) => {
+const EventHeader = () => {
+  const selectedEvent = useSelector(state => state.guestsSlice.selectedEvent)
+
   if (!selectedEvent) {
     return null
   }
