@@ -7,7 +7,7 @@ const EventCard = ({ events, clickable, cursor }) => {
 
   return (
     <Row justify={"center"} gutter={[16, 6]}>
-      {events?.slice(0, 4).map((event, index) => {
+      {events?.map((event, index) => {
         const cardClass = `card-container card-color-${(index % 4) + 1}`
         const formattedDate = new Date(event.eventDate).toLocaleDateString("es-ES")
 
