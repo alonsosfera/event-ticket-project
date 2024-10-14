@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { Table, Space, Button, message } from "antd"
+import { Table, Space, Button, message, Modal } from "antd"
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons"
 import TableActions from "./event-table-actions-component"
 import { columns } from "./event-table-items"
@@ -9,6 +9,8 @@ import { useSession } from "next-auth/react"
 import axios from "axios"
 import { useDispatch, useSelector } from "react-redux"
 import { setUserEventsList, deleteGuest } from "@/slices/guests-slice"
+
+const { confirm } = Modal
 
 const EventTable = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([])
@@ -47,6 +49,21 @@ const EventTable = () => {
 
   const handleEdit = record => {
     record
+  }
+
+  const showDeleteConfirm = id => {
+    confirm({
+      title: "¿Estás seguro que deseas eliminar este invitado?",
+      content: "Esta acción no se puede deshacer y eliminará permanentemente al invitado.",
+      okText: "Sí, eliminar",
+      okType: "danger",
+      cancelText: "Cancelar",
+      onOk() {
+        handleDelete(id)
+      },
+      onCancel() {
+      }
+    })
   }
 
   const handleDelete = async guestId => {
@@ -95,7 +112,7 @@ const EventTable = () => {
             <Button
               icon={<DeleteOutlined />}
               shape="circle"
-              onClick={() => handleDelete(record.id)} />
+              onClick={() => showDeleteConfirm(record.id)} />
           </Space>
         )
       }
