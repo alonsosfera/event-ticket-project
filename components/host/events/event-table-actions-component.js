@@ -9,7 +9,7 @@ import ActionsButtons from "@/components/host/events/event-table-actions-buttons
 import { useSelector } from "react-redux"
 
 const TableActions = () => {
-  const selectedEvent = useSelector(state => state.guestsSlice.selectedEvent)
+  const selectedEvent = useSelector(state => state.eventsSlice.selectedEvent)
 
   const [isDigitalInvitationModalVisible, setIsDigitalInvitationModalVisible] = useState(false)
   const [isInvitateGuestModalVisible, setIsInvitateGuestModalVisible] = useState(false)

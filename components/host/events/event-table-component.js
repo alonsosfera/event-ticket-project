@@ -8,7 +8,8 @@ import EventCard from "@/components/events/event-card-component"
 import { useSession } from "next-auth/react"
 import axios from "axios"
 import { useDispatch, useSelector } from "react-redux"
-import { setUserEventsList, deleteGuest } from "@/slices/guests-slice"
+import { deleteGuest } from "@/slices/guests-slice"
+import { setEventsList } from "@/slices/events-slice"
 
 const { confirm } = Modal
 
@@ -17,17 +18,20 @@ const EventTable = () => {
   const { data: session } = useSession()
   const userId = session?.user?.id
   const dispatch = useDispatch()
-  const userEvents = useSelector(state => state.guestsSlice.list)
-  const selectedEvent = useSelector(state => state.guestsSlice.selectedEvent)
+  const userEvents = useSelector(state => state.eventsSlice.list)
+  const selectedEvent = useSelector(state => state.eventsSlice.selectedEvent)
 
   useEffect(() => {
     const fetchEvents = async () => {
       if (userId) {
         try {
-          const response = await axios.get(`/api/users/${userId}`)
-          dispatch(setUserEventsList(response.data))
+          const response = await axios.get("/api/events/list", {
+            params: { userId }
+          })
+          dispatch(setEventsList(response.data))
         } catch (error) {
           console.error("Error al traer los eventos:", error)
+          message.error("Error al obtener los eventos")
         }
       }
     }

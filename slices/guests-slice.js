@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
   list: [],
-  selectedEvent: null,
   isLoading: false
 }
 
@@ -12,13 +11,6 @@ const guestsSlice = createSlice({
   reducers: {
     fetchGuestsList: state => {
       state.isLoading = true
-    },
-    setUserEventsList: (state, action) => {
-      state.isLoading = false
-      state.list = action.payload
-    },
-    setSelectedEvent: (state, action) => {
-      state.selectedEvent = action.payload
     },
     createGuest: (state, action) => {
       const eventIndex = state.list.findIndex(event => event.id === action.payload.eventId)
@@ -53,5 +45,5 @@ const guestsSlice = createSlice({
   }
 })
 
-export const { fetchGuestsList, setGuestsList, createGuest, deleteGuest, updateGuest, setUserEventsList, setSelectedEvent } = guestsSlice.actions
+export const { fetchGuestsList, setGuestsList, createGuest, deleteGuest, updateGuest } = guestsSlice.actions
 export default guestsSlice.reducer

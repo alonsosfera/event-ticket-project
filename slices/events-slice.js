@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
   list: [],
+  selectedEvent: null,
   isLoading: false
 }
 
@@ -18,6 +19,9 @@ const eventsSlice = createSlice({
       state.isLoading = false
       state.list = action.payload
     },
+    setSelectedEvent: (state, action) => {
+      state.selectedEvent = action.payload
+    },
     setEventsError: (state, action) => {
       state.isLoading = false
       state.error = action.payload
@@ -28,5 +32,5 @@ const eventsSlice = createSlice({
   }
 })
 
-export const { fetchEventsList, setEventsList, setEventsError, createEvent  } = eventsSlice.actions
+export const { fetchEventsList, setEventsList, setEventsError, createEvent, setSelectedEvent  } = eventsSlice.actions
 export default eventsSlice.reducer

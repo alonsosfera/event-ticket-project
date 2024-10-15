@@ -5,14 +5,14 @@ import EventCard from "@/components/events/event-card-component"
 import { LeftOutlined } from "@ant-design/icons"
 import DescriptionListComponent from "@/components/shared/description-list-component"
 import { useSelector, useDispatch } from "react-redux"
-import { setSelectedEvent } from "@/slices/guests-slice"
+import { setSelectedEvent } from "@/slices/events-slice"
 
 const { Title, Text } = Typography
 
 const TableMobile = () => {
   const dispatch = useDispatch()
   const userEvents = useSelector(state => state.guestsSlice.list)
-  const selectedEvent = useSelector(state => state.guestsSlice.selectedEvent)
+  const selectedEvent = useSelector(state => state.eventsSlice.selectedEvent)
 
   const handleBack = () => {
     dispatch(setSelectedEvent(null))

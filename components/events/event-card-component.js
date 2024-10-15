@@ -1,6 +1,6 @@
 import { Card, Col, Row } from "antd"
 import { useDispatch } from "react-redux"
-import { setSelectedEvent } from "@/slices/guests-slice"
+import { setSelectedEvent } from "@/slices/events-slice"
 
 const EventCard = ({ events, clickable, cursor }) => {
   const dispatch = useDispatch()
