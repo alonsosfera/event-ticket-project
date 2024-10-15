@@ -8,7 +8,7 @@ import EventCard from "@/components/events/event-card-component"
 import { useSession } from "next-auth/react"
 import axios from "axios"
 import { useDispatch, useSelector } from "react-redux"
-import { deleteGuest } from "@/slices/guests-slice"
+import { deleteGuest, fetchGuestsList, setGuestsList } from "@/slices/guests-slice"
 import { setEventsList } from "@/slices/events-slice"
 
 const { confirm } = Modal
@@ -20,6 +20,8 @@ const EventTable = () => {
   const dispatch = useDispatch()
   const userEvents = useSelector(state => state.eventsSlice.list)
   const selectedEvent = useSelector(state => state.eventsSlice.selectedEvent)
+  const isLoadingGuests = useSelector(state => state.guestsSlice.isLoading)
+  const guests = useSelector(state => state.guestsSlice.list) || []
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -39,17 +41,28 @@ const EventTable = () => {
     fetchEvents()
   }, [userId, dispatch])
 
+  useEffect(() => {
+    const fetchGuests = async () => {
+      if (selectedEvent) {
+        dispatch(fetchGuestsList())
+        try {
+          const response = await axios.get("/api/guest/list", {
+            params: { eventId: selectedEvent.id }
+          })
+          dispatch(setGuestsList(response.data))
+        } catch (error) {
+          console.error("Error al obtener los invitados:", error)
+          message.error("Error al obtener los invitados")
+        }
+      }
+    }
+
+    fetchGuests()
+  }, [selectedEvent, dispatch])
+
   const onSelectChange = newSelectedRowKeys => {
     setSelectedRowKeys(newSelectedRowKeys)
   }
-
-  const getSelectedGuests = () => {
-    if (!selectedEvent) return []
-    const event = userEvents.find(event => event.id === selectedEvent.id)
-    return event?.guests || []
-  }
-
-  const selectedGuests = getSelectedGuests()
 
   const handleEdit = record => {
     record
@@ -64,8 +77,6 @@ const EventTable = () => {
       cancelText: "Cancelar",
       onOk() {
         handleDelete(id)
-      },
-      onCancel() {
       }
     })
   }
@@ -73,19 +84,21 @@ const EventTable = () => {
   const handleDelete = async guestId => {
     try {
       const response = await axios.delete(`/api/guest/delete?id=${guestId}`)
-
       if (response.data.success) {
         message.open({
           content: "Invitado eliminado con éxito",
           duration: 3
         })
         dispatch(deleteGuest(response.data.deletedGuest.id))
+      } else {
+        message.error(response.data.message || "Error inesperado al eliminar el invitado")
       }
     } catch (error) {
       const errorMessage = error.response?.data?.message || "Error al eliminar el invitado"
       message.error(errorMessage)
     }
   }
+
 
   if (!userEvents || userEvents.length === 0) {
     return (
@@ -136,7 +149,8 @@ const EventTable = () => {
             bordered
             rowSelection={{ selectedRowKeys, onChange: onSelectChange }}
             columns={columnsWithActions}
-            dataSource={mapGuests(selectedGuests)} />
+            dataSource={mapGuests(guests)}
+            loading={isLoadingGuests} />
           <EventCard
             events={userEvents}
             clickable={true} />

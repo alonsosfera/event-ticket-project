@@ -12,36 +12,23 @@ const guestsSlice = createSlice({
     fetchGuestsList: state => {
       state.isLoading = true
     },
+    setGuestsList: (state, action) => {
+      state.isLoading = false
+      state.list = action.payload
+    },
     createGuest: (state, action) => {
-      const eventIndex = state.list.findIndex(event => event.id === action.payload.eventId)
-      if (eventIndex !== -1) {
-        state.list[eventIndex].guests = [
-          ...state.list[eventIndex].guests,
-          action.payload
-        ]
-      }
+      state.list.push(action.payload)
     },
     deleteGuest: (state, action) => {
-      const eventIndex = state.list.findIndex(event =>
-        event.guests.some(guest => guest.id === action.payload)
-      )
-      if (eventIndex !== -1) {
-        state.list[eventIndex].guests = state.list[eventIndex].guests.filter(
-          guest => guest.id !== action.payload
-        )
-      }
+      state.list = state.list.filter(guest => guest.id !== action.payload)
     },
     updateGuest: (state, action) => {
-      const eventIndex = state.list.findIndex(event =>
-        event.guests.some(guest => guest.id === action.payload.id)
-      )
-
-      if (eventIndex !== -1) {
-        state.list[eventIndex].guests = state.list[eventIndex].guests.map(guest =>
-          guest.id === action.payload.id ? action.payload : guest
-        )
+      const { id, ...updatedData } = action.payload
+      const guestIndex = state.list.findIndex(guest => guest.id === id)
+      if (guestIndex !== -1) {
+        state.list[guestIndex] = { ...state.list[guestIndex], ...updatedData }
       }
-    }
+   }
   }
 })
 
