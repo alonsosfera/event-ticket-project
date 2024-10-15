@@ -11,19 +11,27 @@ const UsersComponent = () => {
   const { list, isLoading } = useSelector(state => state.usersSlice)
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [searchText, setSearchText] = useState("")
+  const [editUser, setEditUser] = useState(null)
 
   const showModal = () => setIsModalVisible(true)
-  const handleCancel = () => setIsModalVisible(false)
+
+  const handleCancel = () => {
+    setIsModalVisible(false)
+    setEditUser(null)
+  }
+
+  const handleEdit = record => {
+    setEditUser(record)
+    setIsModalVisible(true)
+  }
 
   const filteredList = list?.filter(user =>
     user.name.toLowerCase().includes(searchText.toLowerCase()) ||
-    user.phone.includes(searchText))
+    user.phone.includes(searchText)
+  )
 
-  const dataSource = filteredList?.map(({ id, ...user }) => ({
-    key: id,
-    role: user.role,
-    name: user.name,
-    phone: user.phone
+  const dataSource = filteredList?.map(user => ({
+    ...user
   }))
 
   return (
@@ -47,20 +55,24 @@ const UsersComponent = () => {
               placeholder="Buscar usuario"
               onChange={e => setSearchText(e.target.value)}
               allowClear={true}
-              onClear={ () => searchText("")}
+              onClear={() => setSearchText("")}
               value={searchText} />
-            <Button
-              type="primary"
-              icon={<SettingOutlined />}>
+            <Button type="primary" icon={<SettingOutlined />}>
               Buscar
             </Button>
           </Space.Compact>
         </Col>
 
-        <UsersTable dataSource={dataSource} isLoading={isLoading} />
+        <UsersTable
+          dataSource={dataSource}
+          isLoading={isLoading}
+          handleEdit={handleEdit} />
       </Row>
 
-      <NewUserModal isModalVisible={isModalVisible} handleCancel={handleCancel} />
+      <NewUserModal
+        isModalVisible={isModalVisible}
+        handleCancel={handleCancel}
+        editUser={editUser} />
     </>
   )
 }
