@@ -11,7 +11,7 @@ const { Title, Text } = Typography
 
 const TableMobile = () => {
   const dispatch = useDispatch()
-  const userEvents = useSelector(state => state.guestsSlice.list)
+  const userEvents = useSelector(state => state.eventsSlice.list)
   const selectedEvent = useSelector(state => state.eventsSlice.selectedEvent)
 
   const handleBack = () => {
