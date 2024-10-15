@@ -16,7 +16,8 @@ const { confirm } = Modal
 
 const EventTable = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([])
-  const [modalState, setModalState] = useState({ visible: false, guest: null })
+  const [isInvitateGuestModalVisible, setIsInvitateGuestModalVisible] = useState(false)
+  const [selectedGuest, setSelectedGuest] = useState(null)
   const { data: session } = useSession()
   const userId = session?.user?.id
   const dispatch = useDispatch()
@@ -26,52 +27,69 @@ const EventTable = () => {
   const guests = useSelector(state => state.guestsSlice.list) || []
 
   const fetchEvents = useCallback(async () => {
-    if (!userId) return
-    try {
-      const response = await axios.get("/api/events/list", { params: { userId } })
-      dispatch(setEventsList(response.data))
-    } catch (error) {
-      console.error("Error al traer los eventos:", error)
-      message.error("Error al obtener los eventos")
+    if (userId) {
+      try {
+        const response = await axios.get("/api/events/list", {
+          params: { userId }
+        })
+        dispatch(setEventsList(response.data))
+      } catch (error) {
+        console.error("Error al traer los eventos:", error)
+        message.error("Error al obtener los eventos")
+      }
     }
   }, [userId, dispatch])
 
-  useEffect(() => {
-    fetchEvents()
-  }, [fetchEvents])
-
+  // Callback para obtener invitados
   const fetchGuests = useCallback(async () => {
-    if (!selectedEvent) return
-    dispatch(fetchGuestsList())
-    try {
-      const response = await axios.get("/api/guest/list", { params: { eventId: selectedEvent.id } })
-      dispatch(setGuestsList(response.data))
-    } catch (error) {
-      console.error("Error al obtener los invitados:", error)
-      message.error("Error al obtener los invitados")
+    if (selectedEvent) {
+      dispatch(fetchGuestsList())
+      try {
+        const response = await axios.get("/api/guest/list", {
+          params: { eventId: selectedEvent.id }
+        })
+        dispatch(setGuestsList(response.data))
+      } catch (error) {
+        console.error("Error al obtener los invitados:", error)
+        message.error("Error al obtener los invitados")
+      }
     }
   }, [selectedEvent, dispatch])
 
   useEffect(() => {
-    fetchGuests()
-  }, [fetchGuests])
+    // Fetch events and guests
+    const fetchData = async () => {
+      await fetchEvents()
+      await fetchGuests()
+    }
 
-  const handleCancelModal = () => setModalState({ visible: false, guest: null })
+    fetchData()
+  }, [fetchEvents, fetchGuests])
 
-  const handleEdit = guest => {
-    setModalState({ visible: true, guest })
+  const onSelectChange = newSelectedRowKeys => {
+    setSelectedRowKeys(newSelectedRowKeys)
+  }
+
+  const handleCancelModal = () => {
+    setIsInvitateGuestModalVisible(false)
+  }
+
+  const handleEdit = record => {
+    setSelectedGuest(record)
+    setIsInvitateGuestModalVisible(true)
   }
 
   const handleSubmitEdit = async values => {
     try {
-      const response = await axios.put(`/api/guest/update?id=${modalState.guest.id}`, {
+      const response = await axios.put(`/api/guest/update?id=${selectedGuest.id}`, {
         name: values.familyName,
         guestQuantity: values.numberGuests,
         phone: values.phone
       })
 
       if (response.data.success) {
-        dispatch(updateGuest(response.data.guest))
+        const updatedGuest = response.data.guest
+        dispatch(updateGuest(updatedGuest))
         message.open({
           content: "Invitado actualizado correctamente",
           duration: 3
@@ -83,7 +101,8 @@ const EventTable = () => {
       message.error("Error al procesar la solicitud")
       console.error(error)
     } finally {
-      handleCancelModal()
+      setIsInvitateGuestModalVisible(false)
+      setSelectedGuest(null)
     }
   }
 
@@ -113,17 +132,27 @@ const EventTable = () => {
         message.error(response.data.message || "Error inesperado al eliminar el invitado")
       }
     } catch (error) {
-      message.error(error.response?.data?.message || "Error al eliminar el invitado")
+      const errorMessage = error.response?.data?.message || "Error al eliminar el invitado"
+      message.error(errorMessage)
     }
   }
 
-  const mapGuests = guests => guests.map(guest => ({
-    id: guest.id,
-    name: guest.name,
-    quantity: guest.guestQuantity,
-    phone: guest.phone,
-    estatus: "pendiente"
-  }))
+
+  if (!userEvents || userEvents.length === 0) {
+    return (
+      <EmptyDescription description="No hay eventos, favor de comunicarse con administración." />
+    )
+  }
+
+  const mapGuests = guests => {
+    return guests.map(guest => ({
+      id: guest.id,
+      name: guest.name,
+      quantity: guest.guestQuantity,
+      phone: guest.phone,
+      estatus: "pendiente"
+    }))
+  }
 
   const columnsWithActions = columns.map(column => {
     if (column.title === "Acciones") {
@@ -132,10 +161,12 @@ const EventTable = () => {
         render: (_, record) => (
           <Space>
             <Button
-              icon={<EditOutlined />} shape="circle"
+              icon={<EditOutlined />}
+              shape="circle"
               onClick={() => handleEdit(record)} />
             <Button
-              icon={<DeleteOutlined />} shape="circle"
+              icon={<DeleteOutlined />}
+              shape="circle"
               onClick={() => showDeleteConfirm(record.id)} />
           </Space>
         )
@@ -144,40 +175,42 @@ const EventTable = () => {
     return column
   })
 
-  const initialValues = modalState.guest ? {
-    familyName: modalState.guest.name,
-    numberGuests: modalState.guest.quantity,
-    phone: modalState.guest.phone
+  const initialValues = selectedGuest ? {
+    familyName: selectedGuest.name,
+    numberGuests: selectedGuest.quantity,
+    phone: selectedGuest.phone
   } : {}
-
-  if (!userEvents || userEvents.length === 0) {
-    return <EmptyDescription description="No hay eventos, favor de comunicarse con administración." />
-  }
 
   return (
     <div className="event-container">
       {selectedEvent ? (
         <>
-          <TableActions selectedRowKeys={selectedRowKeys} setSelectedRowKeys={setSelectedRowKeys} />
+          <TableActions
+            selectedRowKeys={selectedRowKeys}
+            setSelectedRowKeys={setSelectedRowKeys} />
           <Table
             size="small"
             bordered
-            rowSelection={{ selectedRowKeys, onChange: setSelectedRowKeys }}
+            rowSelection={{ selectedRowKeys, onChange: onSelectChange }}
             columns={columnsWithActions}
             dataSource={mapGuests(guests)}
             loading={isLoadingGuests} />
-          <EventCard events={userEvents} clickable={true} />
+          <EventCard
+            events={userEvents}
+            clickable={true} />
           <InvitateGuestModal
-            visible={modalState.visible}
+            visible={isInvitateGuestModalVisible}
             onCancel={handleCancelModal}
             onSubmit={handleSubmitEdit}
             initialValues={initialValues}
-            isEditMode={!!modalState.guest} />
+            isEditMode={!!selectedGuest} />
         </>
       ) : (
         <div>
           <EmptyDescription description="Seleccione un evento para ver aquí sus detalles" />
-          <EventCard events={userEvents} clickable={true} />
+          <EventCard
+            events={userEvents}
+            clickable={true} />
         </div>
       )}
     </div>
