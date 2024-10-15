@@ -6,10 +6,8 @@ import { useState } from "react"
 import ConfigInvitationDigital from "@/components/host/events/event-modal-invitation-digital-component"
 import ConfigRoomMaps from "@/components/host/events/event-modal-room-maps-component"
 import ActionsButtons from "@/components/host/events/event-table-actions-buttons"
-import { useSelector } from "react-redux"
 
 const TableActions = () => {
-  const selectedEvent = useSelector(state => state.eventsSlice.selectedEvent)
 
   const [isDigitalInvitationModalVisible, setIsDigitalInvitationModalVisible] = useState(false)
   const [isInvitateGuestModalVisible, setIsInvitateGuestModalVisible] = useState(false)
@@ -42,7 +40,7 @@ const TableActions = () => {
 
   return (
     <>
-      <EventHeader selectedEvent={selectedEvent} />
+      <EventHeader />
       <Row justify={"end"} gutter={16}>
         <Col>
           <Button icon={<FileImageOutlined />} onClick={handleDigitalInvitation}>
