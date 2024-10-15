@@ -28,7 +28,7 @@ const guestsSlice = createSlice({
       if (guestIndex !== -1) {
         state.list[guestIndex] = { ...state.list[guestIndex], ...updatedData }
       }
-   }
+    }
   }
 })
 

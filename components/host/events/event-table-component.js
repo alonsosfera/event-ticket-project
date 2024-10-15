@@ -8,13 +8,16 @@ import EventCard from "@/components/events/event-card-component"
 import { useSession } from "next-auth/react"
 import axios from "axios"
 import { useDispatch, useSelector } from "react-redux"
-import { deleteGuest, fetchGuestsList, setGuestsList } from "@/slices/guests-slice"
+import { deleteGuest, fetchGuestsList, setGuestsList, updateGuest } from "@/slices/guests-slice"
 import { setEventsList } from "@/slices/events-slice"
+import InvitateGuestModal from "./event-modal-invitations"
 
 const { confirm } = Modal
 
 const EventTable = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([])
+  const [isInvitateGuestModalVisible, setIsInvitateGuestModalVisible] = useState(false)
+  const [selectedGuest, setSelectedGuest] = useState(null)
   const { data: session } = useSession()
   const userId = session?.user?.id
   const dispatch = useDispatch()
@@ -64,8 +67,40 @@ const EventTable = () => {
     setSelectedRowKeys(newSelectedRowKeys)
   }
 
+  const handleCancelModal = () => {
+    setIsInvitateGuestModalVisible(false)
+  }
+
   const handleEdit = record => {
-    record
+    setSelectedGuest(record)
+    setIsInvitateGuestModalVisible(true)
+  }
+
+  const handleSubmitEdit = async values => {
+    try {
+      const response = await axios.put(`/api/guest/update?id=${selectedGuest.id}`, {
+        name: values.familyName,
+        guestQuantity: values.numberGuests,
+        phone: values.phone
+      })
+
+      if (response.data.success) {
+        const updatedGuest = response.data.guest
+        dispatch(updateGuest(updatedGuest))
+        message.open({
+          content: "Invitado actualizado correctamente",
+          duration: 3
+        })
+      } else {
+        message.error(response.data.message || "Error al actualizar el invitado")
+      }
+    } catch (error) {
+      message.error("Error al procesar la solicitud")
+      console.error(error)
+    } finally {
+      setIsInvitateGuestModalVisible(false)
+      setSelectedGuest(null)
+    }
   }
 
   const showDeleteConfirm = id => {
@@ -137,6 +172,12 @@ const EventTable = () => {
     return column
   })
 
+  const initialValues = selectedGuest ? {
+    familyName: selectedGuest.name,
+    numberGuests: selectedGuest.quantity,
+    phone: selectedGuest.phone
+  } : {}
+
   return (
     <div className="event-container">
       {selectedEvent ? (
@@ -154,6 +195,12 @@ const EventTable = () => {
           <EventCard
             events={userEvents}
             clickable={true} />
+          <InvitateGuestModal
+            visible={isInvitateGuestModalVisible}
+            onCancel={handleCancelModal}
+            onSubmit={handleSubmitEdit}
+            initialValues={initialValues}
+            isEditMode={!!selectedGuest} />
         </>
       ) : (
         <div>
