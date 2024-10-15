@@ -13,18 +13,13 @@ const TableMobile = () => {
   const dispatch = useDispatch()
   const userEvents = useSelector(state => state.eventsSlice.list)
   const selectedEvent = useSelector(state => state.eventsSlice.selectedEvent)
+  const guestsList = useSelector(state => state.guestsSlice.list)
 
   const handleBack = () => {
     dispatch(setSelectedEvent(null))
   }
 
-  const getSelectedGuests = () => {
-    if (!selectedEvent) return []
-    const event = userEvents.find(event => event.id === selectedEvent.id)
-    return event?.guests || []
-  }
-
-  const selectedGuests = getSelectedGuests()
+  const selectedGuests = guestsList
 
   if (!userEvents || userEvents.length === 0) {
     return (
