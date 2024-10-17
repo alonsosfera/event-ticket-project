@@ -1,8 +1,11 @@
 import React from "react"
 import { Row, Col, Typography, Flex } from "antd"
 import { useSelector } from "react-redux"
+import dayjs from "dayjs"
+import "dayjs/locale/es"
 
 const { Title, Text } = Typography
+dayjs.locale("es")
 
 const EventHeader = () => {
   const selectedEvent = useSelector(state => state.eventsSlice.selectedEvent)
@@ -11,8 +14,8 @@ const EventHeader = () => {
     return null
   }
 
-  const eventDate = new Date(selectedEvent.eventDate)
-  const formattedDate = eventDate.toLocaleDateString("es-ES")
+const eventDate = dayjs(selectedEvent.eventDate)
+const formattedDate = eventDate.format("DD/MM/YYYY")
 
   return (
     <>
