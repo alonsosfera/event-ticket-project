@@ -1,10 +1,28 @@
 import { Space, Button, Checkbox, Table, Modal } from "antd"
 import { DeleteOutlined, EditOutlined, ExclamationCircleOutlined } from "@ant-design/icons"
+import { useEffect } from "react"
+import { fetchRoomsList , setRoomsList } from "@/slices/rooms-slice"
+import axios from "axios"
+import { useDispatch , useSelector } from "react-redux"
 
 const { confirm } = Modal
 
-const RoomsTableComponent = ({ rooms, handleDelete, handleEdit }) => {
+const RoomsTableComponent = ({ handleDelete, handleEdit }) => {
+ const dispatch = useDispatch()
+  const { list: rooms } = useSelector(state => state.usersSlice)
 
+  useEffect (() => {
+    if (!rooms.length) {
+      dispatch(fetchRoomsList())
+      axios.get("/api/rooms/list")
+        .then(({ data }) => {
+          dispatch(setRoomsList(data))
+        })
+        .catch(error => {
+          console.error("Error obteniendo habitaciones:", error.message)
+        })
+    }
+  } , [])
   const showDeleteConfirm = id => {
     confirm({
       title: "¿Estás seguro que deseas eliminar este salón?",
