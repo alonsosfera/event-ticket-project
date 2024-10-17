@@ -8,7 +8,7 @@ import { createGuest } from "@/slices/guests-slice"
 
 const ActionsButtons = () => {
   const dispatch = useDispatch()
-  const selectedEvent = useSelector(state => state.guestsSlice.selectedEvent)
+  const selectedEvent = useSelector(state => state.eventsSlice.selectedEvent)
 
   const { xs, md, lg } = Grid.useBreakpoint()
 
