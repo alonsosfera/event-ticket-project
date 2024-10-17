@@ -24,9 +24,19 @@ const eventsSlice = createSlice({
     },
     createEvent: (state, action) => {
       state.list = [action.payload, ...state.list]
+    },
+    updateEvent: (state, action) => {
+      state.list = state.list.map(event => {
+        if (event.id === action.payload.id) {
+          return action.payload
+        }
+        return event
+      })},
+    deleteEvent: (state, action) => {
+      state.list = state.list.filter(room => room.id !== action.payload)
     }
   }
 })
 
-export const { fetchEventsList, setEventsList, setEventsError, createEvent  } = eventsSlice.actions
+export const { fetchEventsList, setEventsList, setEventsError, createEvent, deleteEvent, updateEvent } = eventsSlice.actions
 export default eventsSlice.reducer

@@ -1,8 +1,44 @@
-import { Button , Col , List , Space , Spin , Table } from "antd"
+import { Button, Col, List, Space, Spin, Table, Modal, message } from "antd"
 import { LoadingOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons"
 import DescriptionListComponent from "@/components/shared/description-list-component"
+import axios from "axios"
+import { useDispatch } from "react-redux"
+import { deleteUser } from "@/slices/users-slice"
 
-const UsersTable = ({ dataSource, isLoading }) => {
+const UsersTable = ({ dataSource, isLoading, handleEdit }) => {
+  const dispatch = useDispatch()
+
+  const showConfirm = id => {
+    Modal.confirm({
+      title: "¿Estás seguro de que quieres eliminar este usuario?",
+      onOk: () => handleDelete(id),
+      okText: "Eliminar",
+      cancelText: "Cancelar"
+    })
+  }
+
+  const handleDelete = async id => {
+    try {
+      const response = await axios.delete("/api/users/delete", {
+        data: { id }
+      })
+
+      if (response.status === 200) {
+        message.open({
+          content: "Usuario eliminado con éxito",
+          duration: 3
+        })
+        dispatch(deleteUser(id))
+      } else {
+        message.error("Hubo un error al borrar el usuario")
+      }
+    } catch (error) {
+      console.error("Error:", error)
+      message.error("Hubo un error al borrar el usuario")
+    }
+  }
+
+
   const columns = [
     { title: "Nombre", dataIndex: "name", key: "name" },
     { title: "Teléfono", dataIndex: "phone", key: "phone" },
@@ -10,20 +46,21 @@ const UsersTable = ({ dataSource, isLoading }) => {
     {
       title: "Acciones",
       key: "action",
-      render: () => (
-        <Space size="middle">
-          <Button shape="circle" icon={<EditOutlined />} />
-          <Button shape="circle" icon={<DeleteOutlined />} />
-        </Space>
-      )
+      render: (text, record) => {
+        return (
+          <Space size="middle">
+            <Button
+              shape="circle" icon={<EditOutlined />}
+              onClick={() => handleEdit(record)} />
+            <Button
+              shape="circle"
+              icon={<DeleteOutlined />}
+              onClick={() => showConfirm(record.key)} />
+          </Space>
+        )
+      }
     }
   ]
-
-  const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-    ("Selected Row Keys: ", selectedRowKeys, "Selected Rows: ", selectedRows)
-    }
-  }
 
   if (isLoading) {
     return (
@@ -37,8 +74,9 @@ const UsersTable = ({ dataSource, isLoading }) => {
     <>
       <Col xs={0} md={24}>
         <Table
-          dataSource={dataSource} columns={columns}
-          rowSelection={rowSelection} />
+          dataSource={dataSource}
+          columns={columns}
+          rowKey={record => record.id} />
       </Col>
       <Col md={0} xs={24}>
         <List

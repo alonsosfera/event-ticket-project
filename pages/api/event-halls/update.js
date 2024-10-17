@@ -12,7 +12,7 @@ async function handler(req, res) {
     return res.status(400).json({ message: "El Id es requerido" })
   }
 
-  const { name, locationUrl } = req.body
+  const { name, locationUrl, capacity } = req.body
 
   if (!name && !locationUrl) {
     return res.status(400).json({ message: "Se requiere al menos un campo para actualizar" })
@@ -23,7 +23,8 @@ async function handler(req, res) {
       where: { id: id },
       data: {
         ...(name && { name }),
-        ...(locationUrl && { locationUrl })
+        ...(locationUrl && { locationUrl }),
+        ...(capacity && { capacity })
       }
     })
 

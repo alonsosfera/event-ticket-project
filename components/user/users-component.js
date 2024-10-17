@@ -1,23 +1,37 @@
 import { useState } from "react"
 import { useSelector } from "react-redux"
-import { Row, Col, Typography, Button, Space, Input } from "antd"
 import { SettingOutlined } from "@ant-design/icons"
-import UsersActions from "@/components/user/user-actions-component"
-import NewUserModal from "@/components/user/user-modal-component"
-import UsersTable from "@/components/user/users-table-component"
+import { Button, Col, Row, Typography, Input, Space } from "antd"
+
+import UsersTable from "./users-table-component"
+import UsersActions from "./user-actions-component"
+import NewUserModal from "./user-modal-component"
 
 const UsersComponent = () => {
   const { list, isLoading } = useSelector(state => state.usersSlice)
   const [isModalVisible, setIsModalVisible] = useState(false)
+  const [searchText, setSearchText] = useState("")
+  const [editUser, setEditUser] = useState(null)
 
   const showModal = () => setIsModalVisible(true)
-  const handleCancel = () => setIsModalVisible(false)
 
-  const dataSource = list?.map(({ id, ...user }) => ({
-    key: user.id,
-    role: user.role,
-    name: user.name,
-    phone: user.phone
+  const handleCancel = () => {
+    setIsModalVisible(false)
+    setEditUser(null)
+  }
+
+  const handleEdit = record => {
+    setEditUser(record)
+    setIsModalVisible(true)
+  }
+
+  const filteredList = list?.filter(user =>
+    user.name.toLowerCase().includes(searchText.toLowerCase()) ||
+    user.phone.includes(searchText)
+  )
+
+  const dataSource = filteredList?.map(user => ({
+    ...user
   }))
 
   return (
@@ -37,19 +51,28 @@ const UsersComponent = () => {
           xl={{ span: 8, offset: 12 }}
           xxl={{ span: 6, offset: 14 }}>
           <Space.Compact style={{ width: "100%" }}>
-            <Input />
-            <Button
-              type="primary"
-              icon={<SettingOutlined />}>
+            <Input
+              placeholder="Buscar usuario"
+              onChange={e => setSearchText(e.target.value)}
+              allowClear={true}
+              onClear={() => setSearchText("")}
+              value={searchText} />
+            <Button type="primary" icon={<SettingOutlined />}>
               Buscar
             </Button>
           </Space.Compact>
         </Col>
 
-        <UsersTable dataSource={dataSource} isLoading={isLoading} />
+        <UsersTable
+          dataSource={dataSource}
+          isLoading={isLoading}
+          handleEdit={handleEdit} />
       </Row>
 
-      <NewUserModal isModalVisible={isModalVisible} handleCancel={handleCancel} />
+      <NewUserModal
+        isModalVisible={isModalVisible}
+        handleCancel={handleCancel}
+        editUser={editUser} />
     </>
   )
 }

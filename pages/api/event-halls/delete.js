@@ -1,9 +1,9 @@
 import { prisma } from "@/lib/prisma"
 import { withAuthApi } from "@/helpers/with-api-auth"
 
- async function handler(req, res) {
+async function handler(req, res) {
   if (req.method !== "DELETE") {
-    return res.status(405).json({ message: "Metodo no permitido" })
+    return res.status(405).json({ message: "Método no permitido" })
   }
 
   const { id } = req.query
@@ -13,6 +13,16 @@ import { withAuthApi } from "@/helpers/with-api-auth"
   }
 
   try {
+    // Verificar si hay eventos asociados al salón
+    const eventCount = await prisma.event.count({
+      where: { eventHallId: id }
+    })
+
+    if (eventCount > 0) {
+      return res.status(500).json({ message: "El salón ya tiene eventos asignados" })
+    }
+
+    // Si no hay eventos, proceder a borrar el salón
     const deletedEventHall = await prisma.eventHall.delete({
       where: {
         id: id
