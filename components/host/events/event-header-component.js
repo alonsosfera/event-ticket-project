@@ -5,7 +5,7 @@ import { useSelector } from "react-redux"
 const { Title, Text } = Typography
 
 const EventHeader = () => {
-  const selectedEvent = useSelector(state => state.guestsSlice.selectedEvent)
+  const selectedEvent = useSelector(state => state.eventsSlice.selectedEvent)
 
   if (!selectedEvent) {
     return null

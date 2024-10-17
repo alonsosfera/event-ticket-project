@@ -1,54 +1,103 @@
-import { useState, useEffect } from "react"
-import { Table, Space, Button, message, Modal } from "antd"
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons"
-import TableActions from "./event-table-actions-component"
-import { columns } from "./event-table-items"
-import EmptyDescription from "../../shared/empty-component"
-import EventCard from "@/components/events/event-card-component"
+import { useState, useEffect, useCallback } from "react"
+import { message, Modal } from "antd"
 import { useSession } from "next-auth/react"
 import axios from "axios"
 import { useDispatch, useSelector } from "react-redux"
-import { setUserEventsList, deleteGuest } from "@/slices/guests-slice"
+import { deleteGuest, fetchGuestsList, setGuestsList, updateGuest } from "@/slices/guests-slice"
+import { setEventsList } from "@/slices/events-slice"
+import EventTableView from "./event-table-view"
+import { columns } from "./event-table-items"
 
 const { confirm } = Modal
 
 const EventTable = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([])
+  const [isInvitateGuestModalVisible, setIsInvitateGuestModalVisible] = useState(false)
+  const [selectedGuest, setSelectedGuest] = useState(null)
   const { data: session } = useSession()
   const userId = session?.user?.id
   const dispatch = useDispatch()
-  const userEvents = useSelector(state => state.guestsSlice.list)
-  const selectedEvent = useSelector(state => state.guestsSlice.selectedEvent)
+  const userEvents = useSelector(state => state.eventsSlice.list)
+  const selectedEvent = useSelector(state => state.eventsSlice.selectedEvent)
+  const isLoadingGuests = useSelector(state => state.guestsSlice.isLoading)
+  const guests = useSelector(state => state.guestsSlice.list) || []
 
-  useEffect(() => {
-    const fetchEvents = async () => {
-      if (userId) {
-        try {
-          const response = await axios.get(`/api/users/${userId}`)
-          dispatch(setUserEventsList(response.data))
-        } catch (error) {
-          console.error("Error al traer los eventos:", error)
-        }
+  const fetchEvents = useCallback(async () => {
+    if (userId) {
+      try {
+        const response = await axios.get("/api/events/list", {
+          params: { userId }
+        })
+        dispatch(setEventsList(response.data))
+      } catch (error) {
+        console.error("Error al traer los eventos:", error)
+        message.error("Error al obtener los eventos")
       }
     }
-
-    fetchEvents()
   }, [userId, dispatch])
+
+  const fetchGuests = useCallback(async () => {
+    if (selectedEvent) {
+      dispatch(fetchGuestsList())
+      try {
+        const response = await axios.get("/api/guest/list", {
+          params: { eventId: selectedEvent.id }
+        })
+        dispatch(setGuestsList(response.data))
+      } catch (error) {
+        console.error("Error al obtener los invitados:", error)
+        message.error("Error al obtener los invitados")
+      }
+    }
+  }, [selectedEvent, dispatch])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await fetchEvents()
+      await fetchGuests()
+    }
+
+    fetchData()
+  }, [fetchEvents, fetchGuests])
 
   const onSelectChange = newSelectedRowKeys => {
     setSelectedRowKeys(newSelectedRowKeys)
   }
 
-  const getSelectedGuests = () => {
-    if (!selectedEvent) return []
-    const event = userEvents.find(event => event.id === selectedEvent.id)
-    return event?.guests || []
+  const handleCancelModal = () => {
+    setIsInvitateGuestModalVisible(false)
   }
 
-  const selectedGuests = getSelectedGuests()
-
   const handleEdit = record => {
-    record
+    setSelectedGuest(record)
+    setIsInvitateGuestModalVisible(true)
+  }
+
+  const handleSubmitEdit = async values => {
+    try {
+      const response = await axios.put(`/api/guest/update?id=${selectedGuest.id}`, {
+        name: values.familyName,
+        guestQuantity: values.numberGuests,
+        phone: values.phone
+      })
+
+      if (response.data.success) {
+        const updatedGuest = response.data.guest
+        dispatch(updateGuest(updatedGuest))
+        message.open({
+          content: "Invitado actualizado correctamente",
+          duration: 3
+        })
+      } else {
+        message.error(response.data.message || "Error al actualizar el invitado")
+      }
+    } catch (error) {
+      message.error("Error al procesar la solicitud")
+      console.error(error)
+    } finally {
+      setIsInvitateGuestModalVisible(false)
+      setSelectedGuest(null)
+    }
   }
 
   const showDeleteConfirm = id => {
@@ -60,8 +109,6 @@ const EventTable = () => {
       cancelText: "Cancelar",
       onOk() {
         handleDelete(id)
-      },
-      onCancel() {
       }
     })
   }
@@ -69,13 +116,14 @@ const EventTable = () => {
   const handleDelete = async guestId => {
     try {
       const response = await axios.delete(`/api/guest/delete?id=${guestId}`)
-
       if (response.data.success) {
         message.open({
           content: "Invitado eliminado con éxito",
           duration: 3
         })
         dispatch(deleteGuest(response.data.deletedGuest.id))
+      } else {
+        message.error(response.data.message || "Error inesperado al eliminar el invitado")
       }
     } catch (error) {
       const errorMessage = error.response?.data?.message || "Error al eliminar el invitado"
@@ -83,69 +131,29 @@ const EventTable = () => {
     }
   }
 
-  if (!userEvents || userEvents.length === 0) {
-    return (
-      <EmptyDescription description="No hay eventos, favor de comunicarse con administración." />
-    )
-  }
-
-  const mapGuests = guests => {
-    return guests.map(guest => ({
-      id: guest.id,
-      name: guest.name,
-      quantity: guest.guestQuantity,
-      phone: guest.phone,
-      estatus: "pendiente"
-    }))
-  }
-
-  const columnsWithActions = columns.map(column => {
-    if (column.title === "Acciones") {
-      return {
-        ...column,
-        render: (_, record) => (
-          <Space>
-            <Button
-              icon={<EditOutlined />}
-              shape="circle"
-              onClick={() => handleEdit(record)} />
-            <Button
-              icon={<DeleteOutlined />}
-              shape="circle"
-              onClick={() => showDeleteConfirm(record.id)} />
-          </Space>
-        )
-      }
-    }
-    return column
-  })
+  const initialValues = selectedGuest ? {
+    familyName: selectedGuest.name,
+    numberGuests: selectedGuest.quantity,
+    phone: selectedGuest.phone
+  } : {}
 
   return (
-    <div className="event-container">
-      {selectedEvent ? (
-        <>
-          <TableActions
-            selectedRowKeys={selectedRowKeys}
-            setSelectedRowKeys={setSelectedRowKeys} />
-          <Table
-            size="small"
-            bordered
-            rowSelection={{ selectedRowKeys, onChange: onSelectChange }}
-            columns={columnsWithActions}
-            dataSource={mapGuests(selectedGuests)} />
-          <EventCard
-            events={userEvents}
-            clickable={true} />
-        </>
-      ) : (
-        <div>
-          <EmptyDescription description="Seleccione un evento para ver aquí sus detalles" />
-          <EventCard
-            events={userEvents}
-            clickable={true} />
-        </div>
-      )}
-    </div>
+    <EventTableView
+      userEvents={userEvents}
+      selectedEvent={selectedEvent}
+      selectedRowKeys={selectedRowKeys}
+      setSelectedRowKeys={setSelectedRowKeys}
+      guests={guests}
+      isLoadingGuests={isLoadingGuests}
+      selectedGuest={selectedGuest}
+      isInvitateGuestModalVisible={isInvitateGuestModalVisible}
+      handleEdit={handleEdit}
+      handleCancelModal={handleCancelModal}
+      handleSubmitEdit={handleSubmitEdit}
+      initialValues={initialValues}
+      columns={columns}
+      showDeleteConfirm={showDeleteConfirm}
+      onSelectChange={onSelectChange} />
   )
 }
 
