@@ -1,29 +1,32 @@
-import { useEvent } from "../../events/event-context"
 import TableActions from "./event-table-actions-component"
 import { List, Typography, Button } from "antd"
 import EmptyDescription from "../../shared/empty-component"
 import EventCard from "@/components/events/event-card-component"
 import { LeftOutlined } from "@ant-design/icons"
 import DescriptionListComponent from "@/components/shared/description-list-component"
+import { useSelector, useDispatch } from "react-redux"
+import { setSelectedEvent } from "@/slices/guests-slice"
 
 const { Title, Text } = Typography
 
-const dataSource = Array.from({ length: 46 }).map((_, i) => ({
-  key: i,
-  familia: `Edwa King ${i}`,
-  invitados: 32,
-  whatsapp: `6394650090 ${i}`,
-  estatus: "pendiente"
-}))
-
 const TableMobile = () => {
-  const { selectedEvent, eventData } = useEvent()
+  const dispatch = useDispatch()
+  const userEvents = useSelector(state => state.guestsSlice.list)
+  const selectedEvent = useSelector(state => state.guestsSlice.selectedEvent)
 
   const handleBack = () => {
-    window.location.reload()
+    dispatch(setSelectedEvent(null))
   }
 
-  if (!eventData || eventData.length === 0) {
+  const getSelectedGuests = () => {
+    if (!selectedEvent) return []
+    const event = userEvents.find(event => event.id === selectedEvent.id)
+    return event?.guests || []
+  }
+
+  const selectedGuests = getSelectedGuests()
+
+  if (!userEvents || userEvents.length === 0) {
     return (
       <EmptyDescription
         description="No hay eventos, favor de comunicarse con administración." />
@@ -33,25 +36,25 @@ const TableMobile = () => {
   return (
     <div className="event-container">
       {selectedEvent && (
-      <Button
-        type="text"
-        className="back-button"
-        icon={<LeftOutlined className="icon-back" />}
-        onClick={handleBack}>
-      </Button>
+        <Button
+          type="text"
+          className="back-button"
+          icon={<LeftOutlined className="icon-back" />}
+          onClick={handleBack}>
+        </Button>
       )}
       {selectedEvent ? (
         <>
-          <TableActions />
+          <TableActions selectedEvent={selectedEvent} />
           <List
-            dataSource={dataSource}
+            dataSource={selectedGuests}
             renderItem={item => (
               <List.Item>
                 <DescriptionListComponent items={[
-                  { label: <Text strong>Familia</Text>, value: item.familia },
-                  { label: <Text strong>Invitados</Text>, value: item.invitados },
-                  { label: <Text strong>WhatsApp</Text>, value: item.whatsapp },
-                  { label: <Text strong>Estatus</Text>, value: item.estatus }
+                  { label: <Text strong>Familia</Text>, value: item.name },
+                  { label: <Text strong>Invitados</Text>, value: item.guestQuantity },
+                  { label: <Text strong>WhatsApp</Text>, value: item.phone },
+                  { label: <Text strong>Estatus</Text>, value: item.status || "Pendiente" }
                 ]} />
               </List.Item>
             )} />
@@ -59,7 +62,9 @@ const TableMobile = () => {
       ) : (
         <div>
           <Title className="title-event">Eventos</Title>
-          <EventCard />
+          <EventCard
+            events={userEvents}
+            clickable={true} />
         </div>
       )}
     </div>

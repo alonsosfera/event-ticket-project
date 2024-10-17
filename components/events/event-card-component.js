@@ -1,26 +1,21 @@
-import { useEvent } from "@/components/events/event-context"
 import { Card, Col, Row } from "antd"
+import { useDispatch } from "react-redux"
+import { setSelectedEvent } from "@/slices/guests-slice"
 
-const EventCard = ({ events }) => {
-  const { setSelectedEvent } = useEvent()
+const EventCard = ({ events, clickable, cursor }) => {
+  const dispatch = useDispatch()
 
   return (
     <Row justify={"center"} gutter={[16, 6]}>
-      {events?.slice(0, 4).map((event, index) => {
+      {events?.map((event, index) => {
         const cardClass = `card-container card-color-${(index % 4) + 1}`
-
-        const formattedDate = new Date(event.eventDate).toLocaleDateString("es-ES", {
-          year: "numeric",
-          month: "long",
-          day: "numeric"
-        })
+        const formattedDate = new Date(event.eventDate).toLocaleDateString("es-ES")
 
         return (
           <Col
-            key={index}
-            xs={24} sm={24}
-            md={12} lg={12}
-            xl={6}>
+            key={index} xs={24}
+            sm={24} md={12}
+            lg={12} xl={6}>
             <Card
               className={cardClass}
               title={
@@ -28,11 +23,14 @@ const EventCard = ({ events }) => {
                   {index + 1}. {event.name}
                 </span>
               }
-              onClick={() => setSelectedEvent(event)}
-              hoverable>
+              onClick={clickable ? () => {
+                dispatch(setSelectedEvent(event))
+              } : null}
+              hoverable
+              style={{ cursor }}>
               <div className="card-content">
                 <p>{formattedDate}</p>
-                <p>{event.eventHall}</p>
+                <p>{typeof event.eventHall === "string" ? event.eventHall : event.eventHall?.name}</p>
               </div>
               <div className="card-invites">
                 <span>{event.guestQuantity} invitados</span>

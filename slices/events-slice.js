@@ -38,5 +38,5 @@ const eventsSlice = createSlice({
   }
 })
 
-export const { fetchEventsList, setEventsList, setEventsError,createEvent,deleteEvent,updateEvent } = eventsSlice.actions
+export const { fetchEventsList, setEventsList, setEventsError, createEvent, deleteEvent, updateEvent } = eventsSlice.actions
 export default eventsSlice.reducer
