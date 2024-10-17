@@ -5,7 +5,6 @@ import dayjs from "dayjs"
 import "dayjs/locale/es"
 
 const { Title, Text } = Typography
-dayjs.locale("es")
 
 const EventHeader = () => {
   const selectedEvent = useSelector(state => state.eventsSlice.selectedEvent)
