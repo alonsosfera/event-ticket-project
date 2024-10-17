@@ -13,7 +13,7 @@ async function handler(req, res) {
     return res.status(405).json({ message: "Método no permitido." })
   }
 
-  const { name, locationUrl } = req.body
+  const { name, locationUrl, capacity } = req.body
 
   if (!name) {
     return res.status(400).json({ message: "Falta el nombre del EventHall." })
@@ -24,6 +24,7 @@ async function handler(req, res) {
       data: {
         name,
         tenantId,
+        capacity,
         ...(locationUrl && { locationUrl })
       }
     })
