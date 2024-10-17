@@ -22,7 +22,8 @@ const RoomsTableComponent = ({ handleDelete, handleEdit }) => {
           console.error("Error obteniendo habitaciones:", error.message)
         })
     }
-  } , [])
+  } , [dispatch, rooms.length])
+
   const showDeleteConfirm = id => {
     confirm({
       title: "¿Estás seguro que deseas eliminar este salón?",
