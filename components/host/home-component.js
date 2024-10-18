@@ -1,5 +1,5 @@
 import { Row, Col, Card, Image, Statistic, Typography, message } from "antd"
-import { useEffect, useCallback } from "react"
+import { useEffect, useCallback, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import axios from "axios"
 import { useSession } from "next-auth/react"
@@ -12,6 +12,7 @@ const HomeComponent = () => {
   const { data: session } = useSession()
   const userId = session?.user?.id
   const events = useSelector(state => state.eventsSlice.list)
+  const [firstEventDetails, setFirstEventDetails] = useState(null)
 
   const fetchEvents = useCallback(async () => {
     if (userId) {
@@ -26,6 +27,16 @@ const HomeComponent = () => {
       }
     }
   }, [userId, dispatch])
+
+  const fetchFirstEventDetails = async eventId => {
+    try {
+      const response = await axios.get(`/api/events/${eventId}`)
+      setFirstEventDetails(response.data)
+    } catch (error) {
+      console.error("Error al obtener el evento:", error)
+      message.error("Error al obtener los detalles del evento")
+    }
+  }
 
   useEffect(() => {
     fetchEvents()
@@ -49,6 +60,14 @@ const HomeComponent = () => {
 
   const sortedEvents = getSortedEvents(events)
   const firstEvent = sortedEvents[0]
+  const firstEventId = firstEvent ? firstEvent.id : null
+  const totalGuestQuantity = firstEventDetails?.guests?.reduce((acc, guest) => acc + guest.guestQuantity, 0) || 0
+
+  useEffect(() => {
+    if (firstEventId) {
+      fetchFirstEventDetails(firstEventId)
+    }
+  }, [firstEventId])
 
   return (
     <Row
@@ -60,10 +79,14 @@ const HomeComponent = () => {
         <Typography.Title level={1}>Home</Typography.Title>
         <Row justify="space-between" align="middle">
           <Col>
-            <Typography.Title level={5}>Próximo Evento: {firstEvent ? firstEvent.name : "No hay próximos eventos"}</Typography.Title>
+            <Typography.Title level={5}>
+              Próximo Evento: {firstEvent ? firstEvent.name : "No hay próximos eventos"}
+            </Typography.Title>
           </Col>
           <Col>
-            <Text type="secondary">{dayjs(firstEvent.eventDate).format("DD/MM/YYYY")}</Text>
+            <Text type="secondary">
+              {firstEvent ? dayjs(firstEvent.eventDate).format("DD/MM/YYYY") : ""}
+            </Text>
           </Col>
         </Row>
 
@@ -86,7 +109,7 @@ const HomeComponent = () => {
             xs={0} sm={12}
             md={6}>
             <Card>
-              <Statistic title="Invitados" value={80} />
+              <Statistic title="Invitados" value={totalGuestQuantity} />
             </Card>
           </Col>
           <Col
