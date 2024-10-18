@@ -9,7 +9,7 @@ const { confirm } = Modal
 
 const RoomsTableComponent = ({ handleDelete, handleEdit }) => {
  const dispatch = useDispatch()
-  const { list: rooms } = useSelector(state => state.usersSlice)
+  const { list: rooms } = useSelector(state => state.roomsSlice())
 
   useEffect (() => {
     if (!rooms.length) {
