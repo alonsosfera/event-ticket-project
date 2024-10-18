@@ -31,6 +31,25 @@ const HomeComponent = () => {
     fetchEvents()
   }, [fetchEvents])
 
+  const getSortedEvents = events => {
+    const currentDate = dayjs()
+
+    const sortedEvents = [...events].sort((a, b) => {
+      const dateA = dayjs(a.eventDate)
+      const dateB = dayjs(b.eventDate)
+
+      if (dateA.isAfter(currentDate) && dateB.isBefore(currentDate)) return -1
+      if (dateA.isBefore(currentDate) && dateB.isAfter(currentDate)) return 1
+      if (dateA.isAfter(currentDate) && dateB.isAfter(currentDate)) return dateA.diff(dateB)
+      return dateB.diff(dateA)
+    })
+
+    return sortedEvents
+  }
+
+  const sortedEvents = getSortedEvents(events)
+  const firstEvent = sortedEvents[0]
+
   return (
     <Row
       className="home-component"
@@ -41,10 +60,10 @@ const HomeComponent = () => {
         <Typography.Title level={1}>Home</Typography.Title>
         <Row justify="space-between" align="middle">
           <Col>
-            <Typography.Title level={5}>Próximo Evento: Cumple Claudia</Typography.Title>
+            <Typography.Title level={5}>Próximo Evento: {firstEvent ? firstEvent.name : "No hay próximos eventos"}</Typography.Title>
           </Col>
           <Col>
-            <Text type="secondary">28/04/2024</Text>
+            <Text type="secondary">{dayjs(firstEvent.eventDate).format("DD/MM/YYYY")}</Text>
           </Col>
         </Row>
 
@@ -105,7 +124,7 @@ const HomeComponent = () => {
       <Col span={24} className="no-border-col">
         <Title level={5}>Próximos Eventos</Title>
         <Row gutter={[16, 24]} justify="center">
-          {events?.slice(0, 4).map((event, index) => (
+          {sortedEvents?.slice(0, 4).map((event, index) => (
             <Col
               key={index} xs={24}
               sm={12} md={6}>
