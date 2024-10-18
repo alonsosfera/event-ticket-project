@@ -17,7 +17,7 @@ const guestsSlice = createSlice({
       state.list = action.payload
     },
     createGuest: (state, action) => {
-      state.list.push(action.payload)
+      state.list = [action.payload, ...state.list]
     },
     deleteGuest: (state, action) => {
       state.list = state.list.filter(guest => guest.id !== action.payload)

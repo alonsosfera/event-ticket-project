@@ -58,12 +58,11 @@ const OwnerHomeComponent = () => {
         <Title level={5} style={{ fontWeight: "bold", marginBottom: "20px" }}>Eventos esta semana</Title>
       </Col>
       <EventCard
-        events={eventsThisWeek} clickable={false}
-        cursor="default" />
+        events={eventsThisWeek} cursor="default" />
       <Col>
         <Title level={5} style={{ fontWeight: "bold", marginBottom: "20px", marginTop: "20px" }}>Próximos eventos</Title>
       </Col>
-      <EventCard events={upcomingEvents} />
+      <EventCard events={upcomingEvents} cursor="default"  />
     </>
   )
 }
