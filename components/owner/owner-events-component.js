@@ -46,7 +46,7 @@ const OwnerEventsComponent = () => {
 
       if (!rooms.length) {
         dispatch(fetchRoomsList())
-        axios.get("/api/rooms/list")
+        axios.get("/api/event-halls/list")
           .then(({ data }) => {
             dispatch(setRoomsList(data))
           })
