@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux"
 import axios from "axios"
 import { useSession } from "next-auth/react"
 import { setEventsList } from "@/slices/events-slice"
+import dayjs from "dayjs"
 
 const HomeComponent = () => {
   const { Text, Title } = Typography
@@ -110,11 +111,11 @@ const HomeComponent = () => {
               sm={12} md={6}>
               <Card className="card-color">
                 <Statistic
-                  title={new Date(event.eventDate).toLocaleDateString("es-ES")}
+                  title={dayjs(event.eventDate).format("DD/MM/YYYY")}
                   value={event.name} />
               </Card>
             </Col>
-    ))}
+          ))}
         </Row>
       </Col>
     </Row>
