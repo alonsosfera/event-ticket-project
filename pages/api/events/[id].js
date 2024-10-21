@@ -1,4 +1,3 @@
-// pages/api/events/update.js
 import { prisma } from "@/lib/prisma"
 import { withAuthApi } from "@/helpers/with-api-auth"
 
