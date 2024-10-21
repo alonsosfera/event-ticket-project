@@ -55,7 +55,7 @@ const UsersTable = ({ dataSource, isLoading, handleEdit }) => {
             <Button
               shape="circle"
               icon={<DeleteOutlined />}
-              onClick={() => showConfirm(record.key)} />
+              onClick={() => showConfirm(record.id)} />
           </Space>
         )
       }
