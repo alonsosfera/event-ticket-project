@@ -46,7 +46,7 @@ model PasswordRecovery {
   createdAt DateTime @default(now()) @db.Timestamp(6)
 
   userId String @unique
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model EventHall {

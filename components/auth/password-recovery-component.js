@@ -1,12 +1,21 @@
 import React from "react"
-import { Button, Modal, Form, Input } from "antd"
+import { Button, Modal, Form, Input, message } from "antd"
 import { WhatsAppOutlined } from "@ant-design/icons"
+import axios from "axios"
 
-const Recovery = ({ visible, onCancel, onSubmit }) => {
-  const handleSubmit = values => {
-    values
-    onSubmit()
-    onCancel()
+const Recovery = ({ visible, onCancel }) => {
+  const handleSubmit = async ({ phone }) => {
+    const sending = message.loading("Enviando...", 0)
+    try {
+      await axios.post("/api/auth/recovery", { phone })
+      message.success("Mensaje de recuperación enviado.")
+      onCancel()
+    } catch (e) {
+      message.error("Hubo un error...")
+      console.error("Error recovering password", e)
+    } finally {
+      sending()
+    }
   }
 
   return (

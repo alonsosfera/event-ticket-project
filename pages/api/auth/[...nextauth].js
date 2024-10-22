@@ -7,8 +7,16 @@ export const authOptions = {
     CredentialsProvider({
       async authorize(credentials) {
         // If no error and we have user data, return it
-        const { data } = await axios.post(`${process.env.NEXT_PUBLIC_APP_URI}/api/auth/login`, credentials)
-        return data.user
+        try {
+          const { data } = await axios.post(`${process.env.NEXT_PUBLIC_APP_URI}/api/auth/login`, credentials)
+          return data.user
+        } catch (e) {
+          if (e.response.status === 401) {
+            throw new Error("invalid_credentials")
+          } else {
+            throw new Error("server_error")
+          }
+        }
       }
     })
   ],
@@ -33,7 +41,7 @@ export const authOptions = {
       return session
     }
   },
-  pages: { signIn: "/auth/signin" },
+  pages: { signIn: "/auth/signin", error: "/auth/signin" },
   secret: process.env.NEXTAUTH_SECRET
 }
 
