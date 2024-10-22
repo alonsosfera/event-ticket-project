@@ -6,9 +6,11 @@ import { Row, Col, Form, Input, Button, message } from "antd"
 import { WhatsAppOutlined, LockOutlined } from "@ant-design/icons"
 
 import Recovery from "./password-recovery-component"
+import NewPasswordComponent from "@/components/auth/new-password-component"
 
 export default function LoginComponent() {
   const router = useRouter()
+  const [recoveryId, setRecoveryId] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const [isRecoveryModalVisible, setIsRecoveryModalVisible] = useState(false)
 
@@ -38,6 +40,11 @@ export default function LoginComponent() {
       message.error("Credenciales inválidas")
     } else if (error && error === "server_error") {
       message.error("Hubo un error")
+    }
+
+    if (router.query.recovery) {
+      setRecoveryId(router.query.recovery)
+      router.replace("")
     }
   }, [router])
 
@@ -118,6 +125,11 @@ export default function LoginComponent() {
       <Recovery
         visible={isRecoveryModalVisible}
         onCancel={closeRecoveryModal} />
+
+      <NewPasswordComponent
+        visible={!!recoveryId}
+        recoveryId={recoveryId}
+        onClose={() => setRecoveryId(null)} />
     </>
   )
 }
