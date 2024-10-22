@@ -19,7 +19,9 @@ const EventButtons = ({ onSearch }) => {
 
   return (
     <>
-      <Row align="middle" gutter={[24, 12]}>
+      <Row
+        align="middle" gutter={[24, 12]}
+        style={{ marginBottom: "10px" }}>
         <Col
           xs={24} md={19}
           xl={21} order={1}>
