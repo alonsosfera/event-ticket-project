@@ -25,13 +25,6 @@ export default function LoginComponent() {
       })
   }
 
-  const handleRecoverySubmit = () => {
-    message.open({
-      content: "Se ha enviado un mensaje al número proporcionado",
-      duration: 3
-    })
-  }
-
   useEffect(() => {
     const { phone, pass } = router.query
 
@@ -124,8 +117,7 @@ export default function LoginComponent() {
 
       <Recovery
         visible={isRecoveryModalVisible}
-        onCancel={closeRecoveryModal}
-        onSubmit={handleRecoverySubmit} />
+        onCancel={closeRecoveryModal} />
     </>
   )
 }
