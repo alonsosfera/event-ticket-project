@@ -34,6 +34,7 @@ const NewPasswordComponent = ({ recoveryId, onClose, visible }) => {
 
   return (
     <Modal
+      centered
       open={visible}
       onCancel={onClose}
       okText="Restablecer"
