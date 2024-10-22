@@ -39,6 +39,13 @@ export default function LoginComponent() {
       router.replace("/auth/signin")
         .then(() => onFinish({ phone, password: pass }))
     }
+
+    const { error } = router.query
+    if (error && error === "invalid_credentials") {
+      message.error("Credenciales inválidas")
+    } else if (error && error === "server_error") {
+      message.error("Hubo un error")
+    }
   }, [router])
 
   return (
