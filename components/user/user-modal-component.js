@@ -38,7 +38,8 @@ const NewUserModal = ({ isModalVisible, handleCancel, editUser }) => {
 
       let response
       if (editUser) {
-        response = await axios.put(`/api/users/${editUser.id}`, userData)
+        response = await axios.put(`/api/users/update?id=${editUser.id}`, userData)
+
       } else {
         response = await axios.post("/api/auth/signup", userData)
       }

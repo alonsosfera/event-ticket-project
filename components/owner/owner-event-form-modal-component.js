@@ -9,7 +9,7 @@ const { Option } = Select
 
 const EventForm = ({ eventToEdit, onCancel }) => {
   const { list: usersList } = useSelector(state => state.usersSlice)
-  const { list: rooms } = useSelector(state => state.roomsSlice)
+  const { list: roomsList } = useSelector(state => state.roomsSlice)
   const [form] = Form.useForm()
   const dispatch = useDispatch()
 
@@ -27,7 +27,7 @@ const EventForm = ({ eventToEdit, onCancel }) => {
 
   const handleSubmit = async values => {
     try {
-      const eventHallId = rooms.find(room => room.name === values.eventHall)?.id
+      const eventHallId = roomsList.find(room => room.name === values.eventHall)?.id
       const userId = usersList.find(user => user.name === values.userId)?.id
 
       const eventData = {
@@ -103,7 +103,7 @@ const EventForm = ({ eventToEdit, onCancel }) => {
         rules={[{ required: true, message: "Selecciona el salón" }]}
         colon={false}>
         <Select placeholder="Selecciona el salón">
-          {rooms.map(room => (
+          {roomsList.map(room => (
             <Option key={room.id} value={room.name}>
               {room.name}
             </Option>

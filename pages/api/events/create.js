@@ -24,7 +24,8 @@ async function handler(req, res) {
         users: {
           connect: { id: userId }
         }
-      }
+      },
+      include: { eventHall: { select: { name: true } }, users: true }
     })
 
     res.status(201).json(newEvent)
