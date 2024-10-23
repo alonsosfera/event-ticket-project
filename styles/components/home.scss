@@ -1,7 +1,6 @@
 .home-component {
   padding: 10px;
   height: 100vh;
-  background-color: #F4F5F7;
 
   .ant-row {
     background-color: #FFFFFF;
@@ -9,6 +8,10 @@
 
   .no-border-col .ant-card {
     border: none;
+  }
+
+  .card-color {
+    background-color: #F4F5F7;
   }
 
     .ant-card {
