@@ -1,4 +1,7 @@
-export default async function handler(req, res) {
+import { prisma } from "@/lib/prisma"
+import { withAuthApi } from "@/helpers/with-api-auth"
+
+async function handler(req, res) {
   const { id } = req.query
 
   if (req.method === "PUT") {
@@ -21,3 +24,5 @@ export default async function handler(req, res) {
     res.status(405).end(`Method ${req.method} Not Allowed`)
   }
 }
+
+export default withAuthApi(handler)
