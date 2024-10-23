@@ -50,38 +50,114 @@ model PasswordRecovery {
 }
 
 model EventHall {
-  id          String   @id @default(uuid())
+  id          String     @id @default(uuid())
   name        String
   capacity    Int?
   locationUrl String?
-  createdAt   DateTime @default(now()) @db.Timestamp(6)
+  createdAt   DateTime   @default(now()) @db.Timestamp(6)
   events      Event[]
+  templates   Template[]
 
   tenantId String
   tenant   Tenant @relation(fields: [tenantId], references: [id])
 }
 
 model Event {
-  id            String   @id @default(uuid())
-  name          String
-  createdAt     DateTime @default(now()) @db.Timestamp(6)
-  guestQuantity Int
-  guests        Guest[]
-  users         User[]
-  eventDate     DateTime
-  updatedAt     DateTime @updatedAt
+  id                String             @id @default(uuid())
+  name              String
+  createdAt         DateTime           @default(now()) @db.Timestamp(6)
+  guestQuantity     Int
+  guests            Guest[]
+  users             User[]
+  eventDate         DateTime
+  updatedAt         DateTime           @updatedAt
+  digitalPass       DigitalPass?
+  digitalInvitation DigitalInvitation?
+  tableDistribution TableDistribution?
 
   eventHallId String
   eventHall   EventHall @relation(fields: [eventHallId], references: [id])
 }
 
 model Guest {
-  id            String   @id @default(uuid())
-  name          String
-  phone         String
-  guestQuantity Int
-  createdAt     DateTime @default(now()) @db.Timestamp(6)
+  id               String   @id @default(uuid())
+  name             String
+  phone            String
+  guestQuantity    Int
+  isConfirmed      Boolean  @default(false)
+  isInvitationSent Boolean  @default(false)
+  createdAt        DateTime @default(now()) @db.Timestamp(6)
 
   eventId String
   event   Event  @relation(fields: [eventId], references: [id])
+}
+
+enum TemplateType {
+  DIGITAL_PASS
+  DIGITAL_INVITATION
+  TABLE_DISTRIBUTION
+}
+
+model Template {
+  id        String       @id @default(uuid())
+  name      String?
+  config    Json?
+  createdAt DateTime     @default(now()) @db.Timestamp(6)
+  updatedAt DateTime     @updatedAt
+  nodes     KonvaNode[]
+  type      TemplateType
+
+  eventHallId String
+  eventHall   EventHall @relation(fields: [eventHallId], references: [id], onDelete: Cascade)
+}
+
+model DigitalPass {
+  id        String      @id @default(uuid())
+  config    Json?
+  updatedAt DateTime    @updatedAt
+  nodes     KonvaNode[]
+
+  eventId String? @unique
+  event   Event?  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+}
+
+model DigitalInvitation {
+  id        String      @id @default(uuid())
+  config    Json?
+  updatedAt DateTime    @updatedAt
+  nodes     KonvaNode[]
+
+  eventId String? @unique
+  event   Event?  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+}
+
+model TableDistribution {
+  id        String      @id @default(uuid())
+  config    Json?
+  updatedAt DateTime    @updatedAt
+  nodes     KonvaNode[]
+
+  eventId String? @unique
+  event   Event?  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+}
+
+model KonvaNode {
+  id          String   @id @default(uuid())
+  config      Json?
+  coordinateX Int?
+  coordinateY Int?
+  createdAt   DateTime @default(now()) @db.Timestamp(6)
+  updatedAt   DateTime @updatedAt
+
+  templateId String?
+  template   Template? @relation(fields: [templateId], references: [id], onDelete: Cascade)
+
+  digitalPassId String?
+  digitalPass   DigitalPass? @relation(fields: [digitalPassId], references: [id], onDelete: Cascade)
+
+  digitalInvitationId String?
+  DigitalInvitation   DigitalInvitation? @relation(fields: [digitalInvitationId], references: [id], onDelete: Cascade)
+
+  tableDistributionId String?
+  TableDistribution   TableDistribution? @relation(fields: [tableDistributionId], references: [id], onDelete: Cascade)
 }
