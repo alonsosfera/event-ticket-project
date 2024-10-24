@@ -1,7 +1,10 @@
 import { Row, Col, Typography, Button, Input, Space } from "antd"
 import { SettingOutlined } from "@ant-design/icons"
 
-const DigitalInvitationButtons = () => {
+const DigitalInvitationButtons = ({ setShowNewDesign }) => {
+  const handleNewDesign = () => {
+    setShowNewDesign(true)
+  }
 
   return (
     <Row
@@ -18,7 +21,8 @@ const DigitalInvitationButtons = () => {
         <Button
           key="submit"
           type="primary"
-          style={{ width: "100%" }}>
+          style={{ width: "100%" }}
+          onClick={handleNewDesign}>
           Nuevo Diseño
         </Button>
       </Col>
@@ -32,9 +36,7 @@ const DigitalInvitationButtons = () => {
         xl={{ span: 8, offset: 12 }}
         xxl={{ span: 6, offset: 14 }}>
         <Space.Compact style={{ width: "100%" }}>
-          <Input
-            placeholder="Buscar diseños"
-            allowClear={true} />
+          <Input placeholder="Buscar diseños" allowClear={true} />
           <Button type="primary" icon={<SettingOutlined />}>
             Buscar
           </Button>
